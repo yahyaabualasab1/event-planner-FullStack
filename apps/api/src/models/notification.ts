@@ -1,7 +1,7 @@
 import { Schema, model, type Model } from "mongoose";
 
-import { ActorType } from "../enums/models/actor";
-import { NotificationType } from "../enums/models/notification";
+import { ActorEnum } from "../enums/models/actor";
+import { NotificationEnum } from "../enums/models/notification";
 import { INotification } from "../interfaces/models/notification.interface";
 
 const notificationSchema = new Schema<INotification>(
@@ -10,12 +10,12 @@ const notificationSchema = new Schema<INotification>(
     actorType: {
       type: String,
       required: true,
-      enum: Object.values(ActorType),
+      enum: Object.values(ActorEnum),
     },
     type: {
       type: String,
       required: true,
-      enum: Object.values(NotificationType),
+      enum: Object.values(NotificationEnum),
     },
     message: { type: String, required: true },
     isRead: { type: Boolean, required: true },
@@ -30,5 +30,5 @@ export const Notification: Model<INotification> = model<INotification>(
 
 export { notificationSchema };
 
-export { ActorType } from "../enums/models/actor";
-export { NotificationType } from "../enums/models/notification";
+export { ActorEnum } from "../enums/models/actor";
+export { NotificationEnum } from "../enums/models/notification";

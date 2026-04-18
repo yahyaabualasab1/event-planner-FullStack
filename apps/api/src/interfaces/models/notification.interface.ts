@@ -1,12 +1,12 @@
-import { ActorType } from "../../enums/models/actor";
-import { NotificationType } from "../../enums/models/notification";
+import { ActorEnum } from "../../enums/models/actor";
+import { NotificationEnum } from "../../enums/models/notification";
 
 /** Stored notification fields (MongoDB adds `_id`). */
 export interface INotification {
   actorId: string;
-  actorType: ActorType;
+  actorType: ActorEnum;
   /** High-level category: booking, message, or system. */
-  type: NotificationType;
+  type: NotificationEnum;
   message: string;
   isRead: boolean;
 }
