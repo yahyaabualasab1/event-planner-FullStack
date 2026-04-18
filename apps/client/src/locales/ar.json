@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "العميل",
+    "subtitle": "Vite و React و TypeScript و Tailwind"
+  },
+  "language": {
+    "label": "اللغة",
+    "en": "English",
+    "es": "Español",
+    "ar": "العربية"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "app": {
+    "title": "Admin",
+    "subtitle": "Vite + React + TypeScript + Tailwind"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "es": "Español",
+    "ar": "Arabic"
+  },
+  "pages": {
+    "homePage": {
+      "findYourPerfectVenue": "Find Your Perfect Venue"
+    }
+  }
+}

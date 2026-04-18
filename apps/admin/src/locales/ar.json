@@ -1,0 +1,17 @@
+{
+  "app": {
+    "title": "الإدارة",
+    "subtitle": "Vite و React و TypeScript و Tailwind"
+  },
+  "language": {
+    "label": "اللغة",
+    "en": "English",
+    "es": "Español",
+    "ar": "العربية"
+  },
+  "pages": {
+    "homePage": {
+      "findYourPerfectVenue": "أوجد مكانك المثالي"
+    }
+  }
+}

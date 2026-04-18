@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "Client",
+    "subtitle": "Vite + React + TypeScript + Tailwind"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "es": "Español",
+    "ar": "Arabic"
+  }
+}
