@@ -11,7 +11,8 @@
   },
   "pages": {
     "homePage": {
-      "findYourPerfectVenue": "Find Your Perfect Venue"
+      "findYourPerfectVenue": "Find Your Perfect Venue",
+      "messages": "Messages"
     }
   }
 }

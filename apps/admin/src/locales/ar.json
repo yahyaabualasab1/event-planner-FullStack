@@ -11,7 +11,8 @@
   },
   "pages": {
     "homePage": {
-      "findYourPerfectVenue": "أوجد مكانك المثالي"
+      "findYourPerfectVenue": "أوجد مكانك المثالي",
+      "messages": "الرسائل"
     }
   }
 }

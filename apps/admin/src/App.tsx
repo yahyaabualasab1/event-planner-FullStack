@@ -24,6 +24,7 @@ export function App() {
       </div>
       <div>
         {t("pages.homePage.findYourPerfectVenue")}
+        {t("pages.homePage.messages")}
       </div>
     </div>
   );
