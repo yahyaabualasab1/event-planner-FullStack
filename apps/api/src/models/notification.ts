@@ -2,7 +2,7 @@ import { Schema, model, type Model } from "mongoose";
 
 import { ActorType } from "../enums/models/actor";
 import { NotificationType } from "../enums/models/notification";
-import { INotification } from "../interfaces/models/inotification";
+import { INotification } from "../interfaces/models/notification.interface";
 
 const notificationSchema = new Schema<INotification>(
   {
