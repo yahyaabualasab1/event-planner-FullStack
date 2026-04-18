@@ -10,8 +10,6 @@ app.use(express.json());
 const PORT = Number(process.env.PORT) || 3000;
 const MONGODB_URI =
   process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017/event-planner";
-console.log(process.env);
-console.log(MONGODB_URI);
 app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
