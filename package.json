@@ -1,0 +1,15 @@
+{
+  "name": "event-planner",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter @event-planner/api dev",
+    "dev:admin": "pnpm --filter @event-planner/admin dev",
+    "dev:client": "pnpm --filter @event-planner/client dev",
+    "dev:customer": "pnpm --filter @event-planner/customer dev",
+    "build": "pnpm -r run build",
+    "build:api": "pnpm --filter @event-planner/api build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
