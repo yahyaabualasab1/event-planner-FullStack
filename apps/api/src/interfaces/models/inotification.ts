@@ -1,4 +1,4 @@
-import { ActorType, NotificationType } from "../enums/notification.js";
+import { ActorType, NotificationType } from "../../enums/models/notification";
 
 /** Stored notification fields (MongoDB adds `_id`). */
 export interface INotification {

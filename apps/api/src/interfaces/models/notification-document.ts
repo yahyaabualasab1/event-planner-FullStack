@@ -1,5 +1,5 @@
 import { type HydratedDocument } from "mongoose";
 
-import { INotification } from "./inotification.js";
+import { INotification } from "./inotification";
 
 export interface NotificationDocument extends HydratedDocument<INotification> {}

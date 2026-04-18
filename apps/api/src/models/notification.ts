@@ -1,7 +1,7 @@
 import { Schema, model, type Model } from "mongoose";
 
-import { ActorType, NotificationType } from "../enums/notification.js";
-import { INotification } from "../interfaces/inotification.js";
+import { ActorType, NotificationType } from "../enums/models/notification";
+import { INotification } from "../interfaces/models/inotification";
 
 const notificationSchema = new Schema<INotification>(
   {
@@ -29,6 +29,4 @@ export const Notification: Model<INotification> = model<INotification>(
 
 export { notificationSchema };
 
-export { ActorType, NotificationType } from "../enums/notification.js";
-export { INotification } from "../interfaces/inotification.js";
-export { NotificationDocument } from "../interfaces/notification-document.js";
+export { ActorType, NotificationType } from "../enums/models/notification";
