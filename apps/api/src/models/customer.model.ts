@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Gender } from "../enums/models/customer-gender.enum";
+import { GenderEnum } from "../enums/models/customer-gender.enum";
 import { ICustomer } from "../interfaces/models/Customer.interface";
 
 const CustomerSchema = new Schema<ICustomer>(
@@ -10,7 +10,7 @@ const CustomerSchema = new Schema<ICustomer>(
     phoneNumber: { type: String, required: true },
     gender: {
       type: String,
-      enum: Object.values(Gender)
+      enum: Object.values(GenderEnum)
      
     },
     dob: { type: Date },
