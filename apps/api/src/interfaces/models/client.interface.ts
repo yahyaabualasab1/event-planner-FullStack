@@ -1,4 +1,3 @@
-import { ActorEnum } from "../../enums/models/actor";
 import { ClientStatus } from "../../enums/models/client";
 
 export interface IClient {

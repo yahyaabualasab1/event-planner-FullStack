@@ -1,6 +1,7 @@
 import { Schema, model, type Model } from "mongoose";
 
-import { IClient, ClientStatus } from "../interfaces/models/client.interface";
+import { IClient } from "../interfaces/models/client.interface";
+import { ClientStatus } from "../enums/models/client";
 
 const clientSchema = new Schema<IClient>(
   {
@@ -16,7 +17,7 @@ const clientSchema = new Schema<IClient>(
     },
   },
   { 
-    collection: "users",
+    collection: "clients",
     timestamps: true,
   }
 );
@@ -28,4 +29,3 @@ export const Client: Model<IClient> = model<IClient>(
 
 export { clientSchema };
 
-export { ClientStatus } from "../interfaces/models/client.interface";
