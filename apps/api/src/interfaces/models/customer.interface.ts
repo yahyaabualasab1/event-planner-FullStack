@@ -1,4 +1,4 @@
-import { Gender } from "../enums/customer-gender.enum";
+import { Gender } from "../enums/models/customer-gender.enum";
 
 export interface ICustomer {
   id: string;
