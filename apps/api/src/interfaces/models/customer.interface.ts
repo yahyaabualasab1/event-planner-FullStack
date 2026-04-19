@@ -1,4 +1,4 @@
-import { Gender } from "../enums/models/customer-gender.enum";
+import { GenderEnum } from "../enums/models/customer-gender.enum";
 
 export interface ICustomer {
   id: string;
@@ -6,7 +6,7 @@ export interface ICustomer {
   password: string;
   fullName: string;
   phoneNumber: string;
-  gender?: Gender;
+  gender?: GenderEnum;
   dob?: Date;
   city: string;
 }
