@@ -10,10 +10,10 @@ const CustomerSchema = new Schema<ICustomer>(
     phoneNumber: { type: String, required: true },
     gender: {
       type: String,
-      enum: Object.values(Gender),
-      required: false,
+      enum: Object.values(Gender)
+     
     },
-    dob: { type: Date, required: false },
+    dob: { type: Date },
     city: { type: String, required: true },
   },
   { timestamps: true }
