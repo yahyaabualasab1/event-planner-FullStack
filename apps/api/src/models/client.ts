@@ -1,7 +1,7 @@
 import { Schema, model, type Model } from "mongoose";
 
 import { IClient } from "../interfaces/models/client.interface";
-import { ClientStatus } from "../enums/models/client";
+import { ClientStatus } from "../enums/models/client-status";
 
 const clientSchema = new Schema<IClient>(
   {

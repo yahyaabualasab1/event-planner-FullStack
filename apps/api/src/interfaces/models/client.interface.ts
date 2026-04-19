@@ -1,4 +1,4 @@
-import { ClientStatus } from "../../enums/models/client";
+import { ClientStatus } from "../../enums/models/client-status";
 
 export interface IClient {
   email: string;
