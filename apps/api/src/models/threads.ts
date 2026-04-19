@@ -1,18 +1,10 @@
-import { Schema, model, type Model } from "mongoose";
-import {senderId} from "../interfaces/models/sender.interface";
+import { Schema, model } from "mongoose";
 import { IThread } from "../interfaces/models/threads.interface";
-import {receiverId} from "../interfaces/models/receiver.inteerface";
 
-const threadSchema = new Schema<IThread>(
-  {
-    senderId: { type: String, required: true },
-    receiverId: { type: String, required: true },
-  },
-  { collection: "threads" }
-);
+const threadSchema = new Schema<IThread>({
+    senderId: { type: String, required: true , ref: "Customer" },
+    receiverId: { type: String, required: false , ref: "Client" },
+}, { collection: "threads" });
 
-export const Thread: Model<IThread> = model<IThread>("Thread", threadSchema);
-
+export const Thread = model("Thread", threadSchema);
 export { threadSchema };
-export { senderId } from "../interfaces/models/sender.interface";
-export { receiverId } from "../interfaces/models/receiver.inteerface";
