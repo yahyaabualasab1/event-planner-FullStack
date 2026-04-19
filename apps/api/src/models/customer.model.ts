@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { Gender } from "../enums/customer-gender.enum";
-import { ICustomer } from "../interfaces/Customer.interface";
+import { Gender } from "../enums/models/customer-gender.enum";
+import { ICustomer } from "../interfaces/models/Customer.interface";
 
 const CustomerSchema = new Schema<ICustomer>(
   {
