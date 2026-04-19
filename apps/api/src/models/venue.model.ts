@@ -14,10 +14,10 @@ const venueSchema = new Schema<IVenue>(
   {
     clientId: { type: String, required: true },
     title: { type: String },
-    description: { type: String },
-    location: { type: String },
-    price: { type: String },
-    images: { type: [String] },
+    description: { type: String, default: "" },
+    location: { type: String, default: "" },
+    price: { type: String, default: "" },
+    images: { type: [String], default: [] },
     extras: { type: String },
     availability: { type: [availabilitySchema] },
     discounts: { type: String },
@@ -25,6 +25,5 @@ const venueSchema = new Schema<IVenue>(
   { collection: "venues" }
 );
 
-export const Venue: Model<IVenue> = model<IVenue>("Venue", venueSchema);
-
+export const Venue = model("Venue", venueSchema);
 export { venueSchema };
