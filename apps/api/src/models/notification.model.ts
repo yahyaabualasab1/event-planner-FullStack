@@ -29,6 +29,3 @@ export const Notification: Model<INotification> = model<INotification>(
 );
 
 export { notificationSchema };
-
-export { ActorEnum } from "../enums/models/actor";
-export { NotificationEnum } from "../enums/models/notification";
