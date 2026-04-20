@@ -5,7 +5,7 @@ import { IClientProfile } from "../interfaces/models/client-profile.interface";
 const clientProfileSchema = new Schema<IClientProfile>(
 	{
 		clientId: {
-			type: Schema.Types.ObjectId,
+			type: String,
 			required: true,
 			ref: "Client",
 		},

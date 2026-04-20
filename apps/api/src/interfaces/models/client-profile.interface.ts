@@ -1,12 +1,11 @@
-import { Types } from "mongoose";
-
 export interface IClientProfileContactInformation {
 	name: string;
 	phone: string;
 }
 
 export interface IClientProfile {
-	clientId: Types.ObjectId;
+	_id: string;
+	clientId: string;
 	address: string;
 	description: string;
 	mapURL: string;
