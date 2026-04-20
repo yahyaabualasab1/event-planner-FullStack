@@ -1,6 +1,6 @@
 import { Schema, model, type Model } from "mongoose";
 
-import { IAdmin } from "../interfaces/models/IAdmin.interface";
+import { IAdmin } from "../interfaces/models/admin.interface";
 
 const adminSchema = new Schema<IAdmin>(
   {
@@ -9,7 +9,7 @@ const adminSchema = new Schema<IAdmin>(
     fullName: { type: String, required: true },
     phoneNumber: { type: String, required: true },
   },
-  { collection: "admins" }
+  { collection: "admins", timestamps: true }
 );
 
 export const Admin: Model<IAdmin> = model<IAdmin>("Admin", adminSchema);

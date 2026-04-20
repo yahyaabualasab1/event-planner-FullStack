@@ -6,4 +6,6 @@ export interface IAdmin {
   password: string;
   fullName: string;
   phoneNumber: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
