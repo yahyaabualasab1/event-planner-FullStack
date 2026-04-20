@@ -44,5 +44,3 @@ export const Booking: Model<IBooking> = model<IBooking>(
 );
 
 export { bookingSchema };
-
-export { BookingEnum } from "../enums/models/booking";
