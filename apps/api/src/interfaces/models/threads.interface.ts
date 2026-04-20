@@ -1,4 +1,5 @@
+import { Schema, model, Types } from "mongoose";
 export interface IThread {
-  senderId: string;
-  receiverId?: string; 
+  senderId: Types.ObjectId;
+  receiverId?: Types.ObjectId; 
 }
