@@ -7,7 +7,7 @@ export interface IAvailability {
 
 export interface IVenue {
   id: string;
-  clientId: Types.ObjectId;
+  clientId: string;
   title: string;
   description: string;
   location: string;
