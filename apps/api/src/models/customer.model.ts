@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { GenderEnum } from "../enums/models/customer-gender.enum";
+import { GenderEnum } from "../enums/models/gender.enum.ts";
 import { ICustomer } from "../interfaces/models/Customer.interface";
 
 const CustomerSchema = new Schema<ICustomer>(
