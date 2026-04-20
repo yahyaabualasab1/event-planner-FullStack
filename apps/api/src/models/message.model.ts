@@ -4,17 +4,13 @@ import { MessageEnum } from "../enums/models/message";
 
 const messageSchema = new Schema<IMessage>(
     {
-        id: {
-             type: String,
-              required: true
-             },
         senderId: {
              type: String, 
              required: true 
             },
         message: { 
             type: String,
-             required: false
+             required: true,
              },
         timestamp: { 
             type: Date,
