@@ -16,7 +16,8 @@ const CustomerSchema = new Schema<ICustomer>(
     dob: { type: Date },
     city: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
+  {collection:"Customers"},
 );
 
 export default mongoose.model<ICustomer>("Customer", CustomerSchema);
