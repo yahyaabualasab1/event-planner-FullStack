@@ -1,6 +1,14 @@
 import { Schema, model, type Model } from "mongoose";
 
-import { IClientProfile } from "../interfaces/models/client-profile.interface";
+import { IClientProfile, IClientProfileContactInformation } from "../interfaces/models/client-profile.interface";
+
+const clientProfileContactInformationSchema = new Schema<IClientProfileContactInformation>(
+	{
+		name: { type: String, required: true },
+		phone: { type: String, required: true },
+	},
+	{ _id: false },
+);
 
 const clientProfileSchema = new Schema<IClientProfile>(
 	{
@@ -13,11 +21,8 @@ const clientProfileSchema = new Schema<IClientProfile>(
 		description: { type: String, required: true },
 		mapURL: { type: String, required: true },
 		contactInformation: {
-			type: {
-				name: { type: String, required: true },
-				phone: { type: String, required: true },
-			},
-			required: true,
+			type: [clientProfileContactInformationSchema],
+			required: false,
 		},
 		logo: { type: String, required: true },
 		coverImage: { type: String, required: true },
