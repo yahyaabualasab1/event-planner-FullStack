@@ -1,7 +1,7 @@
 import { GenderEnum } from "../enums/models/gender.enum.ts";
 
 export interface ICustomer {
-  id: string;
+  _id: string;
   email: string;
   password: string;
   fullName: string;
