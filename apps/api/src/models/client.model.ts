@@ -1,7 +1,6 @@
 import { Schema, model, type Model } from "mongoose";
-
 import { IClient } from "../interfaces/models/client.interface";
-import { ClientStatus } from "../enums/models/client.status";
+import { ClientStatusEnum } from "../enums/models/client.status";
 
 const clientSchema = new Schema<IClient>(
   {
@@ -12,19 +11,16 @@ const clientSchema = new Schema<IClient>(
     status: {
       type: String,
       required: true,
-      enum: Object.values(ClientStatus),
-      default: ClientStatus.WAITING_APPROVE,
+      enum: Object.values(ClientStatusEnum),
+      default: ClientStatusEnum.WAITING_APPROVE,
     },
   },
-  { 
+  {
     collection: "clients",
     timestamps: true,
-  }
+  },
 );
 
-export const Client: Model<IClient> = model<IClient>(
-  "Client",
-  clientSchema
-);
+export const Client: Model<IClient> = model<IClient>("Client", clientSchema);
 
 export { clientSchema };
