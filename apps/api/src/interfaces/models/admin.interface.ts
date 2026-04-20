@@ -1,7 +1,5 @@
-import { Types } from "mongoose";
-
 export interface IAdmin {
-  _id: Types.ObjectId;
+  _id: string;
   email: string;
   password: string;
   fullName: string;
