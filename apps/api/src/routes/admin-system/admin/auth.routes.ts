@@ -34,19 +34,18 @@ router.post(
 	},
 );
 
-router.get("/verify", requireAdminAuth, (_req, res) => {
-	const admin = res.locals.admin as {
-		id: string;
-		email: string;
-		actorType: string;
-	};
+router.get("/verify", requireAdminAuth, (req, res) => {
+	if (!req.admin) {
+		res.status(401).json({ error: "Unauthorized" });
+		return;
+	}
 
 	res.status(200).json({
 		valid: true,
 		admin: {
-			id: admin.id,
-			email: admin.email,
-			actorType: admin.actorType,
+			id: req.admin.id,
+			email: req.admin.email,
+			actorType: req.admin.actorType,
 		},
 	});
 });

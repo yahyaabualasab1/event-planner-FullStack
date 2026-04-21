@@ -22,7 +22,7 @@ export function requireAdminAuth(
 
 	try {
 		const decoded = verifyAdminToken(token);
-		res.locals.admin = decoded;
+		req.admin = decoded;
 		next();
 	} catch (error) {
 		if (error instanceof Error && error.message === "Forbidden") {

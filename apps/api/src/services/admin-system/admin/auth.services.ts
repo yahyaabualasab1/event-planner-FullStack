@@ -2,13 +2,8 @@ import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { ActorEnum } from "../../../enums/models/actor";
+import type { AdminAuthPayload } from "../../../interfaces/admin-auth.interface";
 import { Admin } from "../../../models/admin.model";
-
-type AdminTokenPayload = {
-	id: string;
-	email: string;
-	actorType: ActorEnum;
-};
 
 function getAdminJwtSecret(): string {
 	const secret = process.env.JWT_ADMIN_SECRET;
@@ -30,7 +25,7 @@ export async function adminLogin(email: string, password: string) {
 		throw new Error("Invalid email or password");
 	}
 
-	const payload: AdminTokenPayload = {
+	const payload: AdminAuthPayload = {
 		id: admin._id.toString(),
 		email: admin.email,
 		actorType: ActorEnum.Admin,
@@ -51,8 +46,8 @@ export async function adminLogin(email: string, password: string) {
 	};
 }
 
-export function verifyAdminToken(token: string): AdminTokenPayload {
-	const decoded = jwt.verify(token, getAdminJwtSecret()) as AdminTokenPayload;
+export function verifyAdminToken(token: string): AdminAuthPayload {
+	const decoded = jwt.verify(token, getAdminJwtSecret()) as AdminAuthPayload;
 
 	if (decoded.actorType !== ActorEnum.Admin) {
 		throw new Error("Forbidden");
