@@ -19,41 +19,50 @@ import {
 
 const router = Router();
 
-router.get("/", requireAdminAuth, async (_req, res, next) => {
-	try {
-		const venues = await getAllVenues();
-		res.status(200).json(venues);
-	} catch (error) {
-		next(error);
-	}
-});
+router.get(
+	"/",
+	requireAdminAuth,
+	async (req, res, next) => {
+		try {
+			const venues = await getAllVenues();
+			res.status(200).json(venues);
+			return;
+		} catch (error) {
+			next(error);
+			return;
+		}
+	},
+);
 
 router.get(
 	"/:id",
-	requireAdminAuth,
 	validateRequest({ params: VenueIdParamSchema }),
+	requireAdminAuth,
 	async (req, res, next) => {
 		try {
 			const venue = await getVenueById(req.params.id);
 			res.status(200).json(venue);
+			return;
 		} catch (error) {
 			if (error instanceof Error && error.message === "Venue not found") {
 				res.status(404).json({ error: "Venue not found" });
 				return;
 			}
 			next(error);
+			return;
 		}
 	},
 );
 
 router.get(
 	"/client/:clientId",
-	requireAdminAuth,
 	validateRequest({ params: ClientIdParamSchema }),
+	requireAdminAuth,
 	async (req, res, next) => {
 		try {
 			const venues = await getVenuesByClientId(req.params.clientId);
 			res.status(200).json(venues);
+			return;
 		} catch (error) {
 			if (
 				error instanceof Error &&
@@ -63,56 +72,63 @@ router.get(
 				return;
 			}
 			next(error);
+			return;
 		}
 	},
 );
 
 router.post(
 	"/",
-	requireAdminAuth,
 	validateRequest({ body: CreateVenueSchema }),
+	requireAdminAuth,
 	async (req, res, next) => {
 		try {
 			const venue = await createVenue(req.body);
 			res.status(201).json(venue);
+			return;
 		} catch (error) {
 			next(error);
+			return;
 		}
 	},
 );
 
 router.patch(
 	"/:id",
-	requireAdminAuth,
 	validateRequest({ params: VenueIdParamSchema, body: UpdateVenueSchema }),
+	requireAdminAuth,
 	async (req, res, next) => {
 		try {
 			const venue = await updateVenue(req.params.id, req.body);
 			res.status(200).json(venue);
+			return;
 		} catch (error) {
 			if (error instanceof Error && error.message === "Venue not found") {
 				res.status(404).json({ error: "Venue not found" });
 				return;
 			}
 			next(error);
+			return;
 		}
 	},
 );
 
 router.delete(
 	"/:id",
-	requireAdminAuth,
 	validateRequest({ params: VenueIdParamSchema }),
+	requireAdminAuth,
 	async (req, res, next) => {
 		try {
 			await deleteVenue(req.params.id);
 			res.status(200).json({ message: "Venue deleted successfully" });
+			return;
 		} catch (error) {
 			if (error instanceof Error && error.message === "Venue not found") {
 				res.status(404).json({ error: "Venue not found" });
 				return;
 			}
 			next(error);
+			return;
 		}
 	},
 );
