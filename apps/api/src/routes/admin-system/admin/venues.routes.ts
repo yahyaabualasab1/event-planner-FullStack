@@ -19,7 +19,6 @@ import {
 
 const router = Router();
 
-// GET /venues
 router.get("/", requireAdminAuth, async (_req, res, next) => {
 	try {
 		const venues = await getAllVenues();
@@ -29,7 +28,6 @@ router.get("/", requireAdminAuth, async (_req, res, next) => {
 	}
 });
 
-// GET /venues/:id
 router.get(
 	"/:id",
 	requireAdminAuth,
@@ -48,7 +46,6 @@ router.get(
 	},
 );
 
-// GET /venues/client/:clientId
 router.get(
 	"/client/:clientId",
 	requireAdminAuth,
@@ -70,7 +67,6 @@ router.get(
 	},
 );
 
-// POST /venues
 router.post(
 	"/",
 	requireAdminAuth,
@@ -85,7 +81,6 @@ router.post(
 	},
 );
 
-// PATCH /venues/:id
 router.patch(
 	"/:id",
 	requireAdminAuth,
@@ -104,7 +99,6 @@ router.patch(
 	},
 );
 
-// DELETE /venues/:id
 router.delete(
 	"/:id",
 	requireAdminAuth,
