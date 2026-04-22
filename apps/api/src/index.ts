@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import dns from "node:dns/promises";
 import { apiRoutes } from "./routes";
+import bookingRoutes from "./routes/admin-system/bookings/booking.route";
 dns.setServers(["1.1.1.1"]);
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use("/api/admin-system", apiRoutes);
+app.use("/api/admin-system/bookings", bookingRoutes);
 
 const PORT = Number(process.env.PORT) || 3000;
 const MONGODB_URI =
