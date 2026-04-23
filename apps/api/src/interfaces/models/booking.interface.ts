@@ -13,4 +13,5 @@ export interface IBooking {
   date: Date;
   status: BookingEnum;
   timePeriod: IBookingTimePeriod[];
+  deletedAt?: Date;
 }

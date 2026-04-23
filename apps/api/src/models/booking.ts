@@ -34,10 +34,13 @@ const bookingSchema = new Schema<IBooking>(
       type: String,
       required: true,
       enum: Object.values(BookingEnum),
-    },
+    },  
     timePeriod: {
       type: [bookingTimePeriodSchema],
       required: true,
+    },
+    deletedAt: {
+      type: Date,
     },
   },
   { collection: "bookings" },
