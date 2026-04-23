@@ -54,10 +54,9 @@ router.patch(
   validateRequest({ params: idParamSchema, body: updateStatusSchema }),
    requireAdminAuth,
    async (req, res) => {
-    const updated = await updateClientStatus(
-      req.params.clientId,
-      req.body.status
-    );
+     const { id } = req.params;      
+    const { status } = req.body;
+    const updated = await updateClientStatus(id, status);
     if (!updated) {
       return res.status(404).json({ error: "Client not found" });
     }
