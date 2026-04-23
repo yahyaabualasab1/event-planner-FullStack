@@ -23,7 +23,8 @@ router.post(
   validateRequest({ body: createClientSchema }), 
    requireAdminAuth,
   async (req, res) => {
-    const client = await createClient(req.body);
+    const { name, email, phone } = req.body;
+    const client = await createClient({ name, email, phone });
     res.status(201).json(client);
   },
 );
@@ -52,15 +53,19 @@ router.patch(
   "/:id/status",
   validateRequest({ params: idParamSchema, body: updateStatusSchema }),
    requireAdminAuth,
-  async (req, res) => {
-    try {
-      const updated = await updateClientStatus(req.params.id, req.body.status);
-      res.json(updated);
-    } catch (err) {
-      res.status(404).json({ error: "Client not found" });
+   async (req, res) => {
+    const updated = await updateClientStatus(
+      req.params.clientId,
+      req.body.status
+    );
+    if (!updated) {
+      return res.status(404).json({ error: "Client not found" });
     }
-  },
+
+    res.json(updated);
+  }
 );
+
 //test done
 router.delete(
   "/:id",
