@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import {
   createClient,
@@ -19,8 +20,8 @@ const router = Router();
 //test done
 router.post(
   "/",
-  requireAdminAuth,
-  validateRequest({ body: createClientSchema }),
+  validateRequest({ body: createClientSchema }), 
+   requireAdminAuth,
   async (req, res) => {
     const client = await createClient(req.body);
     res.status(201).json(client);
@@ -35,8 +36,8 @@ router.get("/", requireAdminAuth, async (req, res) => {
 //test done
 router.get(
   "/:id",
-  requireAdminAuth,
   validateRequest({ params: idParamSchema }),
+   requireAdminAuth,
   async (req, res) => {
     try {
       const client = await getClientById(req.params.id);
@@ -49,8 +50,8 @@ router.get(
 //test done
 router.patch(
   "/:id/status",
-  requireAdminAuth,
   validateRequest({ params: idParamSchema, body: updateStatusSchema }),
+   requireAdminAuth,
   async (req, res) => {
     try {
       const updated = await updateClientStatus(req.params.id, req.body.status);
@@ -63,8 +64,8 @@ router.patch(
 //test done
 router.delete(
   "/:id",
-  requireAdminAuth,
   validateRequest({ params: idParamSchema }),
+   requireAdminAuth,
   async (req, res) => {
     try {
       await DeleteClient(req.params.id);
