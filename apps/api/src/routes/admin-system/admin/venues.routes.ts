@@ -12,7 +12,9 @@ import {
 } from "../../../services/admin-system/admin/venues.services";
 import {
 	ClientIdParamSchema,
+	CreateVenueInput,
 	CreateVenueSchema,
+	UpdateVenueInput,
 	UpdateVenueSchema,
 	VenueIdParamSchema,
 } from "../../../validation/admin-system/venues.schemas";
@@ -83,7 +85,29 @@ router.post(
 	requireAdminAuth,
 	async (req, res, next) => {
 		try {
-			const venue = await createVenue(req.body);
+			const {
+				clientId,
+				title,
+				description,
+				location,
+				price,
+				images,
+				extras,
+				availability,
+				discounts,
+			} = req.body as CreateVenueInput;
+
+			const venue = await createVenue({
+				clientId,
+				title,
+				description,
+				location,
+				price,
+				images,
+				extras,
+				availability,
+				discounts,
+			});
 			res.status(201).json(venue);
 			return;
 		} catch (error) {
@@ -99,7 +123,27 @@ router.patch(
 	requireAdminAuth,
 	async (req, res, next) => {
 		try {
-			const venue = await updateVenue(req.params.id, req.body);
+			const {
+				title,
+				description,
+				location,
+				price,
+				images,
+				extras,
+				availability,
+				discounts,
+			} = req.body as UpdateVenueInput;
+
+			const venue = await updateVenue(req.params.id, {
+				title,
+				description,
+				location,
+				price,
+				images,
+				extras,
+				availability,
+				discounts,
+			});
 			res.status(200).json(venue);
 			return;
 		} catch (error) {
