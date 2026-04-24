@@ -37,7 +37,7 @@ export async function updateClientStatus(
   return client;
 }
 
-export async function DeleteClient(clientId: string) {
+export async function deleteClient(clientId: string) {
   const client = await Client.findByIdAndUpdate(
     clientId,
     { isDeleted: true },
@@ -57,5 +57,5 @@ export const adminClientServices = {
   getAllClients,
   getClientById,
   updateClientStatus,
-  DeleteClient,
+  deleteClient,
 };

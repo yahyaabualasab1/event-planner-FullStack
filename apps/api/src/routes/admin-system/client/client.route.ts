@@ -83,7 +83,7 @@ router.delete(
   requireAdminAuth,
   async (req, res, next) => {
     try {
-      const deleted = await adminClientServices.DeleteClient(req.params.id);
+      const deleted = await adminClientServices.deleteClient(req.params.id);
 
       if (!deleted) {
         return res.status(404).json({ error: "Client not found" });
