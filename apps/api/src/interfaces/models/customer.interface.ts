@@ -9,4 +9,6 @@ export interface ICustomer {
   gender?: GenderEnum;
   dob?: Date;
   city: string;
+  isDeleted: boolean;
+
 }
