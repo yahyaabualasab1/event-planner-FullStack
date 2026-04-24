@@ -50,3 +50,12 @@ export async function DeleteClient(clientId: string) {
 
   return client;
 }
+
+
+export const adminClientServices = {
+  createClient,
+  getAllClients,
+  getClientById,
+  updateClientStatus,
+  DeleteClient,
+};

@@ -1,11 +1,4 @@
 import { Router } from "express";
-import {
-  createClient,
-  getAllClients,
-  updateClientStatus,
-  getClientById,
-  DeleteClient,
-} from "../../../services/admin-system/client/client.service";
 import { validateRequest } from "../../../middlewares/validate-request.middleware";
 import { requireAdminAuth } from "../../../middlewares/require-admin-auth.middleware";
 import {
@@ -13,7 +6,7 @@ import {
   updateStatusSchema,
   idParamSchema,
 } from "../../../validation/admin-system/client/client.validation";
-
+import { adminClientServices } from "../../../services/admin-system/client/client.service";
 const router = Router();
 
 //test done
@@ -24,7 +17,7 @@ router.post(
   async (req, res, next) => {
     try {
       const { fullName, email, phoneNumber } = req.body;
-      const client = await createClient({ fullName, email, phoneNumber });
+      const client = await adminClientServices.createClient({ fullName, email, phoneNumber });
       res.status(201).json(client);
     } catch (error) {
       next(error);
@@ -34,7 +27,7 @@ router.post(
 //test done
 router.get("/", requireAdminAuth, async (req, res, next) => {
   try {
-    const clients = await getAllClients();
+    const clients = await adminClientServices.getAllClients();
     res.json(clients);
   } catch (error) {
     next(error);
@@ -48,7 +41,7 @@ router.get(
   requireAdminAuth,
   async (req, res, next) => {
     try {
-      const client = await getClientById(req.params.id);
+      const client = await adminClientServices.getClientById(req.params.id);
 
       if (!client) {
         return res.status(404).json({ error: "Client not found" });
@@ -70,7 +63,7 @@ router.patch(
       const { id } = req.params;
       const { status } = req.body;
 
-      const updated = await updateClientStatus(id, status);
+      const updated = await adminClientServices.updateClientStatus(id, status);
 
       if (!updated) {
         return res.status(404).json({ error: "Client not found" });
@@ -90,7 +83,7 @@ router.delete(
   requireAdminAuth,
   async (req, res, next) => {
     try {
-      const deleted = await DeleteClient(req.params.id);
+      const deleted = await adminClientServices.DeleteClient(req.params.id);
 
       if (!deleted) {
         return res.status(404).json({ error: "Client not found" });
