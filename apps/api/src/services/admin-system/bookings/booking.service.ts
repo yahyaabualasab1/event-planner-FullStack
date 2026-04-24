@@ -43,3 +43,15 @@ export const deleteBooking = async (id: string) => {
     return booking;
 };
 
+
+export const bookingService = {
+    getAllBookings,
+    getBookingById,
+    getBookingsByClientId,
+    getBookingsByVenueId,
+    getBookingsByCustomerId,
+    getBookingsByStatus,
+    createBooking,
+    updateBooking,
+    deleteBooking,
+};
