@@ -42,6 +42,10 @@ const bookingSchema = new Schema<IBooking>(
     deletedAt: {
       type: Date,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { collection: "bookings" },
 );
