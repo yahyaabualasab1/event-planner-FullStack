@@ -27,7 +27,7 @@ export async function updateClientStatus(
   status: ClientStatusEnum,
 ) {
   const client = await Client.findByIdAndUpdate(
-    clientId,
+    { _id: clientId, isDeleted: false },
     { status },
     { new: true },
   );
