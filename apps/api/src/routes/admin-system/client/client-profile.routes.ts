@@ -174,4 +174,4 @@ router.delete(
 	},
 );
 
-export { router as clientProfileRoutes };
+export const clientProfileRoutes = router;
