@@ -20,6 +20,7 @@ const venueSchema = new Schema<IVenue>(
     extras: { type: String, required: false },
     availability: { type: [availabilitySchema], required: false },
     discounts: { type: String, required: false },
+    isDeleted: { type: Boolean, default: false },
   },
   { collection: "venues" },
 );

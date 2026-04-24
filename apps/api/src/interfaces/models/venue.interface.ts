@@ -6,7 +6,7 @@ export interface IAvailability {
 }
 
 export interface IVenue {
-  id: string;
+  _id: string;
   clientId: string;
   title: string;
   description: string;
@@ -16,4 +16,5 @@ export interface IVenue {
   extras: string;
   availability: IAvailability[];
   discounts?: string;
+  isDeleted: boolean;
 }

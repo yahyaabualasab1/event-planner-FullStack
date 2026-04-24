@@ -2,15 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import dns from "node:dns/promises";
-import { apiRoutes } from "./routes";
-import clientRoutes from "./routes/admin-system/client/client.route";
+import { adminSystemRoutes } from "./routes/admin-system";
 dns.setServers(["1.1.1.1"]);
 dotenv.config();
 const app = express();
-app.use(express.json());
-app.use("/api/admin-system", apiRoutes);
 
-app.use("/api/clients", clientRoutes);
+app.use(express.json());
+app.use("/api/admin-system", adminSystemRoutes);
+
 
 const PORT = Number(process.env.PORT) || 3000;
 const MONGODB_URI =
@@ -18,7 +17,6 @@ const MONGODB_URI =
 app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
-
 async function main() {
   await mongoose.connect(MONGODB_URI);
   app.listen(PORT, () => {
