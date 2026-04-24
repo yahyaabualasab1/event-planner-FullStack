@@ -7,4 +7,5 @@ export interface IClient {
   fullName: string;
   phoneNumber: string;
   status: ClientStatusEnum;
+  isDeleted?: boolean;
 }

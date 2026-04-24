@@ -13,10 +13,10 @@ const clientSchema = new Schema<IClient>(
       required: true,
       enum: Object.values(ClientStatusEnum),
       default: ClientStatusEnum.WAITING_APPROVE,
-    },
-  },
+    },    isDeleted: { type: Boolean, default: false }, 
+  }, 
   {
-    collection: "clients",
+    collection: "clients", 
     timestamps: true,
   },
 );
