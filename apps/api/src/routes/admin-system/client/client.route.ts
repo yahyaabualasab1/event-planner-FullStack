@@ -23,8 +23,8 @@ router.post(
   requireAdminAuth,
   async (req, res, next) => {
     try {
-      const { name, email, phone } = req.body;
-      const client = await createClient({ name, email, phone });
+      const { fullName, email, phoneNumber } = req.body;
+      const client = await createClient({ fullName, email, phoneNumber });
       res.status(201).json(client);
     } catch (error) {
       next(error);
@@ -103,4 +103,4 @@ router.delete(
   }
 );
 
-export default router;
+export const adminClientRoutes = router;
