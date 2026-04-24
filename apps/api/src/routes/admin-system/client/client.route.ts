@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import {
   createClient,
@@ -20,48 +19,67 @@ const router = Router();
 //test done
 router.post(
   "/",
-  validateRequest({ body: createClientSchema }), 
-   requireAdminAuth,
-  async (req, res) => {
-    const { name, email, phone } = req.body;
-    const client = await createClient({ name, email, phone });
-    res.status(201).json(client);
-  },
+  validateRequest({ body: createClientSchema }),
+  requireAdminAuth,
+  async (req, res, next) => {
+    try {
+      const { name, email, phone } = req.body;
+      const client = await createClient({ name, email, phone });
+      res.status(201).json(client);
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 //test done
-router.get("/", requireAdminAuth, async (req, res) => {
-  const clients = await getAllClients();
-  res.json(clients);
+router.get("/", requireAdminAuth, async (req, res, next) => {
+  try {
+    const clients = await getAllClients();
+    res.json(clients);
+  } catch (error) {
+    next(error);
+  }
 });
 
 //test done
 router.get(
   "/:id",
   validateRequest({ params: idParamSchema }),
-   requireAdminAuth,
-  async (req, res) => {
+  requireAdminAuth,
+  async (req, res, next) => {
     try {
       const client = await getClientById(req.params.id);
+
+      if (!client) {
+        return res.status(404).json({ error: "Client not found" });
+      }
+
       res.json(client);
-    } catch {
-      res.status(404).json({ error: "Client not found" });
+    } catch (error) {
+      next(error);
     }
-  },
+  }
 );
 //test done
 router.patch(
   "/:id/status",
   validateRequest({ params: idParamSchema, body: updateStatusSchema }),
-   requireAdminAuth,
-   async (req, res) => {
-     const { id } = req.params;      
-    const { status } = req.body;
-    const updated = await updateClientStatus(id, status);
-    if (!updated) {
-      return res.status(404).json({ error: "Client not found" });
-    }
+  requireAdminAuth,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
 
-    res.json(updated);
+      const updated = await updateClientStatus(id, status);
+
+      if (!updated) {
+        return res.status(404).json({ error: "Client not found" });
+      }
+
+      return res.json(updated);
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
@@ -69,15 +87,20 @@ router.patch(
 router.delete(
   "/:id",
   validateRequest({ params: idParamSchema }),
-   requireAdminAuth,
-  async (req, res) => {
+  requireAdminAuth,
+  async (req, res, next) => {
     try {
-      await DeleteClient(req.params.id);
-      res.json({ message: "Client deleted successfully" });
-    } catch {
-      res.status(404).json({ error: "Client not found" });
+      const deleted = await DeleteClient(req.params.id);
+
+      if (!deleted) {
+        return res.status(404).json({ error: "Client not found" });
+      }
+
+      return res.json({ message: "Client deleted successfully" });
+    } catch (error) {
+      next(error);
     }
-  },
+  }
 );
 
 export default router;
