@@ -35,3 +35,11 @@ export const ClientIdParamSchema = z.object({
 
 export type CreateVenueInput = z.infer<typeof CreateVenueSchema>;
 export type UpdateVenueInput = z.infer<typeof UpdateVenueSchema>;
+
+
+export const venueValidationSchemas = {
+	CreateVenueSchema,
+	UpdateVenueSchema,
+	VenueIdParamSchema,
+	ClientIdParamSchema,
+};

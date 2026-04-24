@@ -169,4 +169,4 @@ router.delete(
     }
   },
 );
-export default router;
+export const bookingRoutes = router;

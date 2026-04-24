@@ -52,3 +52,12 @@ export async function deleteVenue(id: string) {
   }
   return venue;
 }
+
+export const adminVenueServices = {
+  getAllVenues,
+  getVenueById,
+  getVenuesByClientId,
+  createVenue,
+  updateVenue,
+  deleteVenue,
+};
