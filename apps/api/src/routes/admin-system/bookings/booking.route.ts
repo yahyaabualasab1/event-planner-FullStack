@@ -16,8 +16,8 @@ const router = Router();
 
 router.get(
   "/",
-  requireAdminAuth,
   validateRequest({ query: StatusQuerySchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const bookings = await bookingService.getAllBookings();
@@ -30,8 +30,8 @@ router.get(
 
 router.get(
   "/client/:clientId",
-  requireAdminAuth,
   validateRequest({ params: ClientIdParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByClientId(
@@ -45,8 +45,8 @@ router.get(
 );
 router.get(
   "/customer/:customerId",
-  requireAdminAuth,
   validateRequest({ params: CustomerIdParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByCustomerId(
@@ -60,8 +60,8 @@ router.get(
 );
 router.get(
   "/venue/:venueId",
-  requireAdminAuth,
   validateRequest({ params: VenueIdParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByVenueId(
@@ -76,8 +76,8 @@ router.get(
 
 router.get(
   "/status/:status",
-  requireAdminAuth,
   validateRequest({ params: StatusParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByStatus(
@@ -92,8 +92,8 @@ router.get(
 
 router.get(
   "/:id",
-  requireAdminAuth,
   validateRequest({ params: BookingIdParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const booking = await bookingService.getBookingById(req.params.id);
@@ -109,8 +109,8 @@ router.get(
 
 router.post(
   "/",
-  requireAdminAuth,
   validateRequest({ body: CreateBookingSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const newBooking = await bookingService.createBooking(req.body);
@@ -123,8 +123,8 @@ router.post(
 
 router.put(
   "/:id",
-  requireAdminAuth,
   validateRequest({ params: BookingIdParamSchema, body: UpdateBookingSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const updatedBooking = await bookingService.updateBooking(
@@ -155,8 +155,8 @@ router.put(
 
 router.delete(
   "/:id",
-  requireAdminAuth,
   validateRequest({ params: BookingIdParamSchema }),
+  requireAdminAuth,
   async (req, res) => {
     try {
       const deletedBooking = await bookingService.deleteBooking(req.params.id);
