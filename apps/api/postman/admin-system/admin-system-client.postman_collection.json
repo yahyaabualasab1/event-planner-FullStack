@@ -13,21 +13,20 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"email\": \"new-client@example.com\",\n  \"password\": \"ClientPass123\",\n  \"fullName\": \"New Client\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+          "raw": "{\n  \"email\": \"new-client@example.com\",\n  \"fullName\": \"New Client\",\n  \"phoneNumber\": \"+1234567890\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/clients",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "clients"
-          ]
+          "raw": "{{baseUrl}}/api/admin-system/client",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "admin-system", "client"]
         }
       },
       "event": [
@@ -62,14 +61,9 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/api/clients",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "clients"
-          ]
+          "raw": "{{baseUrl}}/api/admin-system/client",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "admin-system", "client"]
         }
       },
       "event": [
@@ -101,15 +95,9 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/api/clients/{{clientId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "clients",
-            "{{clientId}}"
-          ]
+          "raw": "{{baseUrl}}/api/admin-system/client/{{clientId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "admin-system", "client", "{{clientId}}"]
         }
       },
       "event": [
@@ -149,16 +137,9 @@
           "raw": "{\n  \"status\": \"approved\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/clients/{{clientId}}/status",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "clients",
-            "{{clientId}}",
-            "status"
-          ]
+          "raw": "{{baseUrl}}/api/admin-system/client/{{clientId}}/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "admin-system", "client", "{{clientId}}", "status"]
         }
       },
       "event": [
@@ -190,15 +171,9 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/api/clients/{{clientId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "clients",
-            "{{clientId}}"
-          ]
+          "raw": "{{baseUrl}}/api/admin-system/client/{{clientId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "admin-system", "client", "{{clientId}}"]
         }
       },
       "event": [
