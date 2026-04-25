@@ -1,4 +1,4 @@
-import { MessageEnum } from "../../enums/models/message";
+import { MessageEnum } from "../../enums/models/message.enum";
 import { ActorEnum } from "../../enums/models/actor";
 export interface IMessage {
   _id: string;
@@ -8,4 +8,5 @@ export interface IMessage {
   timestamp: Date;
   threadId: string;
   status: MessageEnum;
+  isDeleted?: boolean;
 }
