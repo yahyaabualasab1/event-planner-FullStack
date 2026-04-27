@@ -2,7 +2,7 @@
   "info": {
     "name": "Event Planner API - Admin System Auth",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Admin auth only: /api/admin-system/admin. Import admin-system-customers.postman_collection.json and admin-system-venues.postman_collection.json for those APIs. Use admin-system-local.postman_environment.json.",
+    "description": "Admin auth only: /api/admin-system/admin. Import admin-system-customers.postman_collection.json and admin-system-venues.postman_collection.json for those APIs. Use admin-system-local.postman_environment.json."
   },
   "item": [
     {
