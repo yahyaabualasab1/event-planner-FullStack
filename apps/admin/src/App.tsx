@@ -1,4 +1,4 @@
-import { AppProviders } from "./app/providers/app.provider";
+import { AppProviders } from "./app/providers/react-query.provider";
 import { AppRouter } from "./app/router/app.router";
 
 function App() {
