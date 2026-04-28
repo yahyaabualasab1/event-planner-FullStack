@@ -20,15 +20,12 @@ const notificationSchema = new Schema<INotification>(
     message: { type: String, required: true },
     isRead: { type: Boolean, required: true },
   },
-  { collection: "notifications" }
+  { collection: "notifications" },
 );
 
 export const Notification: Model<INotification> = model<INotification>(
   "Notification",
-  notificationSchema
+  notificationSchema,
 );
 
 export { notificationSchema };
-
-export { ActorEnum } from "../enums/models/actor";
-export { NotificationEnum } from "../enums/models/notification";
