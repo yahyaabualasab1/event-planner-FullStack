@@ -1,6 +1,6 @@
-import { verify } from "../api/verify.api";
+import { verify } from "@/api/verify.api";
 import { useEffect } from "react";
-import { useAuthStore } from "../store/auth.store";
+import { useAuthStore } from "@/store/auth.store";
 import { useQuery } from "@tanstack/react-query";
 
 export const useVerify = () => {

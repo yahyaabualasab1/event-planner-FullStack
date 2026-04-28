@@ -1,6 +1,6 @@
 // UI
-import { uselogin } from "../hooks/use-login";
-import { Input } from "../../services/Input.tsx";
+import { uselogin } from "@/hooks/use-login.ts";
+import { Input } from "@/components/Input.tsx";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
