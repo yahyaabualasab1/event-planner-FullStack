@@ -1,8 +1,8 @@
 
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { NavLayout } from "@/auth/components/layout/nav.layout";
-import { HeaderLayout } from "@/auth/components/layout/header.layout";
+import { NavLayout } from "@/components/layout/nav.layout";
+import { HeaderLayout } from "@/components/layout/header.layout";
 
 export const Dashboard = () => {
   const [selectedLabel, setSelectedLabel] = useState("Analytics");
