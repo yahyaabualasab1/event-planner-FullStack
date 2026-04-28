@@ -39,7 +39,7 @@ export const LoginForm = () => {
 
       <button
         disabled={isPending}
-        className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700"
+        className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? "Loading..." : "Login"}
       </button>
