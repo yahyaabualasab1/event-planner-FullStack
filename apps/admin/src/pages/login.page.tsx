@@ -1,5 +1,5 @@
 //UI
-import { LoginForm } from "../components/login-form";
+import { LoginForm } from "@/widget/login-form";
 
 export const LoginPage = () => {
   return (

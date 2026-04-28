@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/auth.store";
+import { useAuthStore } from "@/store/auth.store";
 
 export const HeaderLayout = ({ selectedLabel }: { selectedLabel: string }) => {
   const logout = useAuthStore((s) => s.logout);

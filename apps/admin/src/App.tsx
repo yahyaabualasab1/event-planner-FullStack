@@ -1,5 +1,5 @@
-import { AppProviders } from "./app/providers/react-query.provider";
-import { AppRouter } from "./app/router/app.router";
+import { AppProviders } from "@/providers/react-query.provider";
+import { AppRouter } from "@/router/app.router";
 
 function App() {
   return (
