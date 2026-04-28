@@ -6,7 +6,7 @@ import { useAuthStore } from "../../store/auth.store";
 export const HeaderLayout = ({ selectedLabel }: { selectedLabel: string }) => {
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
-  const [isClicked, setIsClicked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -18,13 +18,13 @@ export const HeaderLayout = ({ selectedLabel }: { selectedLabel: string }) => {
       <h1 className="text-2xl font-bold text-gray-800">{selectedLabel}</h1>
 
       <div className="relative">
-        <button onClick={() => setIsClicked((prev) => !prev)} className="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 transition-colors">
+        <button onClick={() => setIsOpen((prev) => !prev)} className="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
         </button>
 
-        {isClicked && (
+        {isOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-lg border border-gray-100 py-3 z-50">
           <div className="px-4 pb-3 border-b border-gray-100">
             <p className="font-semibold text-gray-800">Admin User</p>

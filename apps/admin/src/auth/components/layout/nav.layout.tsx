@@ -1,6 +1,4 @@
-
 import { NavLink } from "react-router-dom";
-
 const navItems = [
   {
     label: "Analytics",
@@ -53,25 +51,18 @@ export const NavLayout = ({ onSelect }: { onSelect: (label: string) => void }) =
 
       <nav className="flex flex-col gap-1">
         {navItems.map(({ label, to, icon }) => (
-          <NavLink
-            key={to}
-            to={to}
-            onClick={() => onSelect(label)}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-indigo-50 text-indigo-600"
-                  : "text-gray-700 hover:bg-gray-100"
-              }`
-            }
-          >
+          <NavLink key={to} to={to} onClick={() => onSelect(label)}>
             {({ isActive }) => (
-              <>
+              <div
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  isActive ? "bg-indigo-50 text-indigo-600" : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
                 <span className={isActive ? "text-indigo-600" : "text-gray-500"}>
                   {icon}
                 </span>
                 {label}
-              </>
+              </div>
             )}
           </NavLink>
         ))}
