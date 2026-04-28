@@ -6,30 +6,33 @@ import { AnalyticsPage } from "@/pages/analytics.page";
 import { UsersPage } from "@/pages/users.page";
 import { ListingsPage } from "@/pages/listings.page";
 import { ReportsPage } from "@/pages/reports.page";
+import { AppInit } from "@/providers/app-init.provider";
 
 export const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <AppInit>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-        <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Navigate to="analytics" replace />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="users"     element={<UsersPage />} />
-          <Route path="listings"  element={<ListingsPage />} />
-          <Route path="reports"   element={<ReportsPage />} />
-        </Route>
-      </Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="analytics" replace />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="listings" element={<ListingsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+          </Route>
+        </Routes>
+      </AppInit>
     </BrowserRouter>
   );
 };
