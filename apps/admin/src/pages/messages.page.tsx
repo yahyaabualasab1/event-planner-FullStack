@@ -9,6 +9,9 @@ export const MessagesPage = () => {
 
   const selectedThread = threads?.find((t: any) => t._id === selectedThreadId);
 
+  const getInitials = (name: any) =>
+    String(name ?? "??").slice(0, 2).toUpperCase();
+
   return (
     <div className="flex h-[calc(100vh-80px)] bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
 
@@ -41,14 +44,14 @@ export const MessagesPage = () => {
                 }`}
               >
                 <div className="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
-                  {thread.senderId?.slice(0, 2).toUpperCase() ?? "??"}
+                  {getInitials(thread.senderName)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-gray-800 truncate">
-                    {thread.senderId ?? "Unknown"}
+                    {thread.senderName}
                   </p>
                   <p className="text-xs text-gray-400 truncate mt-0.5">
-                    {thread.receiverId ?? "No receiver"}
+                    {String(thread.receiverId ?? "No receiver")}
                   </p>
                 </div>
               </button>
@@ -68,11 +71,11 @@ export const MessagesPage = () => {
             {/* Header */}
             <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
               <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold">
-                {selectedThread?.senderId?.slice(0, 2).toUpperCase() ?? "??"}
+                {getInitials(selectedThread?.senderName)}
               </div>
               <div>
                 <p className="font-semibold text-gray-800">
-                  {selectedThread?.senderId ?? "Unknown"}
+                  {selectedThread?.senderName ?? "Unknown"}
                 </p>
                 <p className="text-xs text-green-500 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
