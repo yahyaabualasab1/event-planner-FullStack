@@ -9,7 +9,7 @@ export const MessagesPage = () => {
 
   const selectedThread = threads?.find((t: any) => t._id === selectedThreadId);
 
-  const getInitials = (name: any) =>
+  const getInitials = (name: string) =>
     String(name ?? "??").slice(0, 2).toUpperCase();
 
   return (
@@ -43,15 +43,28 @@ export const MessagesPage = () => {
                   selectedThreadId === thread._id ? "bg-indigo-50" : ""
                 }`}
               >
-                <div className="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
-                  {getInitials(thread.senderName)}
+                <div className="relative">
+                  <div className="w-11 h-11 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+                    {getInitials(thread.senderId?.fullName)}
+                  </div>
+                  {thread.isOnline && (
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-800 truncate">
-                    {thread.senderName}
-                  </p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-sm font-semibold text-gray-800 truncate">
+                      {thread.senderId?.fullName ?? "Unknown"}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(thread.updatedAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
                   <p className="text-xs text-gray-400 truncate mt-0.5">
-                    {String(thread.receiverId ?? "No receiver")}
+                    {thread.lastMessage || "No messages yet"}
                   </p>
                 </div>
               </button>
@@ -70,16 +83,25 @@ export const MessagesPage = () => {
           <>
             {/* Header */}
             <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
-              <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold">
-                {getInitials(selectedThread?.senderName)}
+              <div className="relative">
+                <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-semibold">
+                  {getInitials(selectedThread?.senderId?.fullName)}
+                </div>
+                {selectedThread?.isOnline && (
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white" />
+                )}
               </div>
               <div>
                 <p className="font-semibold text-gray-800">
-                  {selectedThread?.senderName ?? "Unknown"}
+                  {selectedThread?.senderId?.fullName ?? "Unknown"}
                 </p>
-                <p className="text-xs text-green-500 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
-                  Online
+                <p className={`text-xs flex items-center gap-1 ${
+                  selectedThread?.isOnline ? "text-green-500" : "text-gray-400"
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full inline-block ${
+                    selectedThread?.isOnline ? "bg-green-500" : "bg-gray-400"
+                  }`} />
+                  {selectedThread?.isOnline ? "Online" : "Offline"}
                 </p>
               </div>
             </div>
@@ -95,30 +117,36 @@ export const MessagesPage = () => {
                   No messages yet
                 </div>
               ) : (
-                messages?.map((msg: any) => (
-                  <div
-                    key={msg._id}
-                    className={`flex flex-col ${
-                      msg.actorType === "admin" ? "items-end" : "items-start"
-                    }`}
-                  >
+                messages?.map((msg: any) => {
+                  const isFromSender =
+                    msg.senderId === selectedThread?.senderId?._id ||
+                    msg.actorType === "customer";
+
+                  return (
                     <div
-                      className={`max-w-md px-4 py-3 rounded-2xl text-sm ${
-                        msg.actorType === "admin"
-                          ? "bg-indigo-600 text-white"
-                          : "bg-gray-100 text-gray-800"
+                      key={msg._id}
+                      className={`flex flex-col ${
+                        isFromSender ? "items-start" : "items-end"
                       }`}
                     >
-                      {msg.message}
+                      <div
+                        className={`max-w-md px-4 py-3 rounded-2xl text-sm ${
+                          isFromSender
+                            ? "bg-gray-100 text-gray-800"
+                            : "bg-indigo-600 text-white"
+                        }`}
+                      >
+                        {msg.message}
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {new Date(msg.timestamp).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
                     </div>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {new Date(msg.timestamp).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 

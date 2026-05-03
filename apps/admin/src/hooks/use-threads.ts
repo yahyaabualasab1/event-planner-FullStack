@@ -6,20 +6,35 @@ export const useThreads = () => {
   return useQuery({
     queryKey: ["threads"],
     queryFn: async () => {
-      const [threadsRes, customersRes] = await Promise.all([
-        getThreads(),
-        api.get("/api/admin-system/customers"),
-      ]);
+      const res = await getThreads();
+      const threads = res.data;
 
-      const customers = customersRes.data;
-      const threads = threadsRes.data;
+      const threadsWithLastMessage = await Promise.all(
+        threads.map(async (thread: any) => {
+          try {
+            const msgRes = await api.get(
+              `/api/admin-system/messages/thread/${thread._id}`,
+            );
+            const messages = msgRes.data;
+            const lastMessage = messages[messages.length - 1];
+            const lastMessageTime = lastMessage
+              ? new Date(lastMessage.timestamp).getTime()
+              : 0;
+            const isOnline = Date.now() - lastMessageTime < 5 * 60 * 1000;
 
-      return threads.map((thread: any) => ({
-        ...thread,
-        senderName:
-          customers.find((c: any) => c._id === thread.senderId)?.fullName ??
-          "Unknown",
-      }));
+            return {
+              ...thread,
+              lastMessage: lastMessage?.message ?? "",
+              isOnline,
+            };
+          } catch {
+            return { ...thread, lastMessage: "", isOnline: false };
+          }
+        }),
+      );
+
+      return threadsWithLastMessage;
     },
+    refetchInterval: 30000,
   });
 };
