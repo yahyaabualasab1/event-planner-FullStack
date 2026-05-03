@@ -120,6 +120,32 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 						</div>
 					</div>
 				</div>
+
+				<div className="flex items-center gap-3">
+					<button className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							strokeWidth={1.8}
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"
+							/>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+							/>
+						</svg>
+						View Details
+					</button>
+				</div>
 			</div>
 		</div>
 	);
