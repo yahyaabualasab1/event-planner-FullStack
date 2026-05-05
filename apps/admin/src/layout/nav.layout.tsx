@@ -107,6 +107,27 @@ const navItems = [
 		),
 	},
 	{
+		label: "Bookings",
+		to: "/dashboard/bookings",
+		icon: (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="22"
+				height="22"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				strokeWidth={1.8}
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M8 6V4m8 2V4M3 10h18M5 8h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2z"
+				/>
+			</svg>
+		),
+	},
+	{
 		label: "Reports",
 		to: "/dashboard/reports",
 		icon: (

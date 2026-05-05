@@ -1,28 +1,18 @@
-// UI
-import { uselogin } from "@/hooks/use-login";
+import { useLogin } from "@/hooks/use-login";
 import { Input } from "@/components/input";
-import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
-  const { mutate, isPending, isError } = uselogin();
-  const navigate = useNavigate();
+  const { mutate, isPending, isError } = useLogin();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    mutate(
-      {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
-      },
-      {
-        onSuccess: () => {
-          navigate("/dashboard");
-        },
-      },
-    );
+    mutate({
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    });
   };
 
   return (
@@ -35,11 +25,11 @@ export const LoginForm = () => {
       <Input name="email" placeholder="Email" required />
       <Input name="password" type="password" placeholder="Password" required />
 
-      {isError && <p className="text-red-500 text-sm">Invalid LogIn</p>}
+      {isError && <p className="text-red-500 text-sm">Invalid Login</p>}
 
       <button
         disabled={isPending}
-        className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-blue-600 text-white py-2 rounded-xl disabled:opacity-50"
       >
         {isPending ? "Loading..." : "Login"}
       </button>
