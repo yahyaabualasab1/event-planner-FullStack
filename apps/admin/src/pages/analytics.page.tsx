@@ -4,7 +4,7 @@ import{ StatsCard } from "../widget/analytics/stats-Card";
 import { RevenueGrowthChart } from "@/widget/analytics/revenue-Growth-Chart";
 import { VenueDistributionChart } from "@/widget/analytics/venue-Distribution-Chart";
 import { UserRegistrationChart } from "@/widget/analytics/user-Registration-Chart";
-
+ 
 export const AnalyticsPage = () => {
   const { t } = useTranslation();
 
