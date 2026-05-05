@@ -9,7 +9,7 @@ import {
 	getClientProfileById,
 	getClientProfiles,
 	updateClientProfile,
-} from "../../../services/admin-system/client/clientProfile.services";
+} from "../../../services/admin-system/client/client-profile.services";
 import {
 	ClientIdParamsSchema,
 	ClientProfileIdParamsSchema,
@@ -28,7 +28,10 @@ function handleClientProfileError(error: unknown, res: Response): boolean {
 		res.status(403).json({ error: "Forbidden" });
 		return true;
 	}
-	if (error.message === "Client not found" || error.message === "Client profile not found") {
+	if (
+		error.message === "Client not found" ||
+		error.message === "Client profile not found"
+	) {
 		res.status(404).json({ error: error.message });
 		return true;
 	}
@@ -116,7 +119,10 @@ router.get(
 			}
 
 			const { clientId } = req.params as { clientId: string };
-			const profile = await getClientProfileByClientId(req.admin, clientId);
+			const profile = await getClientProfileByClientId(
+				req.admin,
+				clientId,
+			);
 			res.status(200).json(profile);
 		} catch (error) {
 			if (handleClientProfileError(error, res)) {
@@ -141,7 +147,11 @@ router.patch(
 			}
 
 			const { profileId } = req.params as { profileId: string };
-			const profile = await updateClientProfile(req.admin, profileId, req.body);
+			const profile = await updateClientProfile(
+				req.admin,
+				profileId,
+				req.body,
+			);
 			res.status(200).json(profile);
 		} catch (error) {
 			if (handleClientProfileError(error, res)) {
