@@ -54,5 +54,20 @@
         "venues": "الأماكن"
       }
     }
+  },
+  "messagesPage": {
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "التبديل إلى العربية",
+    "searchPlaceholder": "ابحث في المحادثات...",
+    "loading": "جاري التحميل...",
+    "noConversations": "لا توجد محادثات",
+    "unknown": "غير معروف",
+    "noMessagesYet": "لا توجد رسائل بعد",
+    "selectConversation": "اختر محادثة لعرض الرسائل",
+    "online": "متصل",
+    "offline": "غير متصل",
+    "loadingMessages": "جاري تحميل الرسائل...",
+    "typeYourMessage": "اكتب رسالتك...",
+    "send": "إرسال"
   }
 }
