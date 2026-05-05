@@ -41,4 +41,3 @@ export const AppRouter = () => {
 		</BrowserRouter>
 	);
 };
-//http://localhost:5173/login
