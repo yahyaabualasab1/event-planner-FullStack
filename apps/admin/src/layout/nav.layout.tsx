@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+
 const navItems = [
 	{
 		label: "Analytics",
@@ -43,8 +44,50 @@ const navItems = [
 		),
 	},
 	{
-		label: "Venues",
-		to: "/dashboard/venues",
+		label: "Clients",
+		to: "/dashboard/clients",
+		icon: (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="22"
+				height="22"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				strokeWidth={1.8}
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+				/>
+			</svg>
+		),
+	},
+	{
+		label: "Customers",
+		to: "/dashboard/customers",
+		icon: (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="22"
+				height="22"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				strokeWidth={1.8}
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M12 11a4 4 0 100-8 4 4 0 000 8zM3 21a7 7 0 0114 0M17 11a3 3 0 100-6 3 3 0 000 6zm4 10a5 5 0 00-7-4.583"
+				/>
+			</svg>
+		),
+	},
+	{
+		label: "Listings",
+		to: "/dashboard/listings",
 		icon: (
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
