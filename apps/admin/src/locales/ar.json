@@ -13,6 +13,46 @@
     "homePage": {
       "findYourPerfectVenue": "أوجد مكانك المثالي",
       "messages": "الرسائل"
+    },
+    "analytics": {
+      "title": "لوحة التحليلات",
+      "subtitle": "مقاييس ورؤى على مستوى المنصة",
+      "stats": {
+        "totalUsers": "إجمالي المستخدمين",
+        "activeVenues": "الأماكن النشطة",
+        "totalBookings": "إجمالي الحجوزات",
+        "revenue": "الإيرادات"
+      },
+      "charts": {
+        "bookingTrends": "اتجاهات الحجوزات",
+        "revenueGrowth": "نمو الإيرادات",
+        "venueDistribution": "توزيع الأماكن حسب الموقع",
+        "userRegistration": "اتجاهات تسجيل المستخدمين"
+      },
+      "months": {
+        "jan": "يناير",
+        "feb": "فبراير",
+        "mar": "مارس",
+        "apr": "أبريل",
+        "may": "مايو",
+        "jun": "يونيو"
+      },
+      "venues": {
+        "newYork": "نيويورك",
+        "losAngeles": "لوس أنجلوس",
+        "chicago": "شيكاغو",
+        "miami": "ميامي"
+      },
+      "weeks": {
+        "week1": "الأسبوع 1",
+        "week2": "الأسبوع 2",
+        "week3": "الأسبوع 3",
+        "week4": "الأسبوع 4"
+      },
+      "chartLabels": {
+        "users": "المستخدمون",
+        "venues": "الأماكن"
+      }
     }
   }
 }

@@ -13,6 +13,46 @@
     "homePage": {
       "findYourPerfectVenue": "Find Your Perfect Venue",
       "messages": "Messages"
+    },
+    "analytics": {
+      "title": "Analytics Dashboard",
+      "subtitle": "Platform-wide metrics and insights",
+      "stats": {
+        "totalUsers": "Total Users",
+        "activeVenues": "Active Venues",
+        "totalBookings": "Total Bookings",
+        "revenue": "Revenue"
+      },
+      "charts": {
+        "bookingTrends": "Booking Trends",
+        "revenueGrowth": "Revenue Growth",
+        "venueDistribution": "Venue Distribution by Location",
+        "userRegistration": "User Registration Trends"
+      },
+      "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun"
+      },
+      "venues": {
+        "newYork": "New York",
+        "losAngeles": "Los Angeles",
+        "chicago": "Chicago",
+        "miami": "Miami"
+      },
+      "weeks": {
+        "week1": "Week 1",
+        "week2": "Week 2",
+        "week3": "Week 3",
+        "week4": "Week 4"
+      },
+      "chartLabels": {
+        "users": "users",
+        "venues": "venues"
+      }
     }
   }
 }
