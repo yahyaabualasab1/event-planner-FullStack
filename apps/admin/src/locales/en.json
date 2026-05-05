@@ -14,5 +14,20 @@
       "findYourPerfectVenue": "Find Your Perfect Venue",
       "messages": "Messages"
     }
+  },
+  "messagesPage": {
+    "switchToEnglish": "Switch to English",
+    "switchToArabic": "التبديل إلى العربية",
+    "searchPlaceholder": "Search conversations...",
+    "loading": "Loading...",
+    "noConversations": "No conversations found",
+    "unknown": "Unknown",
+    "noMessagesYet": "No messages yet",
+    "selectConversation": "Select a conversation to view messages",
+    "online": "Online",
+    "offline": "Offline",
+    "loadingMessages": "Loading messages...",
+    "typeYourMessage": "Type your message...",
+    "send": "Send"
   }
 }

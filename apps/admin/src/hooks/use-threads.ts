@@ -1,39 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { getThreads } from "@/api/threads.api";
-import { api } from "@/services/axios";
 
 export const useThreads = () => {
   return useQuery({
     queryKey: ["threads"],
     queryFn: async () => {
       const res = await getThreads();
-      const threads = res.data;
+      const threads = Array.isArray(res.data) ? res.data : [];
 
-      const threadsWithLastMessage = await Promise.all(
-        threads.map(async (thread: any) => {
-          try {
-            const msgRes = await api.get(
-              `/api/admin-system/messages/thread/${thread._id}`,
-            );
-            const messages = msgRes.data;
-            const lastMessage = messages[messages.length - 1];
-            const lastMessageTime = lastMessage
-              ? new Date(lastMessage.timestamp).getTime()
-              : 0;
-            const isOnline = Date.now() - lastMessageTime < 5 * 60 * 1000;
+      return threads.map((thread: any) => {
+        const lastMessageText =
+          thread?.lastMessage?.message ?? thread?.lastMessage ?? "";
+        const lastMessageTimestamp =
+          thread?.lastMessage?.timestamp ??
+          thread?.lastMessageAt ??
+          thread?.updatedAt;
+        const lastMessageTime = lastMessageTimestamp
+          ? new Date(lastMessageTimestamp).getTime()
+          : 0;
+        const isOnline = Date.now() - lastMessageTime < 5 * 60 * 1000;
 
-            return {
-              ...thread,
-              lastMessage: lastMessage?.message ?? "",
-              isOnline,
-            };
-          } catch {
-            return { ...thread, lastMessage: "", isOnline: false };
-          }
-        }),
-      );
-
-      return threadsWithLastMessage;
+        return {
+          ...thread,
+          lastMessage: lastMessageText,
+          isOnline,
+        };
+      });
     },
     refetchInterval: 30000,
   });
