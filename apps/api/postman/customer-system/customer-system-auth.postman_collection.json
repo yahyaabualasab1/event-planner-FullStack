@@ -1,0 +1,96 @@
+{
+	"info": {
+		"name": "Event Planner API - Customer System Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Customer auth only: /api/customer-system/customer. Use the same baseUrl environment and set customerEmail/customerPassword."
+	},
+	"variable": [
+		{
+			"key": "customerEmail",
+			"value": "customer@example.com",
+			"type": "string"
+		},
+		{
+			"key": "customerPassword",
+			"value": "Password@123",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Customer Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{customerEmail}}\",\n  \"password\": \"{{customerPassword}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/customer-system/customer/login",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "customer-system", "customer", "login"]
+				}
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const json = pm.response.json();",
+							"if (json && json.token) {",
+							"    pm.environment.set('customerToken', json.token);",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Customer Verify",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{customerToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/customer-system/customer/verify",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "customer-system", "customer", "verify"]
+				}
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const json = pm.response.json();",
+							"pm.test('Verify response is valid', function () {",
+							"    pm.expect(json.valid).to.eql(true);",
+							"    pm.expect(json.customer).to.be.an('object');",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	]
+}
