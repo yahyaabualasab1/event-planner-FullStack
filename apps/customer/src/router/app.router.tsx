@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "@/pages/login.page";
 import { CustomerHomePage } from "@/pages/home.page";
+import { Dashboard } from "@/pages/layout.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import { AppInit } from "@/providers/app-init.provider";
 
@@ -18,10 +19,12 @@ export const AppRouter = () => {
 						path="/dashboard"
 						element={
 							<ProtectedRoute>
-								<CustomerHomePage />
+								<Dashboard />
 							</ProtectedRoute>
 						}
-					/>
+					>
+						<Route index element={<CustomerHomePage />} />
+					</Route>
 				</Routes>
 			</AppInit>
 		</BrowserRouter>
