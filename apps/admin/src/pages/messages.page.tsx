@@ -4,7 +4,7 @@ import { useMessages } from "@/hooks/use-messages";
 import { useTranslation } from "react-i18next";
 
 export const MessagesPage = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
   const { data: threads, isLoading: threadsLoading } = useThreads();
   const { data: messages, isLoading: messagesLoading } = useMessages(selectedThreadId);
@@ -13,10 +13,6 @@ export const MessagesPage = () => {
 
   const getInitials = (name: string) =>
     String(name ?? "??").slice(0, 2).toUpperCase();
-  const isArabic = (i18n.resolvedLanguage ?? i18n.language)?.startsWith("ar");
-  const toggleLanguage = () => {
-    void i18n.changeLanguage(isArabic ? "en" : "ar");
-  };
 
   return (
     <div className="flex h-[calc(100vh-80px)] bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -24,15 +20,6 @@ export const MessagesPage = () => {
       {/* Left — Thread List */}
       <div className="w-80 border-r border-gray-100 flex flex-col">
         <div className="p-4 border-b border-gray-100 space-y-3">
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm hover:bg-gray-50 transition-colors"
-          >
-            {isArabic
-              ? t("messagesPage.switchToEnglish")
-              : t("messagesPage.switchToArabic")}
-          </button>
           <input
             type="text"
             placeholder={t("messagesPage.searchPlaceholder")}
@@ -54,7 +41,7 @@ export const MessagesPage = () => {
               <button
                 key={thread._id}
                 onClick={() => setSelectedThreadId(thread._id)}
-                className={`w-full flex items-center gap-3 px-4 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors text-left ${
+                className={`w-full flex items-center gap-3 px-4 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors text-start ${
                   selectedThreadId === thread._id ? "bg-indigo-50" : ""
                 }`}
               >
@@ -69,7 +56,7 @@ export const MessagesPage = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center">
                     <p className="text-sm font-semibold text-gray-800 truncate">
-                      {thread.senderId?.fullName ?? t("messagesPage.unknown")}
+                      {thread.senderId?.fullName ?? t("common.unknown")}
                     </p>
                     <p className="text-xs text-gray-400">
                       {new Date(thread.updatedAt).toLocaleTimeString([], {
@@ -108,7 +95,7 @@ export const MessagesPage = () => {
               </div>
               <div>
                 <p className="font-semibold text-gray-800">
-                  {selectedThread?.senderId?.fullName ?? t("messagesPage.unknown")}
+                  {selectedThread?.senderId?.fullName ?? t("common.unknown")}
                 </p>
                 <p className={`text-xs flex items-center gap-1 ${
                   selectedThread?.isOnline ? "text-green-500" : "text-gray-400"

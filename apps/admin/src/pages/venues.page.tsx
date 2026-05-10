@@ -1,4 +1,5 @@
 import { useVenues } from "@/hooks/use-venues";
+import { useTranslation } from "react-i18next";
 
 interface Venue {
 	_id: string;
@@ -48,11 +49,14 @@ const mockVenues: Venue[] = [
 ];
 
 const VenueCard = ({ venue }: { venue: Venue }) => {
-	const status = venue.isDeleted ? "Archived" : "Active";
+	const { t } = useTranslation();
+	const status = venue.isDeleted
+		? t("venuesPage.card.statusArchived")
+		: t("venuesPage.card.statusActive");
 	const imageUrl = venue.images?.[0];
 	const availabilityLabel = venue.availability?.length
 		? `${venue.availability[0].from} - ${venue.availability[0].to}`
-		: "N/A";
+		: t("common.notAvailable");
 
 	return (
 		<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
@@ -67,7 +71,7 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 							/>
 						) : (
 							<div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
-								No image
+								{t("venuesPage.card.noImage")}
 							</div>
 						)}
 					</div>
@@ -80,7 +84,7 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 								{venue.title}
 							</h3>
 							<p className="text-sm text-gray-500">
-								Client ID {venue.clientId}
+								{t("venuesPage.card.clientId", { id: venue.clientId })}
 							</p>
 							<p className="text-sm text-gray-500">
 								{venue.location}
@@ -93,36 +97,39 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 
 					<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
-							<p className="text-xs text-gray-400">Price</p>
+							<p className="text-xs text-gray-400">{t("venuesPage.card.price")}</p>
 							<p className="text-sm font-semibold text-gray-900">
-								{venue.price || "N/A"}
+								{venue.price || t("common.notAvailable")}
 							</p>
 						</div>
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
 							<p className="text-xs text-gray-400">
-								Availability
+								{t("venuesPage.card.availability")}
 							</p>
 							<p className="text-sm font-semibold text-gray-900">
 								{availabilityLabel}
 							</p>
 						</div>
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
-							<p className="text-xs text-gray-400">Discounts</p>
+							<p className="text-xs text-gray-400">{t("venuesPage.card.discounts")}</p>
 							<p className="text-sm font-semibold text-gray-900">
-								{venue.discounts || "N/A"}
+								{venue.discounts || t("common.notAvailable")}
 							</p>
 						</div>
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
-							<p className="text-xs text-gray-400">Extras</p>
+							<p className="text-xs text-gray-400">{t("venuesPage.card.extras")}</p>
 							<p className="text-sm font-semibold text-gray-900">
-								{venue.extras || "N/A"}
+								{venue.extras || t("common.notAvailable")}
 							</p>
 						</div>
 					</div>
 				</div>
 
 				<div className="flex items-center gap-3">
-					<button className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700">
+					<button
+						type="button"
+						className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
@@ -143,7 +150,7 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 								d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 							/>
 						</svg>
-						View Details
+						{t("venuesPage.card.viewDetails")}
 					</button>
 				</div>
 			</div>
@@ -152,6 +159,7 @@ const VenueCard = ({ venue }: { venue: Venue }) => {
 };
 
 export const VenuesPage = () => {
+	const { t } = useTranslation();
 	const { data, isLoading, isError } = useVenues();
 	const venues = (data ?? []) as Venue[];
 	const list = venues.length ? venues : mockVenues;
@@ -159,9 +167,9 @@ export const VenuesPage = () => {
 	return (
 		<div className="space-y-6">
 			<header>
-				<h2 className="text-2xl font-bold text-gray-900">Venues</h2>
+				<h2 className="text-2xl font-bold text-gray-900">{t("venuesPage.title")}</h2>
 				<p className="text-sm text-gray-500">
-					Review and manage venue listings
+					{t("venuesPage.subtitle")}
 				</p>
 			</header>
 
@@ -169,7 +177,7 @@ export const VenuesPage = () => {
 				{isLoading && (
 					<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
 						<p className="text-sm text-gray-500">
-							Loading venues...
+							{t("venuesPage.loading")}
 						</p>
 					</div>
 				)}
@@ -177,7 +185,7 @@ export const VenuesPage = () => {
 				{isError && (
 					<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
 						<p className="text-sm text-red-500">
-							Failed to load venues.
+							{t("venuesPage.loadError")}
 						</p>
 					</div>
 				)}

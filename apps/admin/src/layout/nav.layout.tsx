@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
 	{
-		label: "Analytics",
+		key: "analytics",
 		to: "/dashboard/analytics",
 		icon: (
 			<svg
@@ -23,7 +24,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Users",
+		key: "users",
 		to: "/dashboard/users",
 		icon: (
 			<svg
@@ -44,7 +45,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Clients",
+		key: "clients",
 		to: "/dashboard/clients",
 		icon: (
 			<svg
@@ -65,7 +66,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Customers",
+		key: "customers",
 		to: "/dashboard/customers",
 		icon: (
 			<svg
@@ -86,7 +87,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Listings",
+		key: "listings",
 		to: "/dashboard/listings",
 		icon: (
 			<svg
@@ -107,7 +108,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Bookings",
+		key: "bookings",
 		to: "/dashboard/bookings",
 		icon: (
 			<svg
@@ -128,7 +129,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Reports",
+		key: "reports",
 		to: "/dashboard/reports",
 		icon: (
 			<svg
@@ -156,7 +157,7 @@ const navItems = [
 		),
 	},
 	{
-		label: "Messages",
+		key: "messages",
 		to: "/dashboard/messages",
 		icon: (
 			<svg
@@ -176,25 +177,23 @@ const navItems = [
 			</svg>
 		),
 	},
-];
+] as const;
 
-export const NavLayout = ({
-	onSelect,
-}: {
-	onSelect: (label: string) => void;
-}) => {
+export const NavLayout = () => {
+	const { t } = useTranslation();
+
 	return (
 		<aside className="flex flex-col w-64 min-h-screen bg-white px-4 py-6">
 			<div className="mb-6 px-2">
-				<h1 className="text-2xl font-bold text-indigo-600">Eventat</h1>
-				<p className="text-sm text-gray-400 mt-0.5">Admin Portal</p>
+				<h1 className="text-2xl font-bold text-indigo-600">{t("nav.brand")}</h1>
+				<p className="text-sm text-gray-400 mt-0.5">{t("nav.portalSubtitle")}</p>
 			</div>
 
 			<hr className="border-gray-200 mb-6" />
 
 			<nav className="flex flex-col gap-1">
-				{navItems.map(({ label, to, icon }) => (
-					<NavLink key={to} to={to} onClick={() => onSelect(label)}>
+				{navItems.map(({ key, to, icon }) => (
+					<NavLink key={to} to={to}>
 						{({ isActive }) => (
 							<div
 								className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -212,7 +211,7 @@ export const NavLayout = ({
 								>
 									{icon}
 								</span>
-								{label}
+								{t(`nav.items.${key}`)}
 							</div>
 						)}
 					</NavLink>

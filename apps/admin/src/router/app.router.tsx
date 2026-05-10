@@ -9,6 +9,7 @@ import { CustomersPage } from "@/pages/customers.page";
 import { ListingsPage } from "@/pages/listings.page";
 import { ReportsPage } from "@/pages/reports.page";
 import { MessagesPage } from "@/pages/messages.page";
+import { BookingsPage } from "@/pages/bookings.page";
 
 export const AppRouter = () => {
 	return (
@@ -40,6 +41,7 @@ export const AppRouter = () => {
 					<Route path="clients" element={<ClientsPage />} />
 					<Route path="customers" element={<CustomersPage />} />
 					<Route path="listings" element={<ListingsPage />} />
+					<Route path="bookings" element={<BookingsPage />} />
 					<Route path="reports" element={<ReportsPage />} />
 					<Route path="messages" element={<MessagesPage />} />
 				</Route>

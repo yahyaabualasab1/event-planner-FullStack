@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { ClientStatusValue } from "@/api/clients.api";
 import { useClients } from "@/hooks/use-clients";
 import { useUpdateClientStatus } from "@/hooks/use-update-client-status";
@@ -7,17 +8,6 @@ import {
 	type ClientRow,
 } from "@/widget/client-status-modal";
 import { ClientStatusTrigger } from "@/widget/client-status-trigger";
-
-const formatDate = (value?: string) => {
-	if (!value) return "-";
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return "-";
-	return date.toLocaleDateString("en-US", {
-		month: "short",
-		day: "numeric",
-		year: "numeric",
-	});
-};
 
 const getInitials = (name?: string) => {
 	if (!name) return "?";
@@ -28,6 +18,7 @@ const getInitials = (name?: string) => {
 };
 
 export const ClientsPage = () => {
+	const { t, i18n } = useTranslation();
 	const { data, isLoading, isError } = useClients();
 	const {
 		mutate: updateStatus,
@@ -43,6 +34,17 @@ export const ClientsPage = () => {
 	const [statusModalClient, setStatusModalClient] = useState<ClientRow | null>(
 		null,
 	);
+
+	const formatDate = (value?: string) => {
+		if (!value) return t("common.dash");
+		const date = new Date(value);
+		if (Number.isNaN(date.getTime())) return t("common.dash");
+		return date.toLocaleDateString(i18n.language, {
+			month: "short",
+			day: "numeric",
+			year: "numeric",
+		});
+	};
 
 	const clients = useMemo<ClientRow[]>(() => {
 		return (data ?? []).map((c: Record<string, unknown>) => ({
@@ -85,10 +87,8 @@ export const ClientsPage = () => {
 	return (
 		<div className="space-y-6">
 			<header>
-				<h2 className="text-2xl font-bold text-gray-900">Clients</h2>
-				<p className="text-sm text-gray-500">
-					Manage venue owners and clients on the platform
-				</p>
+				<h2 className="text-2xl font-bold text-gray-900">{t("clientsTablePage.title")}</h2>
+				<p className="text-sm text-gray-500">{t("clientsTablePage.subtitle")}</p>
 			</header>
 
 			<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
@@ -98,7 +98,7 @@ export const ClientsPage = () => {
 							type="text"
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							placeholder="Search clients by name or email..."
+							placeholder={t("clientsTablePage.searchPlaceholder")}
 							className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"
 						/>
 					</div>
@@ -111,26 +111,29 @@ export const ClientsPage = () => {
 						}
 						className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm bg-white"
 					>
-						<option value="all">All Status</option>
-						<option value="approved">Approved</option>
-						<option value="waiting-approve">Waiting approval</option>
-						<option value="banned">Banned</option>
+						<option value="all">{t("clientsTablePage.filter.allStatus")}</option>
+						<option value="approved">{t("clientsTablePage.filter.approved")}</option>
+						<option value="waiting-approve">{t("clientsTablePage.filter.waitingApproval")}</option>
+						<option value="banned">{t("clientsTablePage.filter.banned")}</option>
 					</select>
 				</div>
 
 				<div className="overflow-x-auto">
-					<table className="w-full text-sm">
+					<table
+						dir={i18n.dir()}
+						className="w-full border-collapse text-sm"
+					>
 						<thead>
-							<tr className="text-left text-xs uppercase tracking-wider text-gray-400 border-b border-gray-100">
-								<th className="py-3 pr-4 font-medium">
-									Client
+							<tr className="text-xs uppercase tracking-wider text-gray-400 border-b border-gray-100">
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">
+									{t("clientsTablePage.table.client")}
 								</th>
-								<th className="py-3 pr-4 font-medium">Phone</th>
-								<th className="py-3 pr-4 font-medium">
-									Status
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("clientsTablePage.table.phone")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">
+									{t("clientsTablePage.table.status")}
 								</th>
-								<th className="py-3 pr-4 font-medium">
-									Join Date
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">
+									{t("clientsTablePage.table.joinDate")}
 								</th>
 							</tr>
 						</thead>
@@ -141,7 +144,7 @@ export const ClientsPage = () => {
 										colSpan={4}
 										className="py-6 text-center text-gray-500"
 									>
-										Loading clients...
+										{t("clientsTablePage.loading")}
 									</td>
 								</tr>
 							)}
@@ -151,7 +154,7 @@ export const ClientsPage = () => {
 										colSpan={4}
 										className="py-6 text-center text-red-500"
 									>
-										Failed to load clients.
+										{t("clientsTablePage.loadError")}
 									</td>
 								</tr>
 							)}
@@ -162,7 +165,7 @@ export const ClientsPage = () => {
 										key={client._id}
 										className="border-b border-gray-50 last:border-0"
 									>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<div className="flex items-center gap-3">
 												<div className="h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-semibold">
 													{getInitials(
@@ -172,18 +175,18 @@ export const ClientsPage = () => {
 												<div>
 													<p className="font-semibold text-gray-900">
 														{client.fullName ??
-															"Unknown"}
+															t("common.unknown")}
 													</p>
 													<p className="text-xs text-gray-500">
-														{client.email ?? "-"}
+														{client.email ?? t("common.dash")}
 													</p>
 												</div>
 											</div>
 										</td>
-										<td className="py-4 pr-4 text-gray-700">
-											{client.phoneNumber ?? "-"}
+										<td className="py-4 px-4 align-middle text-gray-700 ltr:text-left rtl:text-right">
+											{client.phoneNumber ?? t("common.dash")}
 										</td>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<ClientStatusTrigger
 												client={client}
 												onOpen={() =>
@@ -201,7 +204,7 @@ export const ClientsPage = () => {
 												}
 											/>
 										</td>
-										<td className="py-4 pr-4 text-gray-700">
+										<td className="py-4 px-4 align-middle text-gray-700 ltr:text-left rtl:text-right">
 											{formatDate(client.createdAt)}
 										</td>
 									</tr>
@@ -214,7 +217,7 @@ export const ClientsPage = () => {
 										colSpan={4}
 										className="py-6 text-center text-gray-500"
 									>
-										No clients match the current filters.
+										{t("clientsTablePage.empty")}
 									</td>
 								</tr>
 							)}

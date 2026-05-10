@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 
 type ModalProps = {
 	open: boolean;
@@ -23,6 +24,8 @@ export function Modal({
 	footer,
 	closeDisabled = false,
 }: ModalProps) {
+	const { t } = useTranslation();
+
 	useEffect(() => {
 		if (!open) return;
 		const onKey = (e: KeyboardEvent) => {
@@ -47,7 +50,7 @@ export function Modal({
 			<button
 				type="button"
 				className="absolute inset-0 bg-gray-900/50 backdrop-blur-[3px] transition-opacity"
-				aria-label="Close dialog"
+				aria-label={t("modal.closeDialog")}
 				disabled={closeDisabled}
 				onClick={() => {
 					if (!closeDisabled) onClose();

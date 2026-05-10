@@ -6,14 +6,45 @@
   "language": {
     "label": "اللغة",
     "en": "English",
-    "es": "Español",
     "ar": "العربية"
   },
-  "pages": {
-    "homePage": {
-      "findYourPerfectVenue": "أوجد مكانك المثالي",
+  "nav": {
+    "brand": "إيفنتات",
+    "portalSubtitle": "بوابة الإدارة",
+    "items": {
+      "analytics": "التحليلات",
+      "users": "المستخدمون",
+      "clients": "العملاء (المالكون)",
+      "customers": "زوار المنصة",
+      "listings": "القوائم",
+      "bookings": "الحجوزات",
+      "reports": "التقارير",
       "messages": "الرسائل"
-    },
+    }
+  },
+  "header": {
+    "adminDisplayName": "مسؤول النظام",
+    "adminEmail": "admin@eventat.com",
+    "logout": "تسجيل الخروج"
+  },
+  "modal": {
+    "closeDialog": "إغلاق النافذة"
+  },
+  "common": {
+    "unknown": "غير معروف",
+    "loading": "جاري التحميل…",
+    "notAvailable": "غير متاح",
+    "dash": "—"
+  },
+  "login": {
+    "title": "تسجيل دخول الإدارة",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "passwordPlaceholder": "كلمة المرور",
+    "invalidCredentials": "بيانات الدخول غير صحيحة",
+    "submit": "تسجيل الدخول",
+    "loading": "جاري التحميل…"
+  },
+  "pages": {
     "analytics": {
       "title": "لوحة التحليلات",
       "subtitle": "مقاييس ورؤى على مستوى المنصة",
@@ -56,18 +87,15 @@
     }
   },
   "messagesPage": {
-    "switchToEnglish": "Switch to English",
-    "switchToArabic": "التبديل إلى العربية",
-    "searchPlaceholder": "ابحث في المحادثات...",
-    "loading": "جاري التحميل...",
+    "searchPlaceholder": "ابحث في المحادثات…",
+    "loading": "جاري التحميل…",
     "noConversations": "لا توجد محادثات",
-    "unknown": "غير معروف",
     "noMessagesYet": "لا توجد رسائل بعد",
     "selectConversation": "اختر محادثة لعرض الرسائل",
     "online": "متصل",
     "offline": "غير متصل",
-    "loadingMessages": "جاري تحميل الرسائل...",
-    "typeYourMessage": "اكتب رسالتك...",
+    "loadingMessages": "جاري تحميل الرسائل…",
+    "typeYourMessage": "اكتب رسالتك…",
     "send": "إرسال"
   },
   "clientsPage": {
@@ -95,6 +123,140 @@
         "bannedTitle": "محظور",
         "bannedDesc": "الحساب موقوف — تسجيل الدخول والإجراءات غير مسموحة."
       }
+    }
+  },
+  "usersPage": {
+    "title": "إدارة المستخدمين",
+    "subtitle": "مراقبة وإدارة مستخدمي المنصة",
+    "searchPlaceholder": "ابحث بالاسم أو البريد…",
+    "filter": {
+      "allRoles": "كل الأدوار",
+      "allStatus": "كل الحالات",
+      "roleClient": "عميل (مالك مكان)",
+      "roleCustomer": "زائر",
+      "approved": "موافَق",
+      "waitingApproval": "بانتظار الموافقة",
+      "banned": "محظور"
+    },
+    "table": {
+      "user": "المستخدم",
+      "role": "الدور",
+      "status": "الحالة",
+      "phone": "الهاتف",
+      "joinDate": "تاريخ الانضمام",
+      "actions": "إجراءات"
+    },
+    "loading": "جاري تحميل المستخدمين…",
+    "loadError": "تعذّر تحميل المستخدمين.",
+    "empty": "لا يوجد مستخدمون مطابقون للمرشحات.",
+    "status": {
+      "approved": "موافَق",
+      "waitingApproval": "بانتظار الموافقة",
+      "banned": "محظور",
+      "none": "—"
+    },
+    "role": {
+      "client": "عميل (مالك)",
+      "customer": "زائر"
+    },
+    "aria": {
+      "view": "عرض",
+      "edit": "تعديل"
+    }
+  },
+  "clientsTablePage": {
+    "title": "العملاء (المالكون)",
+    "subtitle": "إدارة مالكي الأماكن والعملاء على المنصة",
+    "searchPlaceholder": "ابحث بالاسم أو البريد…",
+    "filter": {
+      "allStatus": "كل الحالات",
+      "approved": "موافَق",
+      "waitingApproval": "بانتظار الموافقة",
+      "banned": "محظور"
+    },
+    "table": {
+      "client": "العميل",
+      "phone": "الهاتف",
+      "status": "الحالة",
+      "joinDate": "تاريخ الانضمام"
+    },
+    "loading": "جاري تحميل العملاء…",
+    "loadError": "تعذّر تحميل العملاء.",
+    "empty": "لا يوجد عملاء مطابقون للمرشحات."
+  },
+  "customersPage": {
+    "title": "زوار المنصة",
+    "subtitle": "إدارة المستخدمين الذين يحجزون الأماكن",
+    "searchPlaceholder": "ابحث بالاسم أو البريد…",
+    "filter": {
+      "allGenders": "كل الأجناس",
+      "male": "ذكر",
+      "female": "أنثى"
+    },
+    "table": {
+      "customer": "الزائر",
+      "phone": "الهاتف",
+      "gender": "الجنس",
+      "dob": "تاريخ الميلاد",
+      "city": "المدينة",
+      "joinDate": "تاريخ الانضمام"
+    },
+    "loading": "جاري التحميل…",
+    "loadError": "تعذّر تحميل البيانات.",
+    "empty": "لا يوجد زوار مطابقون للمرشحات.",
+    "genderValue": {
+      "male": "ذكر",
+      "female": "أنثى"
+    }
+  },
+  "listingsPage": {
+    "title": "القوائم",
+    "subtitle": "نظرة عامة على قوائم الأماكن"
+  },
+  "reportsPage": {
+    "title": "التقارير",
+    "subtitle": "التقارير والتصدير"
+  },
+  "bookingsPage": {
+    "title": "طلبات الحجز",
+    "subtitle": "مراجعة وإدارة طلبات الحجز الواردة",
+    "loading": "جاري تحميل الحجوزات…",
+    "loadError": "تعذّر تحميل الحجوزات.",
+    "card": {
+      "venueTitle": "المكان {{id}}",
+      "requestReceived": "تم استلام الطلب في {{date}}",
+      "clientInfo": "معلومات العميل",
+      "eventDetails": "تفاصيل الفعالية",
+      "clientId": "معرّف العميل {{id}}",
+      "customerId": "معرّف الزائر {{id}}",
+      "bookingId": "معرّف الحجز {{id}}",
+      "eventDate": "تاريخ الفعالية",
+      "timePeriod": "الفترة الزمنية",
+      "bookingReference": "مرجع الحجز"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "cancelled": "ملغى",
+      "completed": "مكتمل",
+      "other": "{{status}}"
+    }
+  },
+  "venuesPage": {
+    "title": "الأماكن",
+    "subtitle": "مراجعة وإدارة قوائم الأماكن",
+    "loading": "جاري تحميل الأماكن…",
+    "loadError": "تعذّر تحميل الأماكن.",
+    "card": {
+      "noImage": "لا صورة",
+      "clientId": "معرّف العميل {{id}}",
+      "statusArchived": "مؤرشف",
+      "statusActive": "نشط",
+      "price": "السعر",
+      "availability": "التوفر",
+      "discounts": "الخصومات",
+      "extras": "إضافات",
+      "viewDetails": "عرض التفاصيل"
     }
   }
 }

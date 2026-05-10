@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useClients } from "@/hooks/use-clients";
 import { useCustomers } from "@/hooks/use-customers";
 
@@ -57,17 +58,6 @@ const mockUsers: PlatformUser[] = [
 	},
 ];
 
-const formatDate = (value?: string) => {
-	if (!value) return "-";
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return "-";
-	return date.toLocaleDateString("en-US", {
-		month: "short",
-		day: "numeric",
-		year: "numeric",
-	});
-};
-
 const getInitials = (name?: string) => {
 	if (!name) return "?";
 	const parts = name.trim().split(/\s+/);
@@ -83,27 +73,31 @@ const StatusBadge = ({
 	role: PlatformUser["role"];
 	status?: string;
 }) => {
+	const { t } = useTranslation();
+
 	if (role === "Customer") {
 		return (
 			<span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-500">
-				—
+				{t("usersPage.status.none")}
 			</span>
 		);
 	}
 
 	const value = (status ?? "waiting-approve").toLowerCase();
 	let styles = "bg-gray-100 text-gray-600";
-	let label = value;
+	let label: string;
 
 	if (value === "approved") {
 		styles = "bg-green-50 text-green-600";
-		label = "Approved";
+		label = t("usersPage.status.approved");
 	} else if (value === "waiting-approve") {
 		styles = "bg-yellow-50 text-yellow-700";
-		label = "Waiting approval";
+		label = t("usersPage.status.waitingApproval");
 	} else if (value === "banded" || value === "banned") {
 		styles = "bg-red-50 text-red-600";
-		label = "Banned";
+		label = t("usersPage.status.banned");
+	} else {
+		label = value;
 	}
 
 	return (
@@ -116,20 +110,26 @@ const StatusBadge = ({
 };
 
 const RoleBadge = ({ role }: { role: PlatformUser["role"] }) => {
+	const { t } = useTranslation();
 	const styles =
 		role === "Client"
 			? "border-indigo-100 bg-indigo-50 text-indigo-600"
 			: "border-purple-100 bg-purple-50 text-purple-600";
+	const label =
+		role === "Client"
+			? t("usersPage.role.client")
+			: t("usersPage.role.customer");
 	return (
 		<span
 			className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${styles}`}
 		>
-			{role}
+			{label}
 		</span>
 	);
 };
 
 export const UsersPage = () => {
+	const { t, i18n } = useTranslation();
 	const clientsQuery = useClients();
 	const customersQuery = useCustomers();
 
@@ -141,26 +141,37 @@ export const UsersPage = () => {
 		"all" | "waiting-approve" | "approved" | "banded"
 	>("all");
 
+	const formatDate = (value?: string) => {
+		if (!value) return t("common.dash");
+		const date = new Date(value);
+		if (Number.isNaN(date.getTime())) return t("common.dash");
+		return date.toLocaleDateString(i18n.language, {
+			month: "short",
+			day: "numeric",
+			year: "numeric",
+		});
+	};
+
 	const users = useMemo<PlatformUser[]>(() => {
 		const clients: PlatformUser[] = (clientsQuery.data ?? []).map(
-			(c: any) => ({
-				_id: c._id ?? c.id,
+			(c: Record<string, unknown>) => ({
+				_id: String(c._id ?? c.id ?? ""),
 				fullName: c.fullName ?? c.name,
-				email: c.email,
-				phoneNumber: c.phoneNumber,
-				role: "Client",
-				status: c.status,
-				createdAt: c.createdAt,
+				email: c.email as string | undefined,
+				phoneNumber: c.phoneNumber as string | undefined,
+				role: "Client" as const,
+				status: c.status as string | undefined,
+				createdAt: c.createdAt as string | undefined,
 			})
 		);
 		const customers: PlatformUser[] = (customersQuery.data ?? []).map(
-			(c: any) => ({
-				_id: c._id ?? c.id,
+			(c: Record<string, unknown>) => ({
+				_id: String(c._id ?? c.id ?? ""),
 				fullName: c.fullName ?? c.name,
-				email: c.email,
-				phoneNumber: c.phoneNumber,
-				role: "Customer",
-				createdAt: c.createdAt,
+				email: c.email as string | undefined,
+				phoneNumber: c.phoneNumber as string | undefined,
+				role: "Customer" as const,
+				createdAt: c.createdAt as string | undefined,
 			})
 		);
 		const combined = [...clients, ...customers];
@@ -189,12 +200,8 @@ export const UsersPage = () => {
 	return (
 		<div className="space-y-6">
 			<header>
-				<h2 className="text-2xl font-bold text-gray-900">
-					Admin Management
-				</h2>
-				<p className="text-sm text-gray-500">
-					Monitor and manage platform users
-				</p>
+				<h2 className="text-2xl font-bold text-gray-900">{t("usersPage.title")}</h2>
+				<p className="text-sm text-gray-500">{t("usersPage.subtitle")}</p>
 			</header>
 
 			<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
@@ -221,7 +228,7 @@ export const UsersPage = () => {
 								type="text"
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
-								placeholder="Search users by name or email..."
+								placeholder={t("usersPage.searchPlaceholder")}
 								className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"
 							/>
 						</div>
@@ -233,9 +240,9 @@ export const UsersPage = () => {
 						}
 						className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm bg-white"
 					>
-						<option value="all">All Roles</option>
-						<option value="Client">Client</option>
-						<option value="Customer">Customer</option>
+						<option value="all">{t("usersPage.filter.allRoles")}</option>
+						<option value="Client">{t("usersPage.filter.roleClient")}</option>
+						<option value="Customer">{t("usersPage.filter.roleCustomer")}</option>
 					</select>
 					<select
 						value={statusFilter}
@@ -246,31 +253,28 @@ export const UsersPage = () => {
 						}
 						className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm bg-white"
 					>
-						<option value="all">All Status</option>
-						<option value="approved">Approved</option>
+						<option value="all">{t("usersPage.filter.allStatus")}</option>
+						<option value="approved">{t("usersPage.filter.approved")}</option>
 						<option value="waiting-approve">
-							Waiting approval
+							{t("usersPage.filter.waitingApproval")}
 						</option>
-						<option value="banded">Banned</option>
+						<option value="banded">{t("usersPage.filter.banned")}</option>
 					</select>
 				</div>
 
 				<div className="overflow-x-auto">
-					<table className="w-full text-sm">
+					<table
+						dir={i18n.dir()}
+						className="w-full border-collapse text-sm"
+					>
 						<thead>
-							<tr className="text-left text-xs uppercase tracking-wider text-gray-400 border-b border-gray-100">
-								<th className="py-3 pr-4 font-medium">User</th>
-								<th className="py-3 pr-4 font-medium">Role</th>
-								<th className="py-3 pr-4 font-medium">
-									Status
-								</th>
-								<th className="py-3 pr-4 font-medium">Phone</th>
-								<th className="py-3 pr-4 font-medium">
-									Join Date
-								</th>
-								<th className="py-3 pr-4 font-medium">
-									Actions
-								</th>
+							<tr className="text-xs uppercase tracking-wider text-gray-400 border-b border-gray-100">
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.user")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.role")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.status")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.phone")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.joinDate")}</th>
+								<th className="py-3 px-4 font-medium ltr:text-left rtl:text-right">{t("usersPage.table.actions")}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -280,7 +284,7 @@ export const UsersPage = () => {
 										colSpan={6}
 										className="py-6 text-center text-gray-500"
 									>
-										Loading users...
+										{t("usersPage.loading")}
 									</td>
 								</tr>
 							)}
@@ -290,7 +294,7 @@ export const UsersPage = () => {
 										colSpan={6}
 										className="py-6 text-center text-red-500"
 									>
-										Failed to load users.
+										{t("usersPage.loadError")}
 									</td>
 								</tr>
 							)}
@@ -300,43 +304,42 @@ export const UsersPage = () => {
 										key={`${user.role}-${user._id}`}
 										className="border-b border-gray-50 last:border-0"
 									>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<div className="flex items-center gap-3">
 												<div className="h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-semibold">
 													{getInitials(user.fullName)}
 												</div>
 												<div>
 													<p className="font-semibold text-gray-900">
-														{user.fullName ??
-															"Unknown"}
+														{user.fullName ?? t("common.unknown")}
 													</p>
 													<p className="text-xs text-gray-500">
-														{user.email ?? "-"}
+														{user.email ?? t("common.dash")}
 													</p>
 												</div>
 											</div>
 										</td>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<RoleBadge role={user.role} />
 										</td>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<StatusBadge
 												role={user.role}
 												status={user.status}
 											/>
 										</td>
-										<td className="py-4 pr-4 text-gray-700">
-											{user.phoneNumber ?? "-"}
+										<td className="py-4 px-4 align-middle text-gray-700 ltr:text-left rtl:text-right">
+											{user.phoneNumber ?? t("common.dash")}
 										</td>
-										<td className="py-4 pr-4 text-gray-700">
+										<td className="py-4 px-4 align-middle text-gray-700 ltr:text-left rtl:text-right">
 											{formatDate(user.createdAt)}
 										</td>
-										<td className="py-4 pr-4">
+										<td className="py-4 px-4 align-middle ltr:text-left rtl:text-right">
 											<div className="flex items-center gap-3 text-gray-500">
 												<button
 													type="button"
 													className="hover:text-indigo-600"
-													aria-label="View"
+													aria-label={t("usersPage.aria.view")}
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -362,7 +365,7 @@ export const UsersPage = () => {
 												<button
 													type="button"
 													className="hover:text-indigo-600"
-													aria-label="Edit"
+													aria-label={t("usersPage.aria.edit")}
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -390,7 +393,7 @@ export const UsersPage = () => {
 										colSpan={6}
 										className="py-6 text-center text-gray-500"
 									>
-										No users match the current filters.
+										{t("usersPage.empty")}
 									</td>
 								</tr>
 							)}

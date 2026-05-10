@@ -1,5 +1,6 @@
 import { useBookings } from "@/hooks/use-bookings";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Booking {
 	_id: string;
@@ -10,22 +11,6 @@ interface Booking {
 	status: string;
 	timePeriod: { from: string; to: string }[];
 }
-
-const formatDate = (value?: string) => {
-	if (!value) return "-";
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return "-";
-	return date.toLocaleDateString("en-US", {
-		month: "long",
-		day: "numeric",
-		year: "numeric",
-	});
-};
-
-const formatStatus = (status?: string) => {
-	if (!status) return "Pending";
-	return status.charAt(0).toUpperCase() + status.slice(1);
-};
 
 const mockBookings: Booking[] = [
 	{
@@ -49,15 +34,42 @@ const mockBookings: Booking[] = [
 ];
 
 const BookingCard = ({ booking }: { booking: Booking }) => {
+	const { t, i18n } = useTranslation();
+
+	const formatDate = (value?: string) => {
+		if (!value) return t("common.dash");
+		const date = new Date(value);
+		if (Number.isNaN(date.getTime())) return t("common.dash");
+		return date.toLocaleDateString(i18n.language, {
+			month: "long",
+			day: "numeric",
+			year: "numeric",
+		});
+	};
+
+	const formatStatus = (status?: string) => {
+		if (!status) return t("bookingsPage.status.pending");
+		const key = status.toLowerCase();
+		if (key === "pending") return t("bookingsPage.status.pending");
+		if (key === "confirmed") return t("bookingsPage.status.confirmed");
+		if (key === "cancelled") return t("bookingsPage.status.cancelled");
+		if (key === "completed") return t("bookingsPage.status.completed");
+		return t("bookingsPage.status.other", {
+			status: status.charAt(0).toUpperCase() + status.slice(1),
+		});
+	};
+
+	const dateFormatted = formatDate(booking.date);
+
 	return (
 		<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
 			<div className="flex items-start justify-between gap-4">
 				<div>
 					<h3 className="text-lg font-semibold text-gray-900">
-						Venue ID {booking.venueId}
+						{t("bookingsPage.card.venueTitle", { id: booking.venueId })}
 					</h3>
 					<p className="text-sm text-gray-400">
-						Request received on {formatDate(booking.date)}
+						{t("bookingsPage.card.requestReceived", { date: dateFormatted })}
 					</p>
 				</div>
 				<span className="inline-flex items-center px-3 py-1 rounded-full bg-yellow-50 text-yellow-700 text-xs font-semibold">
@@ -67,23 +79,23 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 
 			<div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
 				<div className="space-y-3">
-					<p className="text-xs font-semibold text-gray-400">
-						CLIENT INFORMATION
+					<p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+						{t("bookingsPage.card.clientInfo")}
 					</p>
 					<p className="text-sm font-semibold text-gray-900">
-						Client ID {booking.clientId}
+						{t("bookingsPage.card.clientId", { id: booking.clientId })}
 					</p>
 					<p className="text-sm text-gray-500">
-						Customer ID {booking.customerId}
+						{t("bookingsPage.card.customerId", { id: booking.customerId })}
 					</p>
 					<p className="text-sm text-gray-500">
-						Booking ID {booking._id}
+						{t("bookingsPage.card.bookingId", { id: booking._id })}
 					</p>
 				</div>
 
 				<div className="space-y-3">
-					<p className="text-xs font-semibold text-gray-400">
-						EVENT DETAILS
+					<p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+						{t("bookingsPage.card.eventDetails")}
 					</p>
 					<div className="grid gap-3 sm:grid-cols-2">
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
@@ -104,11 +116,11 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 									/>
 								</svg>
 								<span className="text-xs text-gray-400">
-									Event Date
+									{t("bookingsPage.card.eventDate")}
 								</span>
 							</div>
 							<p className="text-sm font-semibold text-gray-900 mt-1">
-								{formatDate(booking.date)}
+								{dateFormatted}
 							</p>
 						</div>
 						<div className="bg-gray-50 rounded-xl px-4 py-3">
@@ -134,13 +146,13 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 									/>
 								</svg>
 								<span className="text-xs text-gray-400">
-									Time Period
+									{t("bookingsPage.card.timePeriod")}
 								</span>
 							</div>
 							<p className="text-sm font-semibold text-gray-900 mt-1">
 								{booking.timePeriod?.length
 									? `${booking.timePeriod[0].from} - ${booking.timePeriod[0].to}`
-									: "-"}
+									: t("common.dash")}
 							</p>
 						</div>
 					</div>
@@ -148,7 +160,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 			</div>
 
 			<div className="mt-6 border-t border-gray-100 pt-4">
-				<p className="text-xs text-gray-400">Booking Reference</p>
+				<p className="text-xs text-gray-400">{t("bookingsPage.card.bookingReference")}</p>
 				<p className="text-lg font-semibold text-indigo-600">
 					{booking._id}
 				</p>
@@ -158,6 +170,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 };
 
 export const BookingsPage = () => {
+	const { t } = useTranslation();
 	const { data, isLoading, isError } = useBookings();
 	const bookings = (data ?? []) as Booking[];
 	const list = bookings.length ? bookings : mockBookings;
@@ -172,10 +185,10 @@ export const BookingsPage = () => {
 		<div className="space-y-6">
 			<header>
 				<h2 className="text-2xl font-bold text-gray-900">
-					Booking Requests
+					{t("bookingsPage.title")}
 				</h2>
 				<p className="text-sm text-gray-500">
-					Review and manage incoming booking requests
+					{t("bookingsPage.subtitle")}
 				</p>
 			</header>
 
@@ -183,7 +196,7 @@ export const BookingsPage = () => {
 				{isLoading && (
 					<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
 						<p className="text-sm text-gray-500">
-							Loading bookings...
+							{t("bookingsPage.loading")}
 						</p>
 					</div>
 				)}
@@ -191,7 +204,7 @@ export const BookingsPage = () => {
 				{isError && (
 					<div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
 						<p className="text-sm text-red-500">
-							Failed to load bookings.
+							{t("bookingsPage.loadError")}
 						</p>
 					</div>
 				)}
