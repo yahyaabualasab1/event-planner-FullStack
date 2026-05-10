@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import dns from "node:dns/promises";
 import cors from "cors";
 import { adminSystemRoutes } from "./routes/admin-system";
+import { clientSystemRoutes } from "./routes/client-system";
 import { customerSystemRoutes } from "./routes/customer-system";
 dns.setServers(["1.1.1.1"]);
 dotenv.config();
@@ -11,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/admin-system", adminSystemRoutes);
+app.use("/api/client-system", clientSystemRoutes);
 app.use("/api/customer-system", customerSystemRoutes);
 
 const PORT = Number(process.env.PORT) || 3000;

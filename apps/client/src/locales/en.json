@@ -1,12 +1,42 @@
 {
   "app": {
     "title": "Client",
-    "subtitle": "Vite + React + TypeScript + Tailwind"
+    "subtitle": "Event planner client portal"
   },
   "language": {
     "label": "Language",
     "en": "English",
     "es": "Español",
     "ar": "Arabic"
+  },
+  "auth": {
+    "loginTitle": "Client Login",
+    "registerTitle": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "login": "Login",
+    "logout": "Logout",
+    "loading": "Loading...",
+    "invalidLogin": "Invalid login",
+    "register": "Create an account",
+    "noAccount": "No account?",
+    "haveAccount": "Already have an account?",
+    "submitRegister": "Submit registration",
+    "registerFailed": "Registration failed",
+    "passwordMismatch": "Passwords do not match",
+    "registerSuccess": "Registration submitted. You can sign in once your account is approved."
+  },
+  "layout": {
+    "portalSubtitle": "Client Portal",
+    "dashboard": "Dashboard",
+    "account": "Account"
+  },
+  "home": {
+    "welcome": "Welcome, {{name}}",
+    "description": "Your dashboard will grow here as features are added.",
+    "fallbackName": "there"
   }
 }

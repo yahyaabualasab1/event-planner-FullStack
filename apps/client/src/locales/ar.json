@@ -1,12 +1,42 @@
 {
   "app": {
     "title": "العميل",
-    "subtitle": "Vite و React و TypeScript و Tailwind"
+    "subtitle": "بوابة عميل مخطط الفعاليات"
   },
   "language": {
     "label": "اللغة",
     "en": "English",
     "es": "Español",
     "ar": "العربية"
+  },
+  "auth": {
+    "loginTitle": "تسجيل دخول العميل",
+    "registerTitle": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "loading": "جاري التحميل...",
+    "invalidLogin": "بيانات الدخول غير صحيحة",
+    "register": "إنشاء حساب",
+    "noAccount": "لا تملك حساباً؟",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "submitRegister": "إرسال التسجيل",
+    "registerFailed": "فشل التسجيل",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "registerSuccess": "تم إرسال طلب التسجيل. يمكنك تسجيل الدخول بعد الموافقة على حسابك."
+  },
+  "layout": {
+    "portalSubtitle": "بوابة العميل",
+    "dashboard": "لوحة التحكم",
+    "account": "الحساب"
+  },
+  "home": {
+    "welcome": "مرحباً، {{name}}",
+    "description": "ستتوسع لوحتك هنا مع إضافة المزيد من الميزات.",
+    "fallbackName": "ضيفنا"
   }
 }
