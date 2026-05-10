@@ -1,43 +1,12 @@
 import { useMemo, useState } from "react";
+import type { ClientStatusValue } from "@/api/clients.api";
 import { useClients } from "@/hooks/use-clients";
-
-type ClientStatus = "waiting-approve" | "approved" | "banded";
-
-interface Client {
-	_id: string;
-	fullName?: string;
-	email?: string;
-	phoneNumber?: string;
-	status?: ClientStatus | string;
-	createdAt?: string;
-}
-
-const mockClients: Client[] = [
-	{
-		_id: "client-mock-1",
-		fullName: "Mike Chen",
-		email: "mike.c@example.com",
-		phoneNumber: "+1 555 0102",
-		status: "approved",
-		createdAt: "2026-02-03T00:00:00.000Z",
-	},
-	{
-		_id: "client-mock-2",
-		fullName: "Robert Wilson",
-		email: "robert.w@example.com",
-		phoneNumber: "+1 555 0411",
-		status: "banded",
-		createdAt: "2026-01-28T00:00:00.000Z",
-	},
-	{
-		_id: "client-mock-3",
-		fullName: "Sophia Reed",
-		email: "sophia.r@example.com",
-		phoneNumber: "+1 555 0822",
-		status: "waiting-approve",
-		createdAt: "2026-03-21T00:00:00.000Z",
-	},
-];
+import { useUpdateClientStatus } from "@/hooks/use-update-client-status";
+import {
+	ClientStatusModal,
+	type ClientRow,
+} from "@/widget/client-status-modal";
+import { ClientStatusTrigger } from "@/widget/client-status-trigger";
 
 const formatDate = (value?: string) => {
 	if (!value) return "-";
@@ -58,48 +27,32 @@ const getInitials = (name?: string) => {
 	return (first + last).toUpperCase();
 };
 
-const ClientStatusBadge = ({ status }: { status?: string }) => {
-	const value = (status ?? "waiting-approve").toLowerCase();
-	let styles = "bg-gray-100 text-gray-600";
-	let label = value;
-
-	if (value === "approved") {
-		styles = "bg-green-50 text-green-600";
-		label = "Approved";
-	} else if (value === "waiting-approve") {
-		styles = "bg-yellow-50 text-yellow-700";
-		label = "Waiting approval";
-	} else if (value === "banded" || value === "banned") {
-		styles = "bg-red-50 text-red-600";
-		label = "Banned";
-	}
-
-	return (
-		<span
-			className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${styles}`}
-		>
-			{label}
-		</span>
-	);
-};
-
 export const ClientsPage = () => {
 	const { data, isLoading, isError } = useClients();
+	const {
+		mutate: updateStatus,
+		isPending: isUpdatingStatus,
+		isError: statusUpdateError,
+		variables: statusUpdateVars,
+		reset: resetStatusMutation,
+	} = useUpdateClientStatus();
 	const [search, setSearch] = useState("");
 	const [statusFilter, setStatusFilter] = useState<
-		"all" | "waiting-approve" | "approved" | "banded"
+		"all" | ClientStatusValue
 	>("all");
+	const [statusModalClient, setStatusModalClient] = useState<ClientRow | null>(
+		null,
+	);
 
-	const clients = useMemo<Client[]>(() => {
-		const list = (data ?? []).map((c: any) => ({
-			_id: c._id ?? c.id,
-			fullName: c.fullName ?? c.name,
-			email: c.email,
-			phoneNumber: c.phoneNumber,
-			status: c.status,
-			createdAt: c.createdAt,
+	const clients = useMemo<ClientRow[]>(() => {
+		return (data ?? []).map((c: Record<string, unknown>) => ({
+			_id: String(c._id ?? c.id ?? ""),
+			fullName: (c.fullName ?? c.name) as string | undefined,
+			email: c.email as string | undefined,
+			phoneNumber: c.phoneNumber as string | undefined,
+			status: c.status as string | undefined,
+			createdAt: c.createdAt as string | undefined,
 		}));
-		return list.length ? list : mockClients;
 	}, [data]);
 
 	const filtered = clients.filter((c) => {
@@ -108,12 +61,26 @@ export const ClientsPage = () => {
 					.toLowerCase()
 					.includes(search.toLowerCase())
 			: true;
+		const raw = (c.status ?? "waiting-approve").toLowerCase();
+		const normalized =
+			raw === "banned" || raw === "banded" ? "banned" : raw;
 		const matchesStatus =
 			statusFilter === "all"
 				? true
-				: (c.status ?? "").toLowerCase() === statusFilter;
+				: normalized === statusFilter;
 		return matchesSearch && matchesStatus;
 	});
+
+	const handleApplyClientStatus = (status: ClientStatusValue) => {
+		if (!statusModalClient) return;
+		resetStatusMutation();
+		updateStatus(
+			{ id: statusModalClient._id, status },
+			{
+				onSuccess: () => setStatusModalClient(null),
+			},
+		);
+	};
 
 	return (
 		<div className="space-y-6">
@@ -147,7 +114,7 @@ export const ClientsPage = () => {
 						<option value="all">All Status</option>
 						<option value="approved">Approved</option>
 						<option value="waiting-approve">Waiting approval</option>
-						<option value="banded">Banned</option>
+						<option value="banned">Banned</option>
 					</select>
 				</div>
 
@@ -189,6 +156,7 @@ export const ClientsPage = () => {
 								</tr>
 							)}
 							{!isLoading &&
+								!isError &&
 								filtered.map((client) => (
 									<tr
 										key={client._id}
@@ -216,8 +184,21 @@ export const ClientsPage = () => {
 											{client.phoneNumber ?? "-"}
 										</td>
 										<td className="py-4 pr-4">
-											<ClientStatusBadge
-												status={client.status}
+											<ClientStatusTrigger
+												client={client}
+												onOpen={() =>
+													setStatusModalClient(client)
+												}
+												isUpdating={
+													isUpdatingStatus &&
+													statusUpdateVars?.id ===
+														client._id
+												}
+												updateFailed={
+													statusUpdateError &&
+													statusUpdateVars?.id ===
+														client._id
+												}
 											/>
 										</td>
 										<td className="py-4 pr-4 text-gray-700">
@@ -225,7 +206,9 @@ export const ClientsPage = () => {
 										</td>
 									</tr>
 								))}
-							{!isLoading && filtered.length === 0 && (
+							{!isLoading &&
+								!isError &&
+								filtered.length === 0 && (
 								<tr>
 									<td
 										colSpan={4}
@@ -239,6 +222,21 @@ export const ClientsPage = () => {
 					</table>
 				</div>
 			</div>
+
+			<ClientStatusModal
+				client={statusModalClient}
+				open={!!statusModalClient}
+				onClose={() => setStatusModalClient(null)}
+				onApply={handleApplyClientStatus}
+				isUpdating={
+					isUpdatingStatus &&
+					statusUpdateVars?.id === statusModalClient?._id
+				}
+				updateFailed={
+					statusUpdateError &&
+					statusUpdateVars?.id === statusModalClient?._id
+				}
+			/>
 		</div>
 	);
 };

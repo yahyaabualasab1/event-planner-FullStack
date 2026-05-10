@@ -69,5 +69,32 @@
     "loadingMessages": "Loading messages...",
     "typeYourMessage": "Type your message...",
     "send": "Send"
+  },
+  "clientsPage": {
+    "badges": {
+      "waiting": "Pending review",
+      "approved": "Approved",
+      "banned": "Banned"
+    },
+    "statusModal": {
+      "title": "Update client status",
+      "subtitle": "Pick how this client can use the platform. Changes apply immediately.",
+      "clientLabel": "Client",
+      "pickLabel": "Status",
+      "unknownUser": "Unknown client",
+      "cancel": "Cancel",
+      "apply": "Apply changes",
+      "saving": "Saving",
+      "updateFailed": "Could not save changes. Try again.",
+      "inlineFailed": "Could not update status.",
+      "options": {
+        "waitingTitle": "Waiting approval",
+        "waitingDesc": "No portal login until an admin approves this account.",
+        "approvedTitle": "Approved",
+        "approvedDesc": "Active venue owner — full access to the client portal.",
+        "bannedTitle": "Banned",
+        "bannedDesc": "Account suspended — login and actions are blocked."
+      }
+    }
   }
 }
