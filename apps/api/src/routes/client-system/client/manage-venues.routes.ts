@@ -37,13 +37,6 @@ router.get(
 			res.status(200).json(venues);
 			return;
 		} catch (error) {
-			if (
-				error instanceof Error &&
-				error.message === "No venues found for this client"
-			) {
-				res.status(404).json({ error: "No venues found for this client" });
-				return;
-			}
 			next(error);
 			return;
 		}

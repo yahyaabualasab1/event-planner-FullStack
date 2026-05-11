@@ -17,11 +17,7 @@ export async function getManageVenueById(id: string) {
 }
 
 export async function getManageVenuesByClientId(clientId: string) {
-	const venues = await Venue.find({ clientId, isDeleted: false });
-	if (!venues.length) {
-		throw new Error("No venues found for this client");
-	}
-	return venues;
+	return await Venue.find({ clientId, isDeleted: false });
 }
 
 export async function createManageVenue(data: CreateManageVenueInput) {

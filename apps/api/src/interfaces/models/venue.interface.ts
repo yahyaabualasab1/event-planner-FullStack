@@ -11,6 +11,7 @@ export interface IVenue {
   title: string;
   description: string;
   location: string;
+  capacity: number;
   price: string;
   images: string[];
   extras: string;

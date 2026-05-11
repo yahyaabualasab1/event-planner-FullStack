@@ -48,6 +48,66 @@ export const NavLayout = ({
 						</div>
 					)}
 				</NavLink>
+				<NavLink to="/dashboard/venues" onClick={() => onSelect("Manage Venues")}>
+					{({ isActive }) => (
+						<div
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+								isActive
+									? "bg-indigo-50 text-indigo-600"
+									: "text-gray-700 hover:bg-gray-100"
+							}`}
+						>
+							<span className={isActive ? "text-indigo-600" : "text-gray-500"}>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="22"
+									height="22"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									strokeWidth={1.8}
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M4.5 21V8.25L12 3l7.5 5.25V21M9 21v-6h6v6M8.25 10.5h.008v.008H8.25V10.5Zm7.5 0h.008v.008h-.008V10.5Z"
+									/>
+								</svg>
+							</span>
+							Manage Venues
+						</div>
+					)}
+				</NavLink>
+				<NavLink to="/dashboard/bookings" onClick={() => onSelect("Bookings")}>
+					{({ isActive }) => (
+						<div
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+								isActive
+									? "bg-indigo-50 text-indigo-600"
+									: "text-gray-700 hover:bg-gray-100"
+							}`}
+						>
+							<span className={isActive ? "text-indigo-600" : "text-gray-500"}>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="22"
+									height="22"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									strokeWidth={1.8}
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M8 7V3m8 4V3M4.5 9.5h15M6 5.5h12A1.5 1.5 0 0 1 19.5 7v12A1.5 1.5 0 0 1 18 20.5H6A1.5 1.5 0 0 1 4.5 19V7A1.5 1.5 0 0 1 6 5.5Z"
+									/>
+								</svg>
+							</span>
+							Bookings
+						</div>
+					)}
+				</NavLink>
 			</nav>
 		</aside>
 	);
