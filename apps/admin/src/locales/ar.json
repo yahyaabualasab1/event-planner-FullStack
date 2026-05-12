@@ -13,6 +13,20 @@
     "homePage": {
       "findYourPerfectVenue": "أوجد مكانك المثالي",
       "messages": "الرسائل"
+    },
+    "reports.page": {
+      "title": "التقارير والمشكلات",
+      "subtitle": "مراقبة وحل مشكلات المنصة",
+      "pending": "قيد الانتظار",
+      "reviewing": "قيد المراجعة",
+      "resolved": "تم الحل",
+      "highPriority": "أولوية عالية"
     }
+  },
+  "report-item": {
+    "high": "عالية",
+    "medium": "متوسطة",
+    "low": "منخفضة",
+    "priority": "الأولوية"
   }
 }
