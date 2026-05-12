@@ -1,12 +1,12 @@
-export const ReportStatsCard = ({
-  title,
-  value,
-  icon,
-}: {
+import React from "react";
+
+type Props = {
   title: string;
   value: string;
   icon: string;
-}) => {
+};
+
+export const ReportStatsCard = ({ title, value, icon }: Props) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
       <div className="flex items-center justify-between">
