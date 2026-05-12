@@ -16,7 +16,7 @@ export const ReportItem = ({
   priority: string;
   createdAt: string;
 }) => {
-  const { t } = useTranslation("report-item");
+  const { t } = useTranslation();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -38,9 +38,9 @@ export const ReportItem = ({
 
   const getPriorityLabel = (priority: string) => {
     switch (priority) {
-      case "High": return t("high");
-      case "Medium": return t("medium");
-      case "Low": return t("low");
+      case "High": return t("report-item.high");
+      case "Medium": return t("report-item.medium");
+      case "Low": return t("report-item.low");
       default: return priority;
     }
   };
@@ -56,7 +56,7 @@ export const ReportItem = ({
               {status}
             </span>
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(priority)}`}>
-              {getPriorityLabel(priority)} {t("priority")}
+              {getPriorityLabel(priority)} {t("report-item.priority")}
             </span>
           </div>
         </div>
