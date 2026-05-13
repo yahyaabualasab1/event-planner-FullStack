@@ -10,6 +10,7 @@ import {
 } from "@/hooks/use-manage-venues";
 import { useAuthStore } from "@/store/auth.store";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const PlusIcon = () => (
@@ -24,6 +25,7 @@ const PlusIcon = () => (
 );
 
 export const ManageVenuesPage = () => {
+	const { t } = useTranslation();
 	const client = useAuthStore((s) => s.client);
 	const clientId = client?.id ?? client?._id;
 	const navigate = useNavigate();
@@ -69,7 +71,9 @@ export const ManageVenuesPage = () => {
 	};
 
 	const handleDelete = (venue: ManageVenue) => {
-		const confirmed = window.confirm(`Delete ${venue.title}?`);
+		const confirmed = window.confirm(
+			t("manageVenues.confirmDelete", { title: venue.title }),
+		);
 		if (!confirmed) {
 			return;
 		}
@@ -88,9 +92,11 @@ export const ManageVenuesPage = () => {
 		<div className="space-y-8">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 				<div>
-					<h2 className="text-3xl font-bold text-gray-950">Manage Venues</h2>
+					<h2 className="text-3xl font-bold text-gray-950">
+						{t("manageVenues.title")}
+					</h2>
 					<p className="mt-4 text-lg text-gray-600">
-						Create and manage your venue listings
+						{t("manageVenues.subtitle")}
 					</p>
 				</div>
 				<Button
@@ -98,7 +104,7 @@ export const ManageVenuesPage = () => {
 					icon={<PlusIcon />}
 					className="h-16 rounded-xl px-8 text-lg"
 				>
-					Add New Venue
+					{t("manageVenues.addNewVenue")}
 				</Button>
 			</div>
 
@@ -106,12 +112,14 @@ export const ManageVenuesPage = () => {
 				<section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
 					<div className="mb-6">
 						<h3 className="text-2xl font-bold text-gray-950">
-							{editingVenue ? "Edit Venue" : "Add New Venue"}
+							{editingVenue
+								? t("manageVenues.editVenue")
+								: t("manageVenues.addNewVenue")}
 						</h3>
 						<p className="mt-2 text-gray-600">
 							{editingVenue
-								? "Update the venue details below."
-								: "Add the details your customers need to understand the space."}
+								? t("manageVenues.editDescription")
+								: t("manageVenues.createDescription")}
 						</p>
 					</div>
 					<VenueForm
@@ -126,30 +134,32 @@ export const ManageVenuesPage = () => {
 
 			{!clientId && (
 				<div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-800">
-					Your client session is still loading. Please try again in a moment.
+					{t("manageVenues.sessionLoading")}
 				</div>
 			)}
 
 			{venuesQuery.isLoading && (
 				<div className="rounded-2xl border border-gray-200 bg-white p-8 text-gray-600">
-					Loading venues...
+					{t("manageVenues.loading")}
 				</div>
 			)}
 
 			{venuesQuery.isError && (
 				<div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">
-					Unable to load venues. Check that the API is running and the route is available.
+					{t("manageVenues.loadError")}
 				</div>
 			)}
 
 			{!venuesQuery.isLoading && !venuesQuery.isError && venues.length === 0 && (
 				<div className="rounded-2xl border border-gray-200 bg-white p-10 text-center">
-					<h3 className="text-xl font-bold text-gray-950">No venues yet</h3>
+					<h3 className="text-xl font-bold text-gray-950">
+						{t("manageVenues.emptyTitle")}
+					</h3>
 					<p className="mt-2 text-gray-600">
-						Add your first venue to start accepting event bookings.
+						{t("manageVenues.emptyDescription")}
 					</p>
 					<Button onClick={openCreateForm} icon={<PlusIcon />} className="mt-6">
-						Add New Venue
+						{t("manageVenues.addNewVenue")}
 					</Button>
 				</div>
 			)}

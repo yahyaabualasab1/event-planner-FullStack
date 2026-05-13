@@ -1,5 +1,6 @@
 import type { ManageVenue } from "@/api/manage-venues.api";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 type VenueCardProps = {
 	venue: ManageVenue;
@@ -90,9 +91,10 @@ export const VenueCard = ({
 	onBookingsClick,
 	isDeleting,
 }: VenueCardProps) => {
+	const { t } = useTranslation();
 	const image = venue.images?.[0];
 	const status = venue.status ?? (venue.isDeleted ? "inactive" : "active");
-	const capacity = venue.capacity ?? "N/A";
+	const capacity = venue.capacity ?? t("manageVenues.notAvailable");
 	const bookingsCount = venue.bookingsCount ?? 0;
 
 	return (
@@ -106,7 +108,7 @@ export const VenueCard = ({
 					/>
 				) : (
 					<div className="flex h-full items-center justify-center text-gray-400">
-						Image unavailable
+						{t("manageVenues.imageUnavailable")}
 					</div>
 				)}
 				<span
@@ -116,7 +118,7 @@ export const VenueCard = ({
 							: "bg-white/90 text-gray-900"
 					}`}
 				>
-					{status}
+					{t(`manageVenues.status.${status}`)}
 				</span>
 			</div>
 
@@ -132,14 +134,18 @@ export const VenueCard = ({
 						<div className="mx-auto flex justify-center text-gray-600">
 							<UsersIcon />
 						</div>
-						<p className="mt-1 text-sm text-gray-600">Capacity</p>
+						<p className="mt-1 text-sm text-gray-600">
+							{t("manageVenues.fields.capacity")}
+						</p>
 						<p className="font-bold text-gray-950">{capacity}</p>
 					</div>
 					<div className="rounded-xl bg-gray-50 px-3 py-4 text-center">
 						<div className="mx-auto flex justify-center text-gray-600">
 							<DollarIcon />
 						</div>
-						<p className="mt-1 text-sm text-gray-600">Price</p>
+						<p className="mt-1 text-sm text-gray-600">
+							{t("manageVenues.fields.price")}
+						</p>
 						<p className="font-bold text-gray-950">{formatPrice(venue.price)}</p>
 					</div>
 					<button
@@ -147,7 +153,9 @@ export const VenueCard = ({
 						onClick={() => onBookingsClick(venue)}
 						className="rounded-xl bg-gray-50 px-3 py-4 text-center transition hover:bg-indigo-50 focus:outline-none focus:ring-4 focus:ring-indigo-100"
 					>
-						<p className="text-sm text-gray-600">Bookings</p>
+						<p className="text-sm text-gray-600">
+							{t("manageVenues.bookings")}
+						</p>
 						<p className="mt-2 text-2xl font-bold text-indigo-600">
 							{bookingsCount}
 						</p>
@@ -160,13 +168,13 @@ export const VenueCard = ({
 						icon={<EditIcon />}
 						className="h-12 text-base"
 					>
-						Edit
+						{t("manageVenues.edit")}
 					</Button>
 					<Button
 						variant="danger"
 						onClick={() => onDelete(venue)}
 						disabled={isDeleting}
-						aria-label={`Delete ${venue.title}`}
+						aria-label={t("manageVenues.deleteVenue", { title: venue.title })}
 						className="h-12 px-0"
 						icon={<TrashIcon />}
 					/>

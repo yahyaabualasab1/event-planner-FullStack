@@ -48,7 +48,10 @@ export const NavLayout = ({
 						</div>
 					)}
 				</NavLink>
-				<NavLink to="/dashboard/venues" onClick={() => onSelect("Manage Venues")}>
+				<NavLink
+					to="/dashboard/venues"
+					onClick={() => onSelect(t("manageVenues.title"))}
+				>
 					{({ isActive }) => (
 						<div
 							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -74,11 +77,14 @@ export const NavLayout = ({
 									/>
 								</svg>
 							</span>
-							Manage Venues
+							{t("manageVenues.title")}
 						</div>
 					)}
 				</NavLink>
-				<NavLink to="/dashboard/bookings" onClick={() => onSelect("Bookings")}>
+				<NavLink
+					to="/dashboard/bookings"
+					onClick={() => onSelect(t("bookings.title"))}
+				>
 					{({ isActive }) => (
 						<div
 							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
@@ -104,7 +110,7 @@ export const NavLayout = ({
 									/>
 								</svg>
 							</span>
-							Bookings
+							{t("bookings.title")}
 						</div>
 					)}
 				</NavLink>

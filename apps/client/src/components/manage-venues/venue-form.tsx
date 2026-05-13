@@ -1,7 +1,9 @@
 import type { ManageVenue, ManageVenuePayload } from "@/api/manage-venues.api";
 import { Button } from "@/components/ui/button";
 import { TextareaInput, TextInput } from "@/components/ui/input";
+import type { TFunction } from "i18next";
 import { ChangeEvent, DragEvent, FormEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type VenueFormValues = {
 	title: string;
@@ -43,36 +45,39 @@ const getInitialValues = (venue?: ManageVenue | null): VenueFormValues => ({
 	imageUrl: venue?.images?.[0] ?? "",
 });
 
-const validateForm = (values: VenueFormValues): VenueFormErrors => {
+const validateForm = (
+	values: VenueFormValues,
+	t: TFunction,
+): VenueFormErrors => {
 	const errors: VenueFormErrors = {};
 
 	if (!values.title.trim()) {
-		errors.title = "Title is required";
+		errors.title = t("manageVenues.validation.titleRequired");
 	}
 
 	if (!values.location.trim()) {
-		errors.location = "Location is required";
+		errors.location = t("manageVenues.validation.locationRequired");
 	}
 
 	if (!values.capacity.trim()) {
-		errors.capacity = "Capacity is required";
+		errors.capacity = t("manageVenues.validation.capacityRequired");
 	} else if (!Number.isInteger(Number(values.capacity)) || Number(values.capacity) <= 0) {
-		errors.capacity = "Capacity must be a positive whole number";
+		errors.capacity = t("manageVenues.validation.capacityPositive");
 	}
 
 	if (!values.price.trim()) {
-		errors.price = "Price is required";
+		errors.price = t("manageVenues.validation.priceRequired");
 	}
 
 	if (!values.description.trim()) {
-		errors.description = "Description is required";
+		errors.description = t("manageVenues.validation.descriptionRequired");
 	}
 
 	if (values.imageUrl.trim()) {
 		try {
 			new URL(values.imageUrl);
 		} catch {
-			errors.imageUrl = "Image must be a valid URL";
+			errors.imageUrl = t("manageVenues.validation.imageUrlInvalid");
 		}
 	}
 
@@ -86,6 +91,7 @@ export const VenueForm = ({
 	onCancel,
 	onSubmit,
 }: VenueFormProps) => {
+	const { t } = useTranslation();
 	const [values, setValues] = useState<VenueFormValues>(() =>
 		getInitialValues(venue),
 	);
@@ -122,7 +128,7 @@ export const VenueForm = ({
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const nextErrors = validateForm(values);
+		const nextErrors = validateForm(values, t);
 		setErrors(nextErrors);
 
 		if (Object.keys(nextErrors).length > 0) {
@@ -145,48 +151,48 @@ export const VenueForm = ({
 		<form onSubmit={handleSubmit} className="space-y-5">
 			<div className="grid gap-5 md:grid-cols-2">
 				<TextInput
-					label="Venue Name"
+					label={t("manageVenues.fields.venueName")}
 					value={values.title}
 					onChange={(event) => setField("title", event.target.value)}
 					error={errors.title}
-					placeholder="Grand Ballroom"
+					placeholder={t("manageVenues.placeholders.venueName")}
 				/>
 				<TextInput
-					label="Location"
+					label={t("manageVenues.fields.location")}
 					value={values.location}
 					onChange={(event) => setField("location", event.target.value)}
 					error={errors.location}
-					placeholder="Downtown Manhattan, NY"
+					placeholder={t("manageVenues.placeholders.location")}
 				/>
 				<TextInput
-					label="Capacity"
+					label={t("manageVenues.fields.capacity")}
 					value={values.capacity}
 					onChange={(event) => setField("capacity", event.target.value)}
 					error={errors.capacity}
-					placeholder="500"
+					placeholder={t("manageVenues.placeholders.capacity")}
 					inputMode="numeric"
 				/>
 				<TextInput
-					label="Price per Day"
+					label={t("manageVenues.fields.pricePerDay")}
 					value={values.price}
 					onChange={(event) => setField("price", event.target.value)}
 					error={errors.price}
-					placeholder="5000"
+					placeholder={t("manageVenues.placeholders.price")}
 					inputMode="decimal"
 				/>
 			</div>
 
 			<TextareaInput
-				label="Description"
+				label={t("manageVenues.fields.description")}
 				value={values.description}
 				onChange={(event) => setField("description", event.target.value)}
 				error={errors.description}
-				placeholder="Describe the space, amenities, and event fit."
+				placeholder={t("manageVenues.placeholders.description")}
 			/>
 
 			<div>
 				<span className="mb-2 block text-sm font-semibold text-gray-700">
-					Image Upload
+					{t("manageVenues.fields.imageUpload")}
 				</span>
 				<label
 					onDragOver={(event) => {
@@ -210,7 +216,7 @@ export const VenueForm = ({
 					{values.imageUrl ? (
 						<img
 							src={values.imageUrl}
-							alt="Venue preview"
+							alt={t("manageVenues.venuePreview")}
 							className="h-36 w-full max-w-md rounded-xl object-cover"
 						/>
 					) : (
@@ -219,10 +225,10 @@ export const VenueForm = ({
 								<UploadIcon />
 							</span>
 							<span className="mt-3 font-semibold text-gray-800">
-								Drop an image here or browse
+								{t("manageVenues.dropImage")}
 							</span>
 							<span className="mt-1 text-sm text-gray-500">
-								The current API accepts image URLs, so dropped files are used as a local preview.
+								{t("manageVenues.imageUploadHint")}
 							</span>
 						</>
 					)}
@@ -231,27 +237,27 @@ export const VenueForm = ({
 					<span className="mt-1 block text-sm text-red-600">{errors.imageUrl}</span>
 				)}
 				<TextInput
-					label="Image URL"
+					label={t("manageVenues.fields.imageUrl")}
 					value={values.imageUrl}
 					onChange={(event) => setField("imageUrl", event.target.value)}
 					error={errors.imageUrl}
-					placeholder="https://example.com/venue.jpg"
+					placeholder={t("manageVenues.placeholders.imageUrl")}
 					className="mt-2"
 				/>
 			</div>
 
 			<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
 				<Button variant="outline" onClick={onCancel} disabled={isSubmitting}>
-					Cancel
+					{t("manageVenues.cancel")}
 				</Button>
 				<Button type="submit" disabled={isSubmitting}>
 					{isSubmitting
 						? venue
-							? "Saving..."
-							: "Creating..."
+							? t("manageVenues.saving")
+							: t("manageVenues.creating")
 						: venue
-							? "Save Venue"
-							: "Create Venue"}
+							? t("manageVenues.saveVenue")
+							: t("manageVenues.createVenue")}
 				</Button>
 			</div>
 		</form>
