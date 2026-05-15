@@ -7,9 +7,9 @@ export interface IBookingTimePeriod {
 
 export interface IBooking {
   _id: string;
-  clientId: string;
-  venueId: string;
-  customerId: string;
+  clientId: string | { _id: string; fullName: string; email: string };
+  venueId: string | { _id: string; title: string; location: string };
+  customerId: string | { _id: string; fullName: string; email: string };
   date: Date;
   status: BookingEnum;
   timePeriod: IBookingTimePeriod[];

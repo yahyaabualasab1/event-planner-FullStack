@@ -32,11 +32,67 @@
   "layout": {
     "portalSubtitle": "بوابة العميل",
     "dashboard": "لوحة التحكم",
-    "account": "الحساب"
+    "account": "الحساب",
+    "overview": "نظرة عامة"
   },
   "home": {
     "welcome": "مرحباً، {{name}}",
     "description": "ستتوسع لوحتك هنا مع إضافة المزيد من الميزات.",
     "fallbackName": "ضيفنا"
+  },
+  "overview": {
+    "totalVenues": "إجمالي القاعات",
+    "activeBookings": "الحجوزات النشطة",
+    "revenue": "الإيرادات",
+    "totalClients": "إجمالي العملاء",
+    "recentActivity": "النشاط الأخير",
+    "BookingsOverview": "نظرة عامة على الحجوزات",
+    "revenueTrend": "اتجاه الإيرادات",
+    "DashboardOverview": "نظرة عامة على لوحة التحكم",
+    "Welcome back! Here's what's happening with your venues and bookings.": "مرحباً بعودتك! إليك ما يحدث مع قاعاتك وحجوزاتك.",
+
+    "Revenue Trend": "اتجاه الإيرادات",
+    "Monthly revenue performance": "أداء الإيرادات الشهرية",
+    "No revenue data available": "لا توجد بيانات إيرادات متاحة",
+    "Jan": "يناير",
+    "Feb": "فبراير",
+    "Mar": "مارس",
+    "Apr": "أبريل",
+    "May": "مايو",
+    "Jun": "يونيو",
+    "Jul": "يوليو",
+    "Aug": "أغسطس",
+    "Sep": "سبتمبر",
+    "Oct": "أكتوبر",
+    "Nov": "نوفمبر",
+    "Dec": "ديسمبر",
+    "Revenue": "الإيرادات",
+    "No booking data available": "لا توجد بيانات حجوزات متاحة",
+    "Bookings": "الحجوزات",
+    "noDashboardData": "لا توجد بيانات للوحة التحكم",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "daysAgo": "أيام مضت",
+    "title": "العنوان",
+    "description": " الوصف ",
+    "viewAll": "عرض الجميع",
+    "unknownClient": "عميل غير معروف",
+    "bookingFor": "لـ",
+    "unknownVenue": "مكان غير معروف",
+    "guests": "الضيوف",
+    "persons": "شخص",
+    "status": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغي"
+    },
+    "showMore": "عرض المزيد",
+    "more": "أخرى",
+    "noActivity": "لا توجد أنشطة حديثة",
+    "recentActivity": "النشاط الأخير",
+    "Number of Bookings": "عدد الحجوزات",
+    "Monthly booking statistics": "إحصائيات الحجوزات الشهرية",
+    "Unknown": "غير معروف"
   }
 }

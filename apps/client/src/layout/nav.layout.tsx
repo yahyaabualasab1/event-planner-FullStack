@@ -2,53 +2,59 @@ import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export const NavLayout = ({
-	onSelect,
+  onSelect,
 }: {
-	onSelect: (label: string) => void;
+  onSelect: (label: string) => void;
 }) => {
-	const { t } = useTranslation();
+  const { t } = useTranslation();
 
-	return (
-		<aside className="flex flex-col w-64 min-h-screen bg-white px-4 py-6 border-r border-gray-100">
-			<div className="mb-6 px-2">
-				<h1 className="text-2xl font-bold text-indigo-600">Eventat</h1>
-				<p className="text-sm text-gray-400 mt-0.5">{t("layout.portalSubtitle")}</p>
-			</div>
+  return (
+    <aside className="flex flex-col w-64 h-full bg-white px-4 py-6 border-r border-gray-100">
+      <div className="mb-6 px-2">
+        <h1 className="text-2xl font-bold text-indigo-600">Eventat</h1>
+        <p className="text-sm text-gray-400 mt-0.5">
+          {t("layout.portalSubtitle")}
+        </p>
+      </div>
 
-			<hr className="border-gray-200 mb-6" />
+      <hr className="border-gray-200 mb-6" />
 
-			<nav className="flex flex-col gap-1">
-				<NavLink to="/dashboard" end onClick={() => onSelect(t("layout.dashboard"))}>
-					{({ isActive }) => (
-						<div
-							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-								isActive
-									? "bg-indigo-50 text-indigo-600"
-									: "text-gray-700 hover:bg-gray-100"
-							}`}
-						>
-							<span className={isActive ? "text-indigo-600" : "text-gray-500"}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="22"
-									height="22"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									strokeWidth={1.8}
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M3 13h4v8H3v-8zm6-5h4v13H9V8zm6-4h4v17h-4V4z"
-									/>
-								</svg>
-							</span>
-							{t("layout.dashboard")}
-						</div>
-					)}
-				</NavLink>
-			</nav>
-		</aside>
-	);
+      <nav className="flex flex-col gap-1">
+        <NavLink
+          to="/dashboard"
+          end
+          onClick={() => onSelect(t("layout.dashboard"))}
+        >
+          {({ isActive }) => (
+            <div
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                isActive
+                  ? "bg-indigo-50 text-indigo-600"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <span className={isActive ? "text-indigo-600" : "text-gray-500"}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 13h4v8H3v-8zm6-5h4v13H9V8zm6-4h4v17h-4V4z"
+                  />
+                </svg>
+              </span>
+              {t("layout.overview")}
+            </div>
+          )}
+        </NavLink>
+      </nav>
+    </aside>
+  );
 };
