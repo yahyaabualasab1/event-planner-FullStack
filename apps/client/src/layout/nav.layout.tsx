@@ -2,20 +2,22 @@ import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export const NavLayout = ({
-	onSelect,
+  onSelect,
 }: {
-	onSelect: (label: string) => void;
+  onSelect: (label: string) => void;
 }) => {
-	const { t } = useTranslation();
+  const { t } = useTranslation();
 
-	return (
-		<aside className="flex flex-col w-64 min-h-screen bg-white px-4 py-6 border-r border-gray-100">
-			<div className="mb-6 px-2">
-				<h1 className="text-2xl font-bold text-indigo-600">Eventat</h1>
-				<p className="text-sm text-gray-400 mt-0.5">{t("layout.portalSubtitle")}</p>
-			</div>
+  return (
+    <aside className="flex flex-col w-64 h-full bg-white px-4 py-6 border-r border-gray-100">
+      <div className="mb-6 px-2">
+        <h1 className="text-2xl font-bold text-indigo-600">Eventat</h1>
+        <p className="text-sm text-gray-400 mt-0.5">
+          {t("layout.portalSubtitle")}
+        </p>
+      </div>
 
-			<hr className="border-gray-200 mb-6" />
+      <hr className="border-gray-200 mb-6" />
 
 			<nav className="flex flex-col gap-1">
 				<NavLink to="/dashboard" end onClick={() => onSelect(t("layout.dashboard"))}>

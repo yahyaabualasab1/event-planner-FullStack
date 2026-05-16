@@ -20,7 +20,21 @@
       "bookings": "Bookings",
       "reports": "Reports",
       "messages": "Messages"
+    },
+    "reports.page": {
+      "title": "Reports & Issues",
+      "subtitle": "Monitor and resolve platform issues",
+      "pending": "Pending",
+      "reviewing": "Reviewing",
+      "resolved": "Resolved",
+      "highPriority": "High Priority"
     }
+  },
+  "report-item": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "priority": "Priority"
   },
   "header": {
     "adminDisplayName": "Admin User",
@@ -46,7 +60,7 @@
   },
   "pages": {
     "analytics": {
-      "title": "Analytics Dashboard",
+      "title": "Analytics Dasboard",
       "subtitle": "Platform-wide metrics and insights",
       "stats": {
         "totalUsers": "Total Users",
