@@ -1,14 +1,20 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useMemo } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { NavLayout } from "@/layout/nav.layout";
 import { HeaderLayout } from "@/layout/header.layout";
 
 export const Dashboard = () => {
-  const [selectedLabel, setSelectedLabel] = useState("Dashboard");
+	const { pathname } = useLocation();
 
-  return (
-    <div className="flex min-h-screen bg-gray-50">
-      <NavLayout onSelect={setSelectedLabel} />
+	const selectedLabel = useMemo(() => {
+		if (pathname.includes("/messages")) return "Messages";
+		if (pathname.includes("/bookings")) return "Bookings";
+		return "Explore";
+	}, [pathname]);
+
+	return (
+		<div className="flex min-h-screen bg-gray-50">
+			<NavLayout />
 
       <div className="flex flex-col flex-1">
         <HeaderLayout selectedLabel={selectedLabel} />
