@@ -8,14 +8,14 @@ export const ReportsPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">{t("reports.page.title")}</h1>
-      <h6 className="text-gray-600">{t("reports.page.subtitle")}</h6>
+      <h1 className="text-2xl font-bold">{t("pages.reportsPage.title")}</h1>
+      <h6 className="text-gray-600">{t("pages.reportsPage.subtitle")}</h6>
 
       <div className="grid grid-cols-4 gap-4">
-        <ReportStatsCard title={t("reports.page.pending")} value="12" icon="🕐" />
-        <ReportStatsCard title={t("reports.page.reviewing")} value="5" icon="💬" />
-        <ReportStatsCard title={t("reports.page.resolved")} value="142" icon="✅" />
-        <ReportStatsCard title={t("reports.page.highPriority")} value="3" icon="🚩" />
+        <ReportStatsCard title={t("pages.reportsPage.pending")} value="12" icon="🕐" />
+        <ReportStatsCard title={t("pages.reportsPage.reviewing")} value="5" icon="💬" />
+        <ReportStatsCard title={t("pages.reportsPage.resolved")} value="142" icon="✅" />
+        <ReportStatsCard title={t("pages.reportsPage.highPriority")} value="3" icon="🚩" />
       </div>
 
       <ReportsList />
