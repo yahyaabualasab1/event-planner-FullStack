@@ -1,3 +1,4 @@
+import { BookingsPage } from "@/pages/bookings.page";
 import { DashboardLayout } from "@/pages/layout.page";
 import { HomePage } from "@/pages/home.page";
 import { LoginPage } from "@/pages/login.page";
@@ -28,6 +29,7 @@ export const AppRouter = () => {
 					}
 				>
 					<Route index element={<HomePage />} />
+					<Route path="bookings" element={<BookingsPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

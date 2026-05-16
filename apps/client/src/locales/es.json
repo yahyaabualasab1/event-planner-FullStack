@@ -32,11 +32,49 @@
   "layout": {
     "portalSubtitle": "Portal de cliente",
     "dashboard": "Panel",
+    "bookings": "Reservas",
     "account": "Cuenta"
   },
   "home": {
     "welcome": "Bienvenido, {{name}}",
     "description": "Tu panel crecerá aquí conforme añadamos funciones.",
     "fallbackName": "usuario"
+  },
+  "common": {
+    "dash": "—"
+  },
+  "bookingsPage": {
+    "title": "Reservas",
+    "subtitle": "Revisa las solicitudes para tus locales y apruébalas o recházalas.",
+    "loading": "Cargando reservas...",
+    "loadError": "No se pudieron cargar las reservas. Inténtalo de nuevo.",
+    "updateError": "No se pudo actualizar la reserva. Inténtalo de nuevo.",
+    "empty": "No hay reservas para mostrar.",
+    "filters": {
+      "all": "Todas",
+      "pending": "Pendientes",
+      "approved": "Aprobadas",
+      "declined": "Rechazadas"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "approved": "Aprobada",
+      "declined": "Rechazada"
+    },
+    "actions": {
+      "approve": "Aprobar",
+      "decline": "Rechazar"
+    },
+    "card": {
+      "venueTitle": "Local #{{id}}",
+      "requestReceived": "Solicitud recibida • {{date}}",
+      "customerInfo": "Información del cliente",
+      "customerId": "ID de cliente: {{id}}",
+      "bookingId": "ID de reserva: {{id}}",
+      "eventDetails": "Detalles del evento",
+      "eventDate": "Fecha del evento",
+      "timePeriod": "Franja horaria",
+      "bookingReference": "Referencia de reserva"
+    }
   }
 }

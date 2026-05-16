@@ -32,11 +32,49 @@
   "layout": {
     "portalSubtitle": "Client Portal",
     "dashboard": "Dashboard",
+    "bookings": "Bookings",
     "account": "Account"
   },
   "home": {
     "welcome": "Welcome, {{name}}",
     "description": "Your dashboard will grow here as features are added.",
     "fallbackName": "there"
+  },
+  "common": {
+    "dash": "—"
+  },
+  "bookingsPage": {
+    "title": "Bookings",
+    "subtitle": "Review requests for your venues and approve or decline them.",
+    "loading": "Loading bookings...",
+    "loadError": "Failed to load bookings. Please try again.",
+    "updateError": "Could not update the booking. Please try again.",
+    "empty": "No bookings to show.",
+    "filters": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "actions": {
+      "approve": "Approve",
+      "decline": "Decline"
+    },
+    "card": {
+      "venueTitle": "Venue #{{id}}",
+      "requestReceived": "Request received • {{date}}",
+      "customerInfo": "Customer info",
+      "customerId": "Customer ID: {{id}}",
+      "bookingId": "Booking ID: {{id}}",
+      "eventDetails": "Event details",
+      "eventDate": "Event date",
+      "timePeriod": "Time period",
+      "bookingReference": "Booking reference"
+    }
   }
 }

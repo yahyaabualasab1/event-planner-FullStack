@@ -48,6 +48,40 @@ export const NavLayout = ({
 						</div>
 					)}
 				</NavLink>
+
+				<NavLink
+					to="/dashboard/bookings"
+					onClick={() => onSelect(t("layout.bookings"))}
+				>
+					{({ isActive }) => (
+						<div
+							className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+								isActive
+									? "bg-indigo-50 text-indigo-600"
+									: "text-gray-700 hover:bg-gray-100"
+							}`}
+						>
+							<span className={isActive ? "text-indigo-600" : "text-gray-500"}>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="22"
+									height="22"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									strokeWidth={1.8}
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M8 7V3m8 4V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"
+									/>
+								</svg>
+							</span>
+							{t("layout.bookings")}
+						</div>
+					)}
+				</NavLink>
 			</nav>
 		</aside>
 	);
