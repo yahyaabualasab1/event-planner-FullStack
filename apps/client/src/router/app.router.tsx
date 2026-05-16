@@ -3,6 +3,7 @@ import { BookingsPage } from "@/pages/bookings.page";
 import { DashboardLayout } from "@/pages/layout.page";
 import { HomePage } from "@/pages/home.page";
 import { LoginPage } from "@/pages/login.page";
+import { ManageVenuesPage } from "@/pages/manage-venues/manage-venues.page";
 import { RegisterPage } from "@/pages/register.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import Overview from "@/pages/overview.page";
@@ -30,6 +31,8 @@ export const AppRouter = () => {
 					}
 				>
 					<Route index element={<HomePage />} />
+					<Route path="venues" element={<ManageVenuesPage />} />
+					<Route path="bookings" element={<BookingsPage />} />
 					<Route path="bookings" element={<BookingsPage />} />
 					<Route path="overview" element={<Overview />} />
 				</Route>

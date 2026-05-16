@@ -41,6 +41,69 @@
     "description": "Your dashboard will grow here as features are added.",
     "fallbackName": "there"
   },
+  "manageVenues": {
+    "title": "Manage Venues",
+    "subtitle": "Create and manage your venue listings",
+    "addNewVenue": "Add New Venue",
+    "editVenue": "Edit Venue",
+    "editDescription": "Update the venue details below.",
+    "createDescription": "Add the details your customers need to understand the space.",
+    "sessionLoading": "Your client session is still loading. Please try again in a moment.",
+    "loading": "Loading venues...",
+    "loadError": "Unable to load venues. Check that the API is running and the route is available.",
+    "emptyTitle": "No venues yet",
+    "emptyDescription": "Add your first venue to start accepting event bookings.",
+    "confirmDelete": "Delete {{title}}?",
+    "imageUnavailable": "Image unavailable",
+    "notAvailable": "N/A",
+    "bookings": "Bookings",
+    "edit": "Edit",
+    "deleteVenue": "Delete {{title}}",
+    "venuePreview": "Venue preview",
+    "dropImage": "Drop an image here or browse",
+    "imageUploadHint": "The current API accepts image URLs, so dropped files are used as a local preview.",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "creating": "Creating...",
+    "saveVenue": "Save Venue",
+    "createVenue": "Create Venue",
+    "status": {
+      "active": "active",
+      "inactive": "inactive"
+    },
+    "fields": {
+      "venueName": "Venue Name",
+      "location": "Location",
+      "capacity": "Capacity",
+      "price": "Price",
+      "pricePerDay": "Price per Day",
+      "description": "Description",
+      "imageUpload": "Image Upload",
+      "imageUrl": "Image URL"
+    },
+    "placeholders": {
+      "venueName": "Grand Ballroom",
+      "location": "Downtown Manhattan, NY",
+      "capacity": "500",
+      "price": "5000",
+      "description": "Describe the space, amenities, and event fit.",
+      "imageUrl": "https://example.com/venue.jpg"
+    },
+    "validation": {
+      "titleRequired": "Title is required",
+      "locationRequired": "Location is required",
+      "capacityRequired": "Capacity is required",
+      "capacityPositive": "Capacity must be a positive whole number",
+      "priceRequired": "Price is required",
+      "descriptionRequired": "Description is required",
+      "imageUrlInvalid": "Image must be a valid URL"
+    }
+  },
+  "bookings": {
+    "title": "Bookings",
+    "showingForVenue": "Showing bookings for venue {{venueId}}.",
+    "selectVenue": "Select a venue to review its bookings."
+  },
   "common": {
     "dash": "—"
   },
