@@ -1,5 +1,6 @@
 import { useLogin } from "@/hooks/use-login";
-import { Input } from "@/components/input";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/widget/input";
 import { useState } from "react";
 
 const EmailIcon = () => (
@@ -84,6 +85,7 @@ const EyeIcon = ({ open }: { open: boolean }) => (
 
 export const LoginForm = () => {
 	const { mutate, isPending, isError } = useLogin();
+	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -199,9 +201,13 @@ export const LoginForm = () => {
 
 			<p className="mt-5 text-center text-sm text-slate-500">
 				Don&apos;t have an account?
-				<span className="ml-2 text-indigo-500 hover:text-indigo-600">
-					Sign up
-				</span>
+				<button
+					type="button"
+					onClick={() => navigate('/register')}
+					className="ml-2 text-indigo-500 hover:text-indigo-600"
+				>
+					Register
+				</button>
 			</p>
 		</form>
 	);

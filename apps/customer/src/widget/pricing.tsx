@@ -12,7 +12,6 @@ export const Pricing = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Basic */}
           <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("pricing.basic.title")}</h3>
             <p className="text-4xl font-bold text-gray-900 mb-1">{t("pricing.basic.price")}</p>
@@ -30,7 +29,6 @@ export const Pricing = () => {
             </a>
           </div>
 
-          {/* Pro */}
           <div className="bg-indigo-600 rounded-2xl p-8 shadow-lg relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">
               {t("pricing.popular")}
@@ -51,7 +49,6 @@ export const Pricing = () => {
             </a>
           </div>
 
-          {/* Enterprise */}
           <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("pricing.enterprise.title")}</h3>
             <p className="text-4xl font-bold text-gray-900 mb-1">{t("pricing.enterprise.price")}</p>

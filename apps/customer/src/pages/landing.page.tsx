@@ -1,11 +1,11 @@
-import { Navbar } from "@/components/navbar";
-import { Hero } from "@/components/hero";
-import { Features } from "@/components/features";
-import { HowItWorks } from "@/components/how-it-works";
-import { Pricing } from "@/components/pricing";
-import { VenueOwner } from "@/components/venue-owner";
+import { Navbar } from "@/widget/navbar";
+import { Hero } from "@/widget/hero";
+import { Features } from "@/widget/features";
+import { HowItWorks } from "@/widget/how-it-works";
+import { Pricing } from "@/widget/pricing";
+import { VenueOwner } from "@/widget/venue-owner";
 import { CTA } from "@/components/cta";
-import { Footer } from "@/components/footer";
+import { Footer } from "@/widget/footer";
 
 export const LandingPage = () => {
   return (

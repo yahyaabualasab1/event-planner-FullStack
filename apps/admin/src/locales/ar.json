@@ -22,6 +22,12 @@
       "messages": "الرسائل"
     }
   },
+  "report-item": {
+    "high": "عالية",
+    "medium": "متوسطة",
+    "low": "منخفضة",
+    "priority": "الأولوية"
+  },
   "header": {
     "adminDisplayName": "مسؤول النظام",
     "adminEmail": "admin@eventat.com",
@@ -215,7 +221,11 @@
   },
   "reportsPage": {
     "title": "التقارير",
-    "subtitle": "التقارير والتصدير"
+    "subtitle": "مراقبة وحل مشكلات المنصة",
+    "pending": "قيد الانتظار",
+    "reviewing": "قيد المراجعة",
+    "resolved": "تم الحل",
+    "highPriority": "أولوية عالية",
   },
   "bookingsPage": {
     "title": "طلبات الحجز",
