@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 
 interface Booking {
 	_id: string;
-	clientId: string;
-	venueId: string;
-	customerId: string;
+	clientId: string | { _id: string; fullName: string; email: string };
+	venueId: string | { _id: string; title: string; location: string };
+	customerId: string | { _id: string; fullName: string; email: string };
 	date: string;
 	status: string;
 	timePeriod: { from: string; to: string }[];
@@ -35,6 +35,27 @@ const mockBookings: Booking[] = [
 
 const BookingCard = ({ booking }: { booking: Booking }) => {
 	const { t, i18n } = useTranslation();
+
+	const getClientName = () => {
+		if (typeof booking.clientId === "string") {
+			return booking.clientId;
+		}
+		return booking.clientId?.fullName || t("common.unknown");
+	};
+
+	const getVenueName = () => {
+		if (typeof booking.venueId === "string") {
+			return booking.venueId;
+		}
+		return booking.venueId?.title || t("common.unknown");
+	};
+
+	const getCustomerName = () => {
+		if (typeof booking.customerId === "string") {
+			return booking.customerId;
+		}
+		return booking.customerId?.fullName || t("common.unknown");
+	};
 
 	const formatDate = (value?: string) => {
 		if (!value) return t("common.dash");
@@ -66,7 +87,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 			<div className="flex items-start justify-between gap-4">
 				<div>
 					<h3 className="text-lg font-semibold text-gray-900">
-						{t("bookingsPage.card.venueTitle", { id: booking.venueId })}
+						{getVenueName()}
 					</h3>
 					<p className="text-sm text-gray-400">
 						{t("bookingsPage.card.requestReceived", { date: dateFormatted })}
@@ -83,10 +104,10 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 						{t("bookingsPage.card.clientInfo")}
 					</p>
 					<p className="text-sm font-semibold text-gray-900">
-						{t("bookingsPage.card.clientId", { id: booking.clientId })}
+						{getClientName()}
 					</p>
 					<p className="text-sm text-gray-500">
-						{t("bookingsPage.card.customerId", { id: booking.customerId })}
+						{getCustomerName()}
 					</p>
 					<p className="text-sm text-gray-500">
 						{t("bookingsPage.card.bookingId", { id: booking._id })}
