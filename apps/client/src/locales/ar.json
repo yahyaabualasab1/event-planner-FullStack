@@ -32,6 +32,7 @@
   "layout": {
     "portalSubtitle": "بوابة العميل",
     "dashboard": "لوحة التحكم",
+    "bookings": "الحجوزات",
     "account": "الحساب",
     "overview": "نظرة عامة"
   },
@@ -40,12 +41,48 @@
     "description": "ستتوسع لوحتك هنا مع إضافة المزيد من الميزات.",
     "fallbackName": "ضيفنا"
   },
+  "common": {
+    "dash": "—"
+  },
+  "bookingsPage": {
+    "title": "الحجوزات",
+    "subtitle": "راجع طلبات الحجز على قاعاتك ووافق عليها أو ارفضها.",
+    "loading": "جارٍ تحميل الحجوزات...",
+    "loadError": "تعذر تحميل الحجوزات. حاول مرة أخرى.",
+    "updateError": "تعذر تحديث الحجز. حاول مرة أخرى.",
+    "empty": "لا توجد حجوزات لعرضها.",
+    "filters": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "approved": "مقبولة",
+      "declined": "مرفوضة"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "approved": "مقبول",
+      "declined": "مرفوض"
+    },
+    "actions": {
+      "approve": "قبول",
+      "decline": "رفض"
+    },
+    "card": {
+      "venueTitle": "القاعة #{{id}}",
+      "requestReceived": "تم استلام الطلب • {{date}}",
+      "customerInfo": "بيانات العميل",
+      "customerId": "معرّف العميل: {{id}}",
+      "bookingId": "معرّف الحجز: {{id}}",
+      "eventDetails": "تفاصيل الفعالية",
+      "eventDate": "تاريخ الفعالية",
+      "timePeriod": "الفترة الزمنية",
+      "bookingReference": "مرجع الحجز"
+    }
+  },
   "overview": {
     "totalVenues": "إجمالي القاعات",
     "activeBookings": "الحجوزات النشطة",
     "revenue": "الإيرادات",
     "totalClients": "إجمالي العملاء",
-    "recentActivity": "النشاط الأخير",
     "BookingsOverview": "نظرة عامة على الحجوزات",
     "revenueTrend": "اتجاه الإيرادات",
     "DashboardOverview": "نظرة عامة على لوحة التحكم",
