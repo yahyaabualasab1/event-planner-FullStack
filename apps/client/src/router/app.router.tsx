@@ -6,6 +6,8 @@ import { RegisterPage } from "@/pages/register.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+import Overview from "@/pages/overview.page";
+
 export const AppRouter = () => {
 	return (
 		<BrowserRouter>
@@ -30,6 +32,7 @@ export const AppRouter = () => {
 				>
 					<Route index element={<HomePage />} />
 					<Route path="bookings" element={<BookingsPage />} />
+					<Route path="overview" element={<Overview />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

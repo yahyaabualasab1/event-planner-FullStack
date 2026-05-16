@@ -33,7 +33,8 @@
     "portalSubtitle": "Client Portal",
     "dashboard": "Dashboard",
     "bookings": "Bookings",
-    "account": "Account"
+    "account": "Account",
+    "overview": "Overview"
   },
   "home": {
     "welcome": "Welcome, {{name}}",
@@ -76,5 +77,58 @@
       "timePeriod": "Time period",
       "bookingReference": "Booking reference"
     }
+  },
+  "overview": {
+    "totalVenues": "Total Venues",
+    "activeBookings": "Active Bookings",
+    "revenue": "Revenue",
+    "totalClients": "Total Clients",
+    "recentActivity": "Recent Activity",
+    "BookingsOverview": "Bookings Overview",
+    "Monthly booking statistics": "Monthly booking statistics",
+    "DashboardOverview": "Dashboard Overview",
+    "Welcome back! Here's what's happening with your venues and bookings.": "Welcome back! Here's what's happening with your venues and bookings.",
+
+    "Revenue Trend": "Revenue Trend",
+    "Monthly revenue performance": "Monthly revenue performance",
+    "No revenue data available": "No revenue data available",
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Apr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Dec",
+    "Revenue": "Revenue",
+    "No booking data available": "No booking data available",
+    "Bookings": "Bookings",
+    "noDashboardData": "No dashboard data available",
+    "today": "today",
+    "yesterday": "yesterday",
+    "daysAgo": "days ago",
+    "viewAll": "View all",
+    "unknownClient": "Unknown client",
+    "bookingFor": "booking for",
+    "unknownVenue": "Unknown venue",
+    "guests": "Guests",
+    "persons": "persons",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "showMore": "Show more",
+    "more": "more",
+    "title": "Title",
+    "description": "Description",
+    "noActivity": "No recent activity",
+    "Number of Bookings": "Number of Bookings",
+    "Unknown": "Unknown"
   }
 }

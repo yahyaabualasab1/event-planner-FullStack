@@ -76,5 +76,21 @@
       "timePeriod": "Franja horaria",
       "bookingReference": "Referencia de reserva"
     }
+  },
+  "overview": {
+    "totalVenues": "Total de espacios",
+    "activeBookings": "Reservas activas",
+    "revenue": "Ingresos",
+    "totalClients": "Total de clientes",
+    "recentActivity": "Actividad reciente",
+    "BookingsOverview": "Resumen de reservas",
+    "Monthly booking statistics": "Estadísticas mensuales de reservas",
+    "DashboardOverview": "Resumen del panel",
+    "status": {
+      "pending": "Pendiente",
+      "confirmed": "Confirmado",
+      "completed": "Completado",
+      "cancelled": "Cancelado"
+    }
   }
 }

@@ -46,7 +46,7 @@
   },
   "pages": {
     "analytics": {
-      "title": "Analytics Dashboard",
+      "title": "Analytics Dasboard",
       "subtitle": "Platform-wide metrics and insights",
       "stats": {
         "totalUsers": "Total Users",
