@@ -38,5 +38,19 @@
     "welcome": "مرحباً، {{name}}",
     "description": "ستتوسع لوحتك هنا مع إضافة المزيد من الميزات.",
     "fallbackName": "ضيفنا"
+  },
+  "manageMessages": {
+    "title": "الرسائل",
+    "subtitle": "استعرض ورد على محادثات عملائك",
+    "conversations": "المحادثات",
+    "loading": "جاري تحميل الرسائل...",
+    "loadError": "تعذر تحميل الرسائل.",
+    "sessionLoading": "جلسة قيد التحميل. حاول مرة أخرى.",
+    "emptyThreads": "لا توجد محادثات بعد.",
+    "selectThread": "اختر محادثة للبدء.",
+    "noMessages": "لا توجد رسائل بعد.",
+    "typePlaceholder": "اكتب رسالتك...",
+    "send": "إرسال",
+    "unknownCustomer": "عميل غير معروف"
   }
 }

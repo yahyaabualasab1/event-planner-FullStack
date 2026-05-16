@@ -38,5 +38,19 @@
     "welcome": "Welcome, {{name}}",
     "description": "Your dashboard will grow here as features are added.",
     "fallbackName": "there"
+  },
+  "manageMessages": {
+    "title": "Messages",
+    "subtitle": "View and reply to your customer conversations",
+    "conversations": "Conversations",
+    "loading": "Loading messages...",
+    "loadError": "Unable to load messages.",
+    "sessionLoading": "Session still loading. Try again.",
+    "emptyThreads": "No conversations yet.",
+    "selectThread": "Select a conversation to start messaging.",
+    "noMessages": "No messages yet.",
+    "typePlaceholder": "Type your message...",
+    "send": "Send",
+    "unknownCustomer": "Unknown Customer"
   }
 }
