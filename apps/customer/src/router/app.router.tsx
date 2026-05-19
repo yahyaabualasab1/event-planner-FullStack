@@ -7,6 +7,7 @@ import { Dashboard } from "@/pages/layout.page";
 import { RegisterPage } from "../pages/registar.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import { AppInit } from "@/providers/app-init.provider";
+import { ExplorePage } from "@/pages/explore.page";
 
 export const AppRouter = () => {
 	return (
@@ -30,6 +31,7 @@ export const AppRouter = () => {
 						<Route index element={<CustomerHomePage />} />
 						<Route path="bookings" element={<BookingsPage />} />
 						<Route path="messages" element={<MessagesPage />} />
+						<Route path="explore" element={<ExplorePage />} />
 					</Route>
 				</Routes>
 			</AppInit>

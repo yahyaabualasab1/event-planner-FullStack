@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const navItems = [
 	{
 		label: "Explore",
-		to: "/dashboard",
+		to: "/dashboard/explore",
 		end: true,
 		icon: (
 			<svg
