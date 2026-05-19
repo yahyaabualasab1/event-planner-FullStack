@@ -9,8 +9,6 @@ node_modules
 .cursor
 **/*.md
 # Exclude frontend sources; keep package.json for pnpm workspace install
-apps/admin/**
-!apps/admin/package.json
 apps/client/**
 !apps/client/package.json
 apps/customer/**
