@@ -1,7 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
-console.log(import.meta.env.VITE_API_URL);
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? "https://dev-event-planner-608310769455.europe-west1.run.app",
+  baseURL:  "https://dev-event-planner-608310769455.europe-west1.run.app",
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
