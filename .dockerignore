@@ -11,6 +11,4 @@ node_modules
 # Exclude frontend sources; keep package.json for pnpm workspace install
 apps/client/**
 !apps/client/package.json
-apps/customer/**
-!apps/customer/package.json
 **/postman
