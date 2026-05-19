@@ -8,7 +8,11 @@ node_modules
 .gitignore
 .cursor
 **/*.md
-apps/admin
-apps/client
-apps/customer
+# Exclude frontend sources; keep package.json for pnpm workspace install
+apps/admin/**
+!apps/admin/package.json
+apps/client/**
+!apps/client/package.json
+apps/customer/**
+!apps/customer/package.json
 **/postman
