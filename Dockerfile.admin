@@ -38,7 +38,6 @@ RUN pnpm install --frozen-lockfile --filter @event-planner/admin...
 
 COPY apps/admin ./apps/admin
 
-ARG VITE_API_URL=http://localhost:3000
 ENV VITE_API_URL=$VITE_API_URL
 
 # Vite build only (tsc -b has pre-existing strict errors in the admin app)
