@@ -28,6 +28,9 @@ RUN corepack enable && corepack prepare pnpm@11.1.3 --activate
 FROM base AS deps
 WORKDIR /app
 
+# Cloud Build sets CI=true; pnpm 11 strict-dep-builds fails on ignored lifecycle scripts
+ENV PNPM_STRICT_DEP_BUILDS=false
+
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
 COPY apps/admin/package.json ./apps/admin/
@@ -55,6 +58,7 @@ RUN pnpm dlx esbuild@0.25.0 src/index.ts \
 FROM base AS runner
 WORKDIR /app
 
+ENV PNPM_STRICT_DEP_BUILDS=false
 ENV NODE_ENV=production
 # Cloud Run sets PORT (default 8080); the API reads process.env.PORT
 ENV PORT=8080
