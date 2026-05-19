@@ -38,7 +38,6 @@ RUN pnpm install --frozen-lockfile --filter @event-planner/customer...
 
 COPY apps/customer ./apps/customer
 
-ARG VITE_API_URL=http://localhost:3000
 ENV VITE_API_URL=$VITE_API_URL
 
 RUN pnpm --filter @event-planner/customer exec vite build
