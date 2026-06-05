@@ -1,16 +1,15 @@
 import { Navigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth.store";
-import { JSX } from "react/jsx-dev-runtime";
+import { ReactNode } from "react";
 
-export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const token = useAuthStore((s) => s.token);
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  if (!token || !isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 // إذا user مش logged in : روح login

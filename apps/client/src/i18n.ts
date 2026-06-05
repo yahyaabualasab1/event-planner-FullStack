@@ -3,6 +3,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import ar from "./locales/ar.json";
 import en from "./locales/en.json";
+import es from "./locales/es.json";
 
 declare module "i18next" {
   interface CustomTypeOptions {
@@ -20,9 +21,10 @@ void i18n
     resources: {
       ar: { translation: ar },
       en: { translation: en },
+      es: { translation: es },
     },
     fallbackLng: "en",
-    supportedLngs: ["ar", "en"],
+    supportedLngs: ["ar", "en", "es"],
     interpolation: { escapeValue: false },
   });
 

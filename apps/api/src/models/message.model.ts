@@ -42,4 +42,4 @@ export const Message: Model<IMessage> = model<IMessage>(
   messageSchema,
 );
 export { messageSchema };
-export { IMessage } from "../interfaces/models/message.interface";
+export type { IMessage } from "../interfaces/models/message.interface";
