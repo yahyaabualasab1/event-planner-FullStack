@@ -1,10 +1,7 @@
 import { Schema, model, type Model } from "mongoose";
 
 import { BookingEnum } from "../enums/models/booking";
-import {
-  IBooking,
-  IBookingTimePeriod,
-} from "../interfaces/models/booking.interface";
+import { IBooking, IBookingTimePeriod } from "../interfaces/models/booking.interface";
 
 const bookingTimePeriodSchema = new Schema<IBookingTimePeriod>(
   {
@@ -24,12 +21,10 @@ const bookingSchema = new Schema<IBooking>(
     venueId: {
       type: String,
       required: true,
-      ref: "Venue",
     },
     customerId: {
       type: String,
       required: true,
-      ref: "Customer",
     },
     date: {
       type: Date,
@@ -39,7 +34,7 @@ const bookingSchema = new Schema<IBooking>(
       type: String,
       required: true,
       enum: Object.values(BookingEnum),
-    },
+    },  
     timePeriod: {
       type: [bookingTimePeriodSchema],
       required: true,
@@ -52,7 +47,7 @@ const bookingSchema = new Schema<IBooking>(
       default: false,
     },
   },
-  { collection: "bookings", timestamps: true },
+  { collection: "bookings" },
 );
 
 export const Booking: Model<IBooking> = model<IBooking>(

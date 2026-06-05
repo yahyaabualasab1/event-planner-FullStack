@@ -1,2 +1,2 @@
-export * from "./admin/auth.services";
-export * from "./admin/venues.services";
+export * from "./admin";
+export * from "./client";

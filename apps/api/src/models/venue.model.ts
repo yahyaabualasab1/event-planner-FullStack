@@ -15,7 +15,6 @@ const venueSchema = new Schema<IVenue>(
     title: { type: String, required: true },
     description: { type: String, required: false },
     location: { type: String, required: false },
-    capacity: { type: Number, required: false },
     price: { type: String, required: false },
     images: { type: [String], required: false },
     extras: { type: String, required: false },
