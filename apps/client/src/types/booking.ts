@@ -5,11 +5,25 @@ export interface BookingTimePeriod {
 	to: string;
 }
 
+export interface BookingCustomer {
+	_id: string;
+	fullName?: string;
+	email?: string;
+	phoneNumber?: string;
+}
+
+export interface BookingVenue {
+	_id: string;
+	title?: string;
+	location?: string;
+	price?: string;
+}
+
 export interface Booking {
 	_id: string;
 	clientId: string;
-	venueId: string;
-	customerId: string;
+	venueId: string | BookingVenue;
+	customerId: string | BookingCustomer;
 	date: string;
 	status: BookingStatus;
 	timePeriod: BookingTimePeriod[];
