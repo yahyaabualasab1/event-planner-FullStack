@@ -225,7 +225,8 @@
   },
   "listingsPage": {
     "title": "Listings",
-    "subtitle": "Venue listings overview"
+    "subtitle": "Venue listings overview",
+    "emptyForClient": "No venues found for this person."
   },
   "reportsPage": {
     "title": "Reports",
@@ -260,6 +261,7 @@
     "title": "Venues",
     "subtitle": "Review and manage venue listings",
     "loading": "Loading venues…",
+    "empty": "No venues found.",
     "loadError": "Failed to load venues.",
     "card": {
       "noImage": "No image",
