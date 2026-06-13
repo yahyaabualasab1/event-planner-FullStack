@@ -1,8 +1,21 @@
+import { cloudinary } from "../../cloudinary";
 import { Venue } from "../../../models/venue.model";
 import type {
 	CreateManageVenueInput,
 	UpdateManageVenueInput,
-} from "../../../validation/client-system/manage-venues.schemas"; 
+} from "../../../validation/client-system/manage-venues.schemas";
+
+export async function getCloudinarySignature() {
+	const timestamp = Math.round(new Date().getTime() / 1000);
+	const signature = cloudinary.utils.api_sign_request(
+		{
+			timestamp,
+			folder: "venues",
+		},
+		process.env.CLOUDINARY_API_SECRET as string,
+	);
+	return { timestamp, signature };
+}
 
 export async function getAllManageVenues() {
 	return await Venue.find({ isDeleted: false });
@@ -53,6 +66,7 @@ export async function deleteManageVenue(id: string) {
 }
 
 export const clientManageVenueServices = {
+	getCloudinarySignature,
 	getAllManageVenues,
 	getManageVenueById,
 	getManageVenuesByClientId,

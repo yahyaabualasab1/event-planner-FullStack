@@ -4,6 +4,10 @@ import { TextareaInput, TextInput } from "@/components/ui/input";
 import type { TFunction } from "i18next";
 import { ChangeEvent, DragEvent, FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getCloudinarySignature, uploadToCloudinary } from "@/api/upload.api";
+
+const CLOUDINARY_CLOUD_NAME = "dremhy6nr"; // Replace with your Cloudinary cloud name
+const CLOUDINARY_API_KEY = "877779214928376"; // Replace with your Cloudinary API key
 
 type VenueFormValues = {
 	title: string;
@@ -25,7 +29,13 @@ type VenueFormProps = {
 };
 
 const UploadIcon = () => (
-	<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+	<svg
+		width="28"
+		height="28"
+		viewBox="0 0 24 24"
+		fill="none"
+		aria-hidden="true"
+	>
 		<path
 			d="M12 15V4m0 0 4 4m-4-4L8 8m12 7v3.5A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5V15"
 			stroke="currentColor"
@@ -61,7 +71,10 @@ const validateForm = (
 
 	if (!values.capacity.trim()) {
 		errors.capacity = t("manageVenues.validation.capacityRequired");
-	} else if (!Number.isInteger(Number(values.capacity)) || Number(values.capacity) <= 0) {
+	} else if (
+		!Number.isInteger(Number(values.capacity)) ||
+		Number(values.capacity) <= 0
+	) {
 		errors.capacity = t("manageVenues.validation.capacityPositive");
 	}
 
@@ -97,6 +110,7 @@ export const VenueForm = ({
 	);
 	const [errors, setErrors] = useState<VenueFormErrors>({});
 	const [isDragging, setIsDragging] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 
 	useEffect(() => {
 		setValues(getInitialValues(venue));
@@ -108,12 +122,31 @@ export const VenueForm = ({
 		setErrors((current) => ({ ...current, [field]: undefined }));
 	};
 
-	const handleImageFile = (file?: File) => {
+	const handleImageFile = async (file?: File) => {
 		if (!file) {
 			return;
 		}
 
-		setField("imageUrl", URL.createObjectURL(file));
+		setIsUploading(true);
+		try {
+			const { data: signatureData } = await getCloudinarySignature();
+			const uploadData = await uploadToCloudinary(
+				file,
+				signatureData.signature,
+				signatureData.timestamp,
+				CLOUDINARY_API_KEY,
+				CLOUDINARY_CLOUD_NAME,
+			);
+			setField("imageUrl", uploadData.secure_url);
+		} catch (error) {
+			console.error("Upload failed", error);
+			setErrors((current) => ({
+				...current,
+				imageUrl: "Image upload failed. Please try again.",
+			}));
+		} finally {
+			setIsUploading(false);
+		}
 	};
 
 	const handleDrop = (event: DragEvent<HTMLLabelElement>) => {
@@ -160,14 +193,18 @@ export const VenueForm = ({
 				<TextInput
 					label={t("manageVenues.fields.location")}
 					value={values.location}
-					onChange={(event) => setField("location", event.target.value)}
+					onChange={(event) =>
+						setField("location", event.target.value)
+					}
 					error={errors.location}
 					placeholder={t("manageVenues.placeholders.location")}
 				/>
 				<TextInput
 					label={t("manageVenues.fields.capacity")}
 					value={values.capacity}
-					onChange={(event) => setField("capacity", event.target.value)}
+					onChange={(event) =>
+						setField("capacity", event.target.value)
+					}
 					error={errors.capacity}
 					placeholder={t("manageVenues.placeholders.capacity")}
 					inputMode="numeric"
@@ -185,7 +222,9 @@ export const VenueForm = ({
 			<TextareaInput
 				label={t("manageVenues.fields.description")}
 				value={values.description}
-				onChange={(event) => setField("description", event.target.value)}
+				onChange={(event) =>
+					setField("description", event.target.value)
+				}
 				error={errors.description}
 				placeholder={t("manageVenues.placeholders.description")}
 			/>
@@ -205,15 +244,20 @@ export const VenueForm = ({
 						isDragging
 							? "border-indigo-500 bg-indigo-50"
 							: "border-gray-200 bg-gray-50 hover:bg-gray-100"
-					}`}
+					} ${isUploading ? "cursor-wait" : ""}`}
 				>
 					<input
 						type="file"
 						accept="image/*"
 						className="sr-only"
 						onChange={handleFileChange}
+						disabled={isUploading}
 					/>
-					{values.imageUrl ? (
+					{isUploading ? (
+						<span className="font-semibold text-gray-800">
+							Uploading...
+						</span>
+					) : values.imageUrl ? (
 						<img
 							src={values.imageUrl}
 							alt={t("manageVenues.venuePreview")}
@@ -234,12 +278,16 @@ export const VenueForm = ({
 					)}
 				</label>
 				{errors.imageUrl && (
-					<span className="mt-1 block text-sm text-red-600">{errors.imageUrl}</span>
+					<span className="mt-1 block text-sm text-red-600">
+						{errors.imageUrl}
+					</span>
 				)}
 				<TextInput
 					label={t("manageVenues.fields.imageUrl")}
 					value={values.imageUrl}
-					onChange={(event) => setField("imageUrl", event.target.value)}
+					onChange={(event) =>
+						setField("imageUrl", event.target.value)
+					}
 					error={errors.imageUrl}
 					placeholder={t("manageVenues.placeholders.imageUrl")}
 					className="mt-2"
@@ -247,10 +295,14 @@ export const VenueForm = ({
 			</div>
 
 			<div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-				<Button variant="outline" onClick={onCancel} disabled={isSubmitting}>
+				<Button
+					variant="outline"
+					onClick={onCancel}
+					disabled={isSubmitting || isUploading}
+				>
 					{t("manageVenues.cancel")}
 				</Button>
-				<Button type="submit" disabled={isSubmitting}>
+				<Button type="submit" disabled={isSubmitting || isUploading}>
 					{isSubmitting
 						? venue
 							? t("manageVenues.saving")
