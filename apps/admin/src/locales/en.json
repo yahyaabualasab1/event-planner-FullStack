@@ -246,15 +246,30 @@
       "bookingId": "Booking ID {{id}}",
       "eventDate": "Event date",
       "timePeriod": "Time period",
-      "bookingReference": "Booking reference"
+      "bookingReference": "Booking reference",
+      "totalAmount": "Total amount"
     },
     "status": {
       "pending": "Pending",
+      "approved": "Approved",
+      "declined": "Declined",
       "confirmed": "Confirmed",
       "cancelled": "Cancelled",
       "completed": "Completed",
       "other": "{{status}}"
-    }
+    },
+    "actions": {
+      "approve": "Approve",
+      "decline": "Decline"
+    },
+    "updateError": "Failed to update booking status.",
+    "filters": {
+      "all": "All",
+      "pending": "Pending",
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "empty": "No booking requests found."
   },
   "venuesPage": {
     "title": "Venues",
