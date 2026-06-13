@@ -242,15 +242,30 @@
       "bookingId": "معرّف الحجز {{id}}",
       "eventDate": "تاريخ الفعالية",
       "timePeriod": "الفترة الزمنية",
-      "bookingReference": "مرجع الحجز"
+      "bookingReference": "مرجع الحجز",
+      "totalAmount": "المبلغ الإجمالي"
     },
     "status": {
       "pending": "قيد الانتظار",
+      "approved": "تمت الموافقة",
+      "declined": "تم الرفض",
       "confirmed": "مؤكد",
       "cancelled": "ملغى",
       "completed": "مكتمل",
       "other": "{{status}}"
-    }
+    },
+    "actions": {
+      "approve": "الموافقة",
+      "decline": "رفض"
+    },
+    "updateError": "فشل تحديث حالة الحجز.",
+    "filters": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "approved": "تمت الموافقة",
+      "declined": "تم الرفض"
+    },
+    "empty": "لا توجد طلبات حجز حالياً."
   },
   "venuesPage": {
     "title": "الأماكن",
