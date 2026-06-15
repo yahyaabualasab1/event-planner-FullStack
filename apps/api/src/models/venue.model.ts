@@ -1,10 +1,11 @@
 import { Schema, model } from "mongoose";
 import { IVenue } from "../interfaces/models/venue.interface";
 
-const availabilitySchema = new Schema<{ from: string; to: string }>(
+const availabilitySchema = new Schema(
   {
-    from: { type: String },
-    to: { type: String },
+    date: { type: Date, required: true },
+    from: { type: String, required: true },
+    to: { type: String, required: true },
   },
   { _id: false },
 );

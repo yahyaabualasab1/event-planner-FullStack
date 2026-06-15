@@ -2,8 +2,11 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonVariant = "primary" | "outline" | "danger" | "ghost";
 
+type ButtonSize = "sm" | "md" | "lg";
+
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	variant?: ButtonVariant;
+	size?: ButtonSize;
 	icon?: ReactNode;
 };
 
@@ -18,10 +21,17 @@ const variants: Record<ButtonVariant, string> = {
 		"bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-100 disabled:text-gray-300",
 };
 
+const sizes: Record<ButtonSize, string> = {
+	sm: "min-h-9 px-3 py-2 text-xs",
+	md: "min-h-11 px-4 py-2.5 text-sm",
+	lg: "min-h-12 px-5 py-3 text-base",
+};
+
 export const Button = ({
 	children,
 	className = "",
 	variant = "primary",
+	size = "md",
 	icon,
 	type = "button",
 	...props
@@ -30,7 +40,7 @@ export const Button = ({
 		<button
 			{...props}
 			type={type}
-			className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-4 disabled:cursor-not-allowed ${variants[variant]} ${className}`}
+			className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors focus:outline-none focus:ring-4 disabled:cursor-not-allowed ${variants[variant]} ${sizes[size]} ${className}`}
 		>
 			{icon}
 			{children}

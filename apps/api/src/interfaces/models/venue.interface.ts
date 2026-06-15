@@ -1,9 +1,10 @@
 import { Types } from "mongoose";
 
-export interface IAvailability {
+export type AvailabilityWindow = {
+  date: string;
   from: string;
   to: string;
-}
+};
 
 export interface IVenue {
   _id: string;
@@ -15,7 +16,7 @@ export interface IVenue {
   price: string;
   images: string[];
   extras: string;
-  availability: IAvailability[];
+  availability?: AvailabilityWindow[];
   discounts?: string;
   isDeleted: boolean;
 }
