@@ -12,20 +12,34 @@ interface Venue {
   price: string;
   images: string[];
   extras: string;
-  availability: { date: Date; from: string; to: string }[];
+  availability: { date?: string | Date; from: string; to: string }[];
   discounts?: string;
   isDeleted: boolean;
 }
 
 const VenueCard = ({ venue }: { venue: Venue }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const status = venue.isDeleted
     ? t("venuesPage.card.statusArchived")
     : t("venuesPage.card.statusActive");
   const imageUrl = venue.images?.[0];
-  const availabilityLabel = venue.availability?.length
-    ? `${venue.availability[0].date.toLocaleDateString()}: ${venue.availability[0].from} - ${venue.availability[0].to}`
-    : t("common.notAvailable");
+
+  const slot = venue.availability?.[0];
+  const formatDate = (value?: string | Date) => {
+    if (!value) return null;
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+    return date.toLocaleDateString(i18n.language, {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+  const formattedDate = slot ? formatDate(slot.date) : null;
+  const availabilityLabel =
+    formattedDate && slot?.from && slot?.to
+      ? `${formattedDate}: ${slot.from} - ${slot.to}`
+      : t("common.notAvailable");
 
   return (
     <article className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
