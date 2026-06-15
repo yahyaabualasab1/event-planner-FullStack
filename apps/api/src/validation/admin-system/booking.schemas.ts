@@ -20,9 +20,8 @@ export const UpdateBookingSchema = z.object({
   venueId: z.string().min(1, "Venue ID is required").optional(),
   customerId: z.string().min(1, "Customer ID is required").optional(),
   date: z.coerce.date().optional(),
-  status: z.nativeEnum(BookingEnum).optional(),
   timePeriod: z.array(BookingTimePeriodSchema).min(1, "At least one time period is required").optional(),
-});
+}).strict();
 
 export const BookingIdParamSchema = z.object({
   id: z.string().min(1, "Booking ID is required"),

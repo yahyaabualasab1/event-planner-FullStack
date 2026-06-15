@@ -1,4 +1,4 @@
-import { useBookings, useUpdateBookingStatus } from "@/hooks/use-bookings";
+import { useBookings } from "@/hooks/use-bookings";
 import type { Booking, BookingCustomer, BookingStatus } from "@/types/booking";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,11 +31,6 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
   console.log("VenueId object:", booking.venueId);
 
   const { t, i18n } = useTranslation<"translation">("translation");
-  const updateStatus = useUpdateBookingStatus();
-
-  const isPending = booking.status === "pending";
-  const isMutating =
-    updateStatus.isPending && updateStatus.variables?.id === booking._id;
 
   const formatDate = (value?: string) => {
     if (!value) return t("common.dash");
@@ -96,10 +91,6 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
   };
 
   const dateFormatted = formatDate(booking.date);
-
-  const handleUpdate = (status: BookingStatus) => {
-    updateStatus.mutate({ id: booking._id, status });
-  };
 
   return (
     <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
@@ -231,33 +222,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
           </p>
         </div>
 
-        {isPending && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => handleUpdate("approved")}
-              disabled={isMutating}
-              className="px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 disabled:opacity-50"
-            >
-              {t("bookingsPage.actions.approve")}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleUpdate("declined")}
-              disabled={isMutating}
-              className="px-4 py-2 rounded-xl border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50"
-            >
-              {t("bookingsPage.actions.decline")}
-            </button>
-          </div>
-        )}
       </div>
-
-      {updateStatus.isError && updateStatus.variables?.id === booking._id && (
-        <p className="mt-3 text-sm text-red-500">
-          {t("bookingsPage.updateError")}
-        </p>
-      )}
     </div>
   );
 };
