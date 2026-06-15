@@ -1,6 +1,6 @@
 import { useLogin } from "@/hooks/use-login";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/input";
+import { Input } from "@/widget/input";
 import { useState } from "react";
 
 const EmailIcon = () => (

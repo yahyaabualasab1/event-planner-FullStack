@@ -111,6 +111,15 @@
       "priceRequired": "Price is required",
       "descriptionRequired": "Description is required",
       "imageUrlInvalid": "Image must be a valid URL"
+    },
+    "availability": {
+      "title": "Availability",
+      "date": "Date",
+      "from": "From",
+      "to": "To",
+      "addSlot": "Add availability slot",
+      "slotsList": "Availability slots",
+      "remove": "Remove"
     }
   },
   "bookings": {

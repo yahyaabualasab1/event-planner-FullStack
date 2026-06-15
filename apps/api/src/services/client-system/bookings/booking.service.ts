@@ -14,14 +14,19 @@ export const getBookingsForClient = async (
 		filter.status = status;
 	}
 
-	return Booking.find(filter).sort({ date: -1 });
+	return Booking.find(filter)
+		.sort({ date: -1 })
+		.populate("venueId", "title location price")
+		.populate("customerId", "fullName email phoneNumber");
 };
 
 export const getBookingByIdForClient = async (
 	id: string,
 	clientId: string,
 ) => {
-	return Booking.findOne({ _id: id, clientId, isDeleted: false });
+	return Booking.findOne({ _id: id, clientId, isDeleted: false })
+		.populate("venueId", "title location price")
+		.populate("customerId", "fullName email phoneNumber");
 };
 
 export const updateBookingStatusForClient = async (
@@ -33,7 +38,9 @@ export const updateBookingStatusForClient = async (
 		{ _id: id, clientId, isDeleted: false },
 		{ status },
 		{ new: true },
-	);
+	)
+		.populate("venueId", "title location price")
+		.populate("customerId", "fullName email phoneNumber");
 };
 
 export const clientBookingService = {

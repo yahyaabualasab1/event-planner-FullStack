@@ -217,7 +217,8 @@
   },
   "listingsPage": {
     "title": "القوائم",
-    "subtitle": "نظرة عامة على قوائم الأماكن"
+    "subtitle": "نظرة عامة على قوائم الأماكن",
+    "emptyForClient": "لم يتم العثور على أماكن لهذا الشخص."
   },
   "reportsPage": {
     "title": "التقارير",
@@ -225,7 +226,7 @@
     "pending": "قيد الانتظار",
     "reviewing": "قيد المراجعة",
     "resolved": "تم الحل",
-    "highPriority": "أولوية عالية",
+    "highPriority": "أولوية عالية"
   },
   "bookingsPage": {
     "title": "طلبات الحجز",
@@ -242,20 +243,36 @@
       "bookingId": "معرّف الحجز {{id}}",
       "eventDate": "تاريخ الفعالية",
       "timePeriod": "الفترة الزمنية",
-      "bookingReference": "مرجع الحجز"
+      "bookingReference": "مرجع الحجز",
+      "totalAmount": "المبلغ الإجمالي"
     },
     "status": {
       "pending": "قيد الانتظار",
+      "approved": "تمت الموافقة",
+      "declined": "تم الرفض",
       "confirmed": "مؤكد",
       "cancelled": "ملغى",
       "completed": "مكتمل",
       "other": "{{status}}"
-    }
+    },
+    "actions": {
+      "approve": "الموافقة",
+      "decline": "رفض"
+    },
+    "updateError": "فشل تحديث حالة الحجز.",
+    "filters": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "approved": "تمت الموافقة",
+      "declined": "تم الرفض"
+    },
+    "empty": "لا توجد طلبات حجز حالياً."
   },
   "venuesPage": {
     "title": "الأماكن",
     "subtitle": "مراجعة وإدارة قوائم الأماكن",
     "loading": "جاري تحميل الأماكن…",
+    "empty": "لم يتم العثور على أماكن.",
     "loadError": "تعذّر تحميل الأماكن.",
     "card": {
       "noImage": "لا صورة",

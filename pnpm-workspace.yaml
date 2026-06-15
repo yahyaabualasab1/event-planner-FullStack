@@ -1,5 +1,5 @@
 packages:
   - "apps/*"
 allowBuilds:
-  bcrypt: true
-  esbuild: true
+  bcrypt: false
+  esbuild: false
