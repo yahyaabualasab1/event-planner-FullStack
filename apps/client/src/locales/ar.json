@@ -111,6 +111,15 @@
       "priceRequired": "السعر مطلوب",
       "descriptionRequired": "الوصف مطلوب",
       "imageUrlInvalid": "يجب أن تكون الصورة رابطًا صالحًا"
+    },
+    "availability": {
+      "title": "التوافر",
+      "date": "التاريخ",
+      "from": "من",
+      "to": "إلى",
+      "addSlot": "إضافة فترة متاحة",
+      "slotsList": "الفترات المتاحة",
+      "remove": "إزالة"
     }
   },
   "bookings": {
