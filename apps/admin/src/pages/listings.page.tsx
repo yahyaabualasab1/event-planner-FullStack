@@ -1,11 +1,16 @@
-import { useMemo } from "react";
+import { AlertTriangle, CheckCircle2, Eye, XCircle } from "lucide-react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { useVenues } from "@/hooks/use-venues";
+import { Modal } from "@/components/modal";
+import type { VenueStatusValue } from "@/api/venues.api";
+import { useUpdateVenueStatus, useVenues } from "@/hooks/use-venues";
+
+type ListingStatus = VenueStatusValue;
 
 interface Venue {
   _id: string;
-  clientId: string;
+  clientId: string | { _id?: string; fullName?: string; name?: string };
   title: string;
   description: string;
   location: string;
@@ -15,104 +20,263 @@ interface Venue {
   availability: { date?: string | Date; from: string; to: string }[];
   discounts?: string;
   isDeleted: boolean;
+  status?: string;
+  bookingsCount?: number;
+  bookings?: number;
+  rating?: number | string;
+  averageRating?: number | string;
 }
 
-const VenueCard = ({ venue }: { venue: Venue }) => {
-  const { t, i18n } = useTranslation();
-  const status = venue.isDeleted
-    ? t("venuesPage.card.statusArchived")
-    : t("venuesPage.card.statusActive");
-  const imageUrl = venue.images?.[0];
+const normalizeStatus = (venue: Venue, override?: ListingStatus) => {
+  if (override) return override;
+  const raw = venue.status?.toLowerCase();
+  if (raw === "approved" || raw === "pending" || raw === "flagged") {
+    return raw;
+  }
+  if (venue.isDeleted) return "flagged";
+  return "pending";
+};
 
-  const slot = venue.availability?.[0];
-  const formatDate = (value?: string | Date) => {
-    if (!value) return null;
-    const date = value instanceof Date ? value : new Date(value);
-    if (Number.isNaN(date.getTime())) return null;
-    return date.toLocaleDateString(i18n.language, {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
+const statusMeta = (status: ListingStatus) => {
+  switch (status) {
+    case "approved":
+      return {
+        label: "Approved",
+        icon: CheckCircle2,
+        className: "bg-emerald-50 text-emerald-700",
+      };
+    case "flagged":
+      return {
+        label: "Flagged",
+        icon: XCircle,
+        className: "bg-red-100 text-red-600",
+      };
+    case "pending":
+    default:
+      return {
+        label: "Pending",
+        icon: AlertTriangle,
+        className: "bg-yellow-100 text-yellow-700",
+      };
+  }
+};
+
+const VenueCard = ({
+  venue,
+  isUpdating,
+  updateError,
+  onViewDetails,
+  onStatusChange,
+}: {
+  venue: Venue;
+  isUpdating: boolean;
+  updateError: boolean;
+  onViewDetails: (venue: Venue) => void;
+  onStatusChange: (id: string, status: ListingStatus) => void;
+}) => {
+  const { t } = useTranslation();
+  const status = normalizeStatus(venue);
+  const meta = statusMeta(status);
+  const StatusIcon = meta.icon;
+  const imageUrl = venue.images?.[0];
+  const bookingsCount = venue.bookingsCount ?? venue.bookings ?? 0;
+  const rating = venue.averageRating ?? venue.rating ?? t("common.notAvailable");
+  const ownerName = () => {
+    if (!venue.clientId) return t("common.unknown");
+    if (typeof venue.clientId === "string") return venue.clientId;
+    return (
+      venue.clientId.fullName ||
+      venue.clientId.name ||
+      venue.clientId._id ||
+      t("common.unknown")
+    );
   };
-  const formattedDate = slot ? formatDate(slot.date) : null;
-  const availabilityLabel =
-    formattedDate && slot?.from && slot?.to
-      ? `${formattedDate}: ${slot.from} - ${slot.to}`
-      : t("common.notAvailable");
+
+  const stats = [
+    { label: "Price", value: venue.price || t("common.notAvailable") },
+    { label: "Bookings", value: bookingsCount },
+    { label: "Rating", value: rating },
+    { label: "Status", value: meta.label },
+  ];
 
   return (
-    <article className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-        <div className="w-full lg:w-44">
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100">
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={venue.title}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
-                {t("venuesPage.card.noImage")}
-              </div>
-            )}
-          </div>
+    <article className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm shadow-gray-200/70">
+      <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
+        <div className="h-40 w-full shrink-0 overflow-hidden rounded-xl bg-gray-100 xl:h-40 xl:w-40">
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={venue.title}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
+              {t("venuesPage.card.noImage")}
+            </div>
+          )}
         </div>
 
-        <div className="flex-1 space-y-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="min-w-0">
+              <h3 className="text-2xl font-semibold leading-tight text-black">
                 {venue.title}
               </h3>
-              <p className="text-sm text-gray-500">
-                {t("venuesPage.card.clientId", { id: venue.clientId })}
+              <p className="mt-2 text-base leading-5 text-slate-700">
+                Owner: {ownerName()}
               </p>
-              <p className="text-sm text-gray-500">{venue.location}</p>
+              <p className="text-base leading-5 text-slate-700">
+                {venue.location || t("common.notAvailable")}
+              </p>
             </div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-yellow-50 text-yellow-700 text-xs font-semibold">
-              {status}
+
+            <span
+              className={`inline-flex w-fit items-center gap-2 rounded-xl px-4 py-3 text-lg font-semibold ${meta.className}`}
+            >
+              <StatusIcon size={20} />
+              {meta.label}
             </span>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="bg-gray-50 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-400">
-                {t("venuesPage.card.price")}
-              </p>
-              <p className="text-sm font-semibold text-gray-900">
-                {venue.price || t("common.notAvailable")}
-              </p>
-            </div>
-            <div className="bg-gray-50 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-400">
-                {t("venuesPage.card.availability")}
-              </p>
-              <p className="text-sm font-semibold text-gray-900">
-                {availabilityLabel}
-              </p>
-            </div>
-            <div className="bg-gray-50 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-400">
-                {t("venuesPage.card.discounts")}
-              </p>
-              <p className="text-sm font-semibold text-gray-900">
-                {venue.discounts || t("common.notAvailable")}
-              </p>
-            </div>
-            <div className="bg-gray-50 rounded-xl px-4 py-3">
-              <p className="text-xs text-gray-400">
-                {t("venuesPage.card.extras")}
-              </p>
-              <p className="text-sm font-semibold text-gray-900">
-                {venue.extras || t("common.notAvailable")}
-              </p>
-            </div>
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {stats.map((item) => (
+              <div key={item.label} className="rounded-xl bg-gray-50 px-4 py-4">
+                <p className="text-sm text-slate-500">{item.label}</p>
+                <p className="mt-1 text-2xl font-semibold leading-none text-black">
+                  {item.value}
+                </p>
+              </div>
+            ))}
           </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-4">
+            <button
+              type="button"
+              onClick={() => onViewDetails(venue)}
+              className="inline-flex h-11 items-center gap-2 rounded-xl bg-indigo-600 px-5 text-base font-semibold text-white transition-colors hover:bg-indigo-700"
+            >
+              <Eye size={18} />
+              View Details
+            </button>
+
+            {status === "pending" && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => onStatusChange(venue._id, "approved")}
+                  disabled={isUpdating}
+                  className="inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-600 px-5 text-base font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <CheckCircle2 size={20} />
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onStatusChange(venue._id, "flagged")}
+                  disabled={isUpdating}
+                  className="inline-flex h-11 items-center gap-2 rounded-xl bg-red-600 px-5 text-base font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <XCircle size={19} />
+                  Reject
+                </button>
+              </>
+            )}
+          </div>
+
+          {updateError && (
+            <p className="mt-3 text-sm font-medium text-red-600">
+              Failed to update listing status.
+            </p>
+          )}
         </div>
       </div>
     </article>
+  );
+};
+
+const VenueDetailsModal = ({
+  venue,
+  onClose,
+}: {
+  venue: Venue | null;
+  onClose: () => void;
+}) => {
+  const { t } = useTranslation();
+  const status = venue ? normalizeStatus(venue) : "pending";
+  const meta = statusMeta(status);
+  const StatusIcon = meta.icon;
+
+  if (!venue) return null;
+
+  const owner =
+    typeof venue.clientId === "string"
+      ? venue.clientId
+      : venue.clientId?.fullName ||
+        venue.clientId?.name ||
+        venue.clientId?._id ||
+        t("common.unknown");
+
+  const details = [
+    { label: "Owner", value: owner },
+    { label: "Location", value: venue.location || t("common.notAvailable") },
+    { label: "Price", value: venue.price || t("common.notAvailable") },
+    { label: "Rating", value: venue.averageRating ?? venue.rating ?? t("common.notAvailable") },
+    { label: "Bookings", value: venue.bookingsCount ?? venue.bookings ?? 0 },
+    { label: "Extras", value: venue.extras || t("common.notAvailable") },
+    { label: "Discounts", value: venue.discounts || t("common.notAvailable") },
+  ];
+
+  return (
+    <Modal
+      open={Boolean(venue)}
+      onClose={onClose}
+      title={venue.title}
+      description={venue.description || venue.location}
+      icon={<Eye size={22} />}
+      footer={
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+          >
+            Close
+          </button>
+        </div>
+      }
+    >
+      <div className="space-y-5">
+        {venue.images?.[0] && (
+          <div className="h-56 overflow-hidden rounded-xl bg-gray-100">
+            <img
+              src={venue.images[0]}
+              alt={venue.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
+
+        <span
+          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold ${meta.className}`}
+        >
+          <StatusIcon size={18} />
+          {meta.label}
+        </span>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {details.map((item) => (
+            <div key={item.label} className="rounded-xl bg-gray-50 px-4 py-3">
+              <p className="text-xs font-medium text-slate-500">
+                {item.label}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-slate-950">
+                {item.value}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Modal>
   );
 };
 
@@ -121,12 +285,24 @@ export const ListingsPage = () => {
   const [searchParams] = useSearchParams();
   const clientId = searchParams.get("clientId") ?? searchParams.get("personId");
   const { data, isLoading, isError } = useVenues();
+  const updateStatus = useUpdateVenueStatus();
+  const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
 
   const venues = useMemo(() => {
     const items = (data ?? []) as Venue[];
     if (!clientId) return items;
-    return items.filter((venue) => venue.clientId === clientId);
+    return items.filter((venue) => {
+      const venueClientId =
+        typeof venue.clientId === "string"
+          ? venue.clientId
+          : venue.clientId?._id;
+      return venueClientId === clientId;
+    });
   }, [clientId, data]);
+
+  const handleStatusChange = (id: string, status: ListingStatus) => {
+    updateStatus.mutate({ id, status });
+  };
 
   return (
     <div className="space-y-6">
@@ -141,7 +317,7 @@ export const ListingsPage = () => {
         </p>
       </header>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         {isLoading && (
           <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
             <p className="text-sm text-gray-500">{t("venuesPage.loading")}</p>
@@ -164,8 +340,26 @@ export const ListingsPage = () => {
 
         {!isLoading &&
           !isError &&
-          venues.map((venue) => <VenueCard key={venue._id} venue={venue} />)}
+          venues.map((venue) => (
+            <VenueCard
+              key={venue._id}
+              venue={venue}
+              isUpdating={
+                updateStatus.isPending && updateStatus.variables?.id === venue._id
+              }
+              updateError={
+                updateStatus.isError && updateStatus.variables?.id === venue._id
+              }
+              onViewDetails={setSelectedVenue}
+              onStatusChange={handleStatusChange}
+            />
+          ))}
       </div>
+
+      <VenueDetailsModal
+        venue={selectedVenue}
+        onClose={() => setSelectedVenue(null)}
+      />
     </div>
   );
 };

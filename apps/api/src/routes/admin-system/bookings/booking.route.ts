@@ -35,7 +35,7 @@ router.get(
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByClientId(
-        parseInt(req.params.clientId),
+        req.params.clientId,
       );
       res.json(bookings);
     } catch (error) {
@@ -50,7 +50,7 @@ router.get(
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByCustomerId(
-        parseInt(req.params.customerId),
+        req.params.customerId,
       );
       res.json(bookings);
     } catch (error) {
@@ -65,7 +65,7 @@ router.get(
   async (req, res) => {
     try {
       const bookings = await bookingService.getBookingsByVenueId(
-        parseInt(req.params.venueId),
+        req.params.venueId,
       );
       res.json(bookings);
     } catch (error) {

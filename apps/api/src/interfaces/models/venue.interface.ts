@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { VenueStatusEnum } from "../../enums/models/venue.status";
 
 export type AvailabilityWindow = {
   date: string;
@@ -18,5 +19,6 @@ export interface IVenue {
   extras: string;
   availability?: AvailabilityWindow[];
   discounts?: string;
+  status: VenueStatusEnum;
   isDeleted: boolean;
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { ReportItem } from "./report-item";
 
 const mockReports = [

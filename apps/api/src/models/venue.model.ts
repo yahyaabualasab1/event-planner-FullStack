@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { VenueStatusEnum } from "../enums/models/venue.status";
 import { IVenue } from "../interfaces/models/venue.interface";
 
 const availabilitySchema = new Schema(
@@ -22,6 +23,12 @@ const venueSchema = new Schema<IVenue>(
     extras: { type: String, required: false },
     availability: { type: [availabilitySchema], required: false },
     discounts: { type: String, required: false },
+    status: {
+      type: String,
+      enum: Object.values(VenueStatusEnum),
+      default: VenueStatusEnum.Pending,
+      required: true,
+    },
     isDeleted: { type: Boolean, default: false },
   },
   { collection: "venues" },

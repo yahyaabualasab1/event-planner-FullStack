@@ -124,6 +124,7 @@ router.patch(
         extras,
         availability,
         discounts,
+        status,
       } = req.body as UpdateVenueInput;
 
       const venue = await adminVenueServices.updateVenue(req.params.id, {
@@ -135,6 +136,7 @@ router.patch(
         extras,
         availability,
         discounts,
+        status,
       });
       res.status(200).json(venue);
       return;

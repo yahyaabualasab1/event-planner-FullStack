@@ -174,8 +174,8 @@ export function ClientStatusModal({
 								<OptionIcon name={opt.icon} />
 							</span>
 							<span className="min-w-0 pt-0.5">
-								<span className="block font-semibold text-gray-900">{t(opt.titleKey)}</span>
-								<span className="mt-0.5 block text-sm leading-snug text-gray-600">{t(opt.descKey)}</span>
+								<span className="block font-semibold text-gray-900">{t(opt.titleKey as any)}</span>
+								<span className="mt-0.5 block text-sm leading-snug text-gray-600">{t(opt.descKey as any)}</span>
 							</span>
 						</button>
 					);

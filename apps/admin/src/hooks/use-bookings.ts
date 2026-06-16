@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, updateBooking } from "@/api/bookings.api";
-import type { StatusFilter } from "@/types/booking";
 import type { BookingStatus } from "@/types/booking";
 
 export const bookingsQueryKey = (status?: BookingStatus) =>

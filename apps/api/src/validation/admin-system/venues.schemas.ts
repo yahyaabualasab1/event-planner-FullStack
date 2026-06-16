@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { VenueStatusEnum } from "../../enums/models/venue.status";
 
 const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "Invalid ObjectId");
 
@@ -26,6 +27,8 @@ export const CreateVenueSchema = z.object({
 
 export const UpdateVenueSchema = CreateVenueSchema.partial().omit({
   clientId: true,
+}).extend({
+  status: z.nativeEnum(VenueStatusEnum).optional(),
 });
 
 export const VenueIdParamSchema = z.object({

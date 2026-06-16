@@ -61,7 +61,7 @@ export function ClientStatusTrigger({ client, onOpen, isUpdating, updateFailed }
 						className={`inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold ${cfg.pill}`}
 					>
 						<span className={`h-2 w-2 shrink-0 rounded-full ${cfg.dot}`} />
-						{t(cfg.labelKey)}
+						{t(cfg.labelKey as any)}
 					</span>
 					<span
 						className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-gray-400 transition group-hover:bg-indigo-50 group-hover:text-indigo-600"

@@ -8,6 +8,7 @@ import { adminClientRoutes } from "./client/client.route";
 import { adminNotificationRouter } from "./notifications/notification.routes";
 import { adminThreadRoutes } from "./thread/thread.routes";
 import { adminMessageRoutes } from "./message/message.routes";
+import { adminReportRoutes } from "./reports/report.routes";
 const router = Router();
 
 router.use("/admin", adminAuthRoutes);
@@ -19,5 +20,6 @@ router.use("/client", adminClientRoutes);
 router.use("/notifications", adminNotificationRouter);
 router.use("/threads", adminThreadRoutes);
 router.use("/messages", adminMessageRoutes);
+router.use("/reports", adminReportRoutes);
 
 export const adminSystemRoutes = router;
