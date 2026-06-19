@@ -33,6 +33,7 @@
     "portalSubtitle": "بوابة العميل",
     "dashboard": "لوحة التحكم",
     "bookings": "الحجوزات",
+    "messages": "الرسائل",
     "account": "الحساب",
     "overview": "نظرة عامة"
   },
@@ -70,6 +71,7 @@
     "confirmDelete": "هل تريد حذف {{title}}؟",
     "imageUnavailable": "الصورة غير متاحة",
     "notAvailable": "غير متاح",
+
     "bookings": "الحجوزات",
     "edit": "تعديل",
     "deleteVenue": "حذف {{title}}",
@@ -128,7 +130,12 @@
     "selectVenue": "اختر قاعة لمراجعة حجوزاتها."
   },
   "common": {
-    "dash": "—"
+    "dash": "—",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "modal": {
+    "closeDialog": "إغلاق"
   },
   "bookingsPage": {
     "title": "الحجوزات",
@@ -151,6 +158,14 @@
     "actions": {
       "approve": "قبول",
       "decline": "رفض"
+    },
+    "confirmApprove": {
+      "title": "هل تريد قبول الحجز؟",
+      "description": "هل أنت متأكد أنك تريد قبول طلب الحجز هذا؟"
+    },
+    "confirmDecline": {
+      "title": "هل تريد رفض الحجز؟",
+      "description": "هل أنت متأكد أنك تريد رفض طلب الحجز هذا؟"
     },
     "card": {
       "venueTitle": "القاعة #{{id}}",
