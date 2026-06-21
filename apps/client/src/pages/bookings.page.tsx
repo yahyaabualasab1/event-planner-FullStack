@@ -3,6 +3,7 @@ import type { Booking, BookingStatus } from "@/types/booking";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Mail, Phone } from "lucide-react";
+import { Modal } from "@/components/modal";
 type StatusFilter = BookingStatus | "all";
 
 const STATUS_FILTERS: StatusFilter[] = [
@@ -27,6 +28,8 @@ const statusBadgeClass = (status: BookingStatus): string => {
 const BookingCard = ({ booking }: { booking: Booking }) => {
   const { t, i18n } = useTranslation();
   const updateStatus = useUpdateBookingStatus();
+  const [confirmingAction, setConfirmingAction] =
+    useState<BookingStatus | null>(null);
 
   const isPending = booking.status === "pending";
   const isMutating =
@@ -94,6 +97,17 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
 
   const handleUpdate = (status: BookingStatus) => {
     updateStatus.mutate({ id: booking._id, status });
+  };
+
+  const handleConfirmAction = (status: BookingStatus) => {
+    setConfirmingAction(status);
+  };
+
+  const handleConfirmUpdate = () => {
+    if (confirmingAction) {
+      handleUpdate(confirmingAction);
+      setConfirmingAction(null);
+    }
   };
 
   return (
@@ -227,7 +241,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => handleUpdate("approved")}
+              onClick={() => handleConfirmAction("approved")}
               disabled={isMutating}
               className="px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 disabled:opacity-50"
             >
@@ -235,7 +249,7 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
             </button>{" "}
             <button
               type="button"
-              onClick={() => handleUpdate("declined")}
+              onClick={() => handleConfirmAction("declined")}
               disabled={isMutating}
               className="px-4 py-2 rounded-xl border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50"
             >
@@ -250,6 +264,46 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
           {t("bookingsPage.updateError")}
         </p>
       )}
+
+      <Modal
+        open={confirmingAction !== null}
+        onClose={() => setConfirmingAction(null)}
+        title={
+          confirmingAction === "approved"
+            ? t("bookingsPage.confirmApprove.title")
+            : t("bookingsPage.confirmDecline.title")
+        }
+        description={
+          confirmingAction === "approved"
+            ? t("bookingsPage.confirmApprove.description")
+            : t("bookingsPage.confirmDecline.description")
+        }
+        footer={
+          <div className="flex items-center gap-2 justify-end">
+            <button
+              type="button"
+              onClick={() => setConfirmingAction(null)}
+              className="px-4 py-2 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-100 disabled:opacity-50"
+            >
+              {t("common.cancel")}
+            </button>
+            <button
+              type="button"
+              onClick={handleConfirmUpdate}
+              disabled={isMutating}
+              className={`px-4 py-2 rounded-xl text-white text-sm font-semibold disabled:opacity-50 ${
+                confirmingAction === "approved"
+                  ? "bg-emerald-600 hover:bg-emerald-700"
+                  : "bg-red-600 hover:bg-red-700"
+              }`}
+            >
+              {confirmingAction === "approved"
+                ? t("bookingsPage.actions.approve")
+                : t("bookingsPage.actions.decline")}
+            </button>
+          </div>
+        }
+      />
     </div>
   );
 };

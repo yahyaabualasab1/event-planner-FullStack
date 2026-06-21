@@ -6,14 +6,16 @@ import { ChangeEvent, DragEvent, FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getCloudinarySignature, uploadToCloudinary } from "@/api/upload.api";
 
-const CLOUDINARY_CLOUD_NAME = "dremhy6nr"; // Replace with your Cloudinary cloud name
-const CLOUDINARY_API_KEY = "877779214928376"; // Replace with your Cloudinary API key
+const CLOUDINARY_CLOUD_NAME = "dremhy6nr";
+const CLOUDINARY_API_KEY = "877779214928376";
 
+// تعديل النوع ليصبح day (string) بدلاً من date (Date)
 type AvailabilityItem = {
-  date: Date;
+  day: string;
   from: string;
   to: string;
 };
+
 type VenueFormValues = {
   title: string;
   location: string;
@@ -59,9 +61,12 @@ const getInitialValues = (venue?: ManageVenue | null): VenueFormValues => ({
   price: venue?.price ?? "",
   description: venue?.description ?? "",
   imageUrl: venue?.images?.[0] ?? "",
+  // قراءة الأيام المحفوظة مسبقاً (إن وجدت)
   availability:
     venue?.availability?.map((a) => ({
-      date: new Date(a.date),
+      day:
+        (a as any).day ||
+        new Date(a.date).toLocaleDateString("en-US", { weekday: "long" }),
       from: a.from,
       to: a.to,
     })) ?? [],
@@ -73,13 +78,10 @@ const validateForm = (
 ): VenueFormErrors => {
   const errors: VenueFormErrors = {};
 
-  if (!values.title.trim()) {
+  if (!values.title.trim())
     errors.title = t("manageVenues.validation.titleRequired");
-  }
-
-  if (!values.location.trim()) {
+  if (!values.location.trim())
     errors.location = t("manageVenues.validation.locationRequired");
-  }
 
   if (!values.capacity.trim()) {
     errors.capacity = t("manageVenues.validation.capacityRequired");
@@ -90,13 +92,10 @@ const validateForm = (
     errors.capacity = t("manageVenues.validation.capacityPositive");
   }
 
-  if (!values.price.trim()) {
+  if (!values.price.trim())
     errors.price = t("manageVenues.validation.priceRequired");
-  }
-
-  if (!values.description.trim()) {
+  if (!values.description.trim())
     errors.description = t("manageVenues.validation.descriptionRequired");
-  }
 
   if (values.imageUrl.trim()) {
     try {
@@ -116,26 +115,40 @@ export const VenueForm = ({
   onCancel,
   onSubmit,
 }: VenueFormProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [values, setValues] = useState<VenueFormValues>(() =>
     getInitialValues(venue),
   );
-
-  const formatAvailabilityDate = (dateValue: string | Date) =>
-    new Date(dateValue).toLocaleDateString(i18n.language, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
   const [errors, setErrors] = useState<VenueFormErrors>({});
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
+  // تحديث حقل الإدخال ليحتوي على day بدلاً من date
   const [availabilityInput, setAvailabilityInput] = useState({
-    date: "",
+    day: "",
     from: "",
     to: "",
   });
+
+  // مصفوفة تحتوي على أيام الأسبوع لملء الـ Dropdown
+  const daysOfWeek = [
+    { value: "Sunday", label: t("days.sunday", { defaultValue: "Sunday" }) },
+    { value: "Monday", label: t("days.monday", { defaultValue: "Monday" }) },
+    { value: "Tuesday", label: t("days.tuesday", { defaultValue: "Tuesday" }) },
+    {
+      value: "Wednesday",
+      label: t("days.wednesday", { defaultValue: "Wednesday" }),
+    },
+    {
+      value: "Thursday",
+      label: t("days.thursday", { defaultValue: "Thursday" }),
+    },
+    { value: "Friday", label: t("days.friday", { defaultValue: "Friday" }) },
+    {
+      value: "Saturday",
+      label: t("days.saturday", { defaultValue: "Saturday" }),
+    },
+  ];
 
   useEffect(() => {
     setValues(getInitialValues(venue));
@@ -146,15 +159,14 @@ export const VenueForm = ({
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
   };
+
   const setAvailabilityField = (field: string, value: string) => {
-    setAvailabilityInput((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setAvailabilityInput((prev) => ({ ...prev, [field]: value }));
   };
+
   const addAvailability = () => {
     if (
-      !availabilityInput.date ||
+      !availabilityInput.day ||
       !availabilityInput.from ||
       !availabilityInput.to
     ) {
@@ -166,15 +178,16 @@ export const VenueForm = ({
       availability: [
         ...prev.availability,
         {
-          date: new Date(availabilityInput.date),
+          day: availabilityInput.day,
           from: availabilityInput.from,
           to: availabilityInput.to,
         },
       ],
     }));
 
-    setAvailabilityInput({ date: "", from: "", to: "" });
+    setAvailabilityInput({ day: "", from: "", to: "" });
   };
+
   const removeAvailability = (index: number) => {
     setValues((prev) => ({
       ...prev,
@@ -183,9 +196,7 @@ export const VenueForm = ({
   };
 
   const handleImageFile = async (file?: File) => {
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     setIsUploading(true);
     try {
@@ -224,9 +235,7 @@ export const VenueForm = ({
     const nextErrors = validateForm(values, t);
     setErrors(nextErrors);
 
-    if (Object.keys(nextErrors).length > 0) {
-      return;
-    }
+    if (Object.keys(nextErrors).length > 0) return;
 
     onSubmit({
       clientId,
@@ -236,11 +245,13 @@ export const VenueForm = ({
       price: values.price.trim(),
       description: values.description.trim(),
       images: values.imageUrl.trim() ? [values.imageUrl.trim()] : [],
+      // إرسال البيانات بشكل متوافق، حيث نقوم بتحويل الـ day لـ payload المناسب للـ API لديك
       availability: values.availability.map((a) => ({
-        date: new Date(a.date).toISOString(),
+        date: new Date().toISOString(), // أو مررها بالطريقة التي يفضلها الباك إند
+        day: a.day,
         from: a.from,
         to: a.to,
-      })),
+      })) as any,
     });
   };
 
@@ -348,8 +359,6 @@ export const VenueForm = ({
         />
       </div>
 
-      {/* ******************************************************************************************* */}
-
       <div className="space-y-3">
         <h3 className="text-lg font-semibold">
           {t("manageVenues.availability.title")}
@@ -358,14 +367,25 @@ export const VenueForm = ({
         <div className="grid gap-3 md:grid-cols-3 items-end">
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
-              {t("manageVenues.availability.date")}
+              {t("manageVenues.availability.day", { defaultValue: "Day" })}
             </label>
-            <input
-              type="date"
-              value={availabilityInput.date}
-              onChange={(e) => setAvailabilityField("date", e.target.value)}
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-            />
+            {/* استبدال حقل الـ Date بـ Select Dropdown للأيام عادي */}
+            <select
+              value={availabilityInput.day}
+              onChange={(e) => setAvailabilityField("day", e.target.value)}
+              className="w-full h-[46px] rounded-xl border border-gray-200 bg-white px-4 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 appearance-none"
+            >
+              <option value="">
+                {t("manageVenues.availability.selectDay", {
+                  defaultValue: "-- Select Day --",
+                })}
+              </option>
+              {daysOfWeek.map((d) => (
+                <option key={d.value} value={d.value}>
+                  {d.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <TextInput
@@ -397,38 +417,48 @@ export const VenueForm = ({
               {t("manageVenues.availability.slotsList")}
             </h4>
           )}
-          {values.availability.map((item, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center border p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition"
-            >
-              <span className="text-sm">
-                {formatAvailabilityDate(item.date)} | {item.from} - {item.to}
-              </span>
-
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => removeAvailability(index)}
+          {values.availability.map((item, index) => {
+            const matchedDay = daysOfWeek.find((d) => d.value === item.day);
+            return (
+              <div
+                key={index}
+                className="flex justify-between items-center border p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition"
               >
-                {t("manageVenues.availability.remove")}
-              </Button>
-            </div>
-          ))}
+                <span className="text-sm font-medium">
+                  {matchedDay ? matchedDay.label : item.day} | {item.from} -{" "}
+                  {item.to}
+                </span>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => removeAvailability(index)}
+                >
+                  {t("manageVenues.availability.remove")}
+                </Button>
+              </div>
+            );
+          })}
         </div>
       </div>
-      {/* ***************************************************** */}
 
-      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+      <div className="grid gap-3 pt-2 sm:grid-cols-2">
         <Button
           variant="outline"
           onClick={onCancel}
           disabled={isSubmitting || isUploading}
+          className="w-full"
+          size="lg"
         >
           {t("manageVenues.cancel")}
         </Button>
-        <Button type="submit" disabled={isSubmitting || isUploading}>
+        <Button
+          type="submit"
+          disabled={isSubmitting || isUploading}
+          className="w-full"
+          size="lg"
+        >
           {isSubmitting
             ? venue
               ? t("manageVenues.saving")
