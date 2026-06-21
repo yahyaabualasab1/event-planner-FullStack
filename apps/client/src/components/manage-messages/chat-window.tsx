@@ -105,7 +105,9 @@ export const ChatWindow = ({
           </div>
         )}
         {messages.map((msg) => {
-          const isOwn = msg.senderId === clientId;
+          const isOwn =
+            msg.senderId?.toString() === clientId?.toString() &&
+            msg.actorType === "client";
           return (
             <div
               key={msg._id}

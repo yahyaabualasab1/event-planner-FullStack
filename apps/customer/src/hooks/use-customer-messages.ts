@@ -1,115 +1,128 @@
-import { useCallback, useMemo, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { useAuthStore } from "@/store/auth.store";
+import axios from "axios";
 
-import {
-	MOCK_CONVERSATIONS,
-	MOCK_MESSAGES_BY_CONVERSATION,
-} from "@/mocks/customer-messages.mock";
-import type { ChatMessage, ConversationSummary } from "@/types/messages.types";
+// 1. تحديث الـ Base URL ليشمل الـ prefixes الخاصة بالـ API لديك
+const api = axios.create({
+  baseURL: "http://localhost:3000/api/client-system/client/manage-messages", // ◄ جرب هذا المسار الكامل أولاً
+});
 
-function formatBubbleTime(iso: string) {
-	try {
-		return new Date(iso).toLocaleTimeString(undefined, {
-			hour: "numeric",
-			minute: "2-digit",
-		});
-	} catch {
-		return "";
-	}
-}
-
-let messageIdSeq = 1000;
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("customerToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export const useCustomerMessages = () => {
-	const [conversations, setConversations] = useState<ConversationSummary[]>(
-		() => [...MOCK_CONVERSATIONS],
-	);
-	const [messagesByConversation, setMessagesByConversation] = useState<
-		Record<string, ChatMessage[]>
-	>(() => {
-		const copy: Record<string, ChatMessage[]> = {};
-		for (const [k, v] of Object.entries(MOCK_MESSAGES_BY_CONVERSATION)) {
-			copy[k] = v.map((m) => ({ ...m }));
-		}
-		return copy;
-	});
-	const [activeConversationId, setActiveConversationId] = useState(
-		MOCK_CONVERSATIONS[0]?.id ?? "",
-	);
-	const [searchQuery, setSearchQuery] = useState("");
+  const queryClient = useQueryClient();
+  const customer = useAuthStore((s) => s.customer);
+  const customerId = customer?.id || customer?._id;
 
-	const filteredConversations = useMemo(() => {
-		const q = searchQuery.trim().toLowerCase();
-		if (!q) return conversations;
-		return conversations.filter(
-			(c) =>
-				c.title.toLowerCase().includes(q) ||
-				c.lastPreview.toLowerCase().includes(q),
-		);
-	}, [conversations, searchQuery]);
+  const [activeConversationId, setActiveConversationId] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-	const activeConversation = useMemo(
-		() => conversations.find((c) => c.id === activeConversationId) ?? null,
-		[conversations, activeConversationId],
-	);
+  // 1. جلب المحادثات (Threads) الحقيقية للكاستمر
+  const threadsQuery = useQuery({
+    queryKey: ["customer-threads", customerId],
+    queryFn: async () => {
+      // تم تنظيف المسار ليقرأ مباشرة بناءً على الـ baseURL
+      const res = await api.get(`/customer/${customerId}`);
+      return res.data;
+    },
+    enabled: !!customerId,
+  });
 
-	const activeMessages = useMemo(
-		() => messagesByConversation[activeConversationId] ?? [],
-		[messagesByConversation, activeConversationId],
-	);
+  // 2. جلب رسائل الثريد المفتوح حالياً
+  const messagesQuery = useQuery({
+    queryKey: ["customer-messages", activeConversationId],
+    queryFn: async () => {
+      const res = await api.get(`/thread/${activeConversationId}`);
+      return res.data;
+    },
+    enabled: !!activeConversationId,
+  });
 
-	const selectConversation = useCallback((id: string) => {
-		setActiveConversationId(id);
-		setConversations((prev) =>
-			prev.map((c) => (c.id === id ? { ...c, unread: false } : c)),
-		);
-	}, []);
+  // 3. طفرة إرسال رسالة جديدة للباك إند
+  const sendMessageMutation = useMutation({
+    mutationFn: async (body: string) => {
+      return api.post(`/customer`, {
+        customerId,
+        threadId: activeConversationId,
+        message: body,
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["customer-messages", activeConversationId],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["customer-threads", customerId],
+      });
+    },
+  });
 
-	const sendMessage = useCallback(
-		(body: string) => {
-			const trimmed = body.trim();
-			if (!trimmed || !activeConversationId) return;
+  // تحويل البيانات القادمة من الباك إند لتتوافق مع تصميم الواجهة (Adapter)
+  const conversations = useMemo(() => {
+    const rawThreads = threadsQuery.data ?? [];
+    return rawThreads.map((t: any) => ({
+      id: t._id,
+      title: t.receiverId?.fullName || "Client Portal", // اسم الكلاينت أو الصالة
+      initials: (t.receiverId?.fullName || "CP").substring(0, 2).toUpperCase(),
+      lastPreview: t.lastMessage?.message || "No messages yet",
+      lastAtLabel: t.lastMessage?.timestamp
+        ? new Date(t.lastMessage.timestamp).toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+          })
+        : "",
+      unread: t.unreadCount > 0,
+      isOnline: true,
+    }));
+  }, [threadsQuery.data]);
 
-			const newMessage: ChatMessage = {
-				id: `local-${messageIdSeq++}`,
-				conversationId: activeConversationId,
-				body: trimmed,
-				direction: "out",
-				createdAt: new Date().toISOString(),
-			};
+  const filteredConversations = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return conversations;
+    return conversations.filter((c: any) => c.title.toLowerCase().includes(q));
+  }, [conversations, searchQuery]);
 
-			setMessagesByConversation((prev) => ({
-				...prev,
-				[activeConversationId]: [
-					...(prev[activeConversationId] ?? []),
-					newMessage,
-				],
-			}));
+  const activeConversation =
+    conversations.find((c: any) => c.id === activeConversationId) || null;
 
-			setConversations((prev) =>
-				prev.map((c) =>
-					c.id === activeConversationId
-						? {
-								...c,
-								lastPreview: trimmed,
-								lastAtLabel: "Just now",
-								unread: false,
-							}
-						: c,
-				),
-			);
-		},
-		[activeConversationId],
-	);
+  // تحويل الرسائل القادمة من الباك إند لتتوافق مع تصميم الفقاعات (Bubbles)
+  const activeMessages = useMemo(() => {
+    const rawMessages = messagesQuery.data ?? [];
+    return rawMessages.map((m: any) => ({
+      id: m._id,
+      conversationId: m.threadId,
+      body: m.message,
+      // إذا كان المرسل هو الكاستمر نفسه إذن الاتجاه out (يمين)، خلافه يكون in (يسار)
+      direction: m.senderId === customerId ? "out" : "in",
+      createdAt: m.timestamp,
+    }));
+  }, [messagesQuery.data, customerId]);
 
-	return {
-		searchQuery,
-		setSearchQuery,
-		filteredConversations,
-		activeConversationId,
-		activeConversation,
-		activeMessages,
-		selectConversation,
-		sendMessage,
-		formatBubbleTime,
-	};
+  return {
+    searchQuery,
+    setSearchQuery,
+    filteredConversations,
+    activeConversationId,
+    activeConversation,
+    activeMessages,
+    selectConversation: setActiveConversationId,
+    sendMessage: (body: string) => sendMessageMutation.mutate(body),
+    formatBubbleTime: (iso: string) => {
+      try {
+        return new Date(iso).toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+        });
+      } catch {
+        return "";
+      }
+    },
+  };
 };
