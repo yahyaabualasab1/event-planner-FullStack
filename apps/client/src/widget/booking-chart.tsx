@@ -20,7 +20,7 @@ ChartJS.register(
   Legend,
 );
 
-const BookingChart = ({ data, bookingsChange }: any) => {
+const BookingChart = ({ data }: any) => {
   const { t } = useTranslation();
 
   console.log("Monthly bookings data:", data);

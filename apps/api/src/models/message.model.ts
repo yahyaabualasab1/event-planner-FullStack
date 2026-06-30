@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Model } from "mongoose";
+import { Schema, model, Model } from "mongoose";
 import { IMessage } from "../interfaces/models/message.interface";
 import { MessageEnum } from "../enums/models/message.enum";
 import { ActorEnum } from "../enums/models/actor";

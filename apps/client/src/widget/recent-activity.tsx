@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Calendar, User, MapPin, Clock, ArrowRight } from "lucide-react";
+import { Calendar, User, Clock, ArrowRight } from "lucide-react";
 
 const RecentActivity = ({ bookings }: any) => {
   const { t } = useTranslation();

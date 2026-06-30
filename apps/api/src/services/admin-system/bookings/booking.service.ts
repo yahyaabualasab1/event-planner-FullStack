@@ -1,7 +1,6 @@
 import { Booking } from "../../../models/booking";
 import { IBooking } from "../../../interfaces/models/booking.interface";
 import { BookingEnum } from "../../../enums/models/booking";
-import { Types } from "mongoose";
 
 import { Client } from "../../../models/client.model";
 import { Venue } from "../../../models/venue.model";

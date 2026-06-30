@@ -3,7 +3,6 @@ import StatsCards from "@/widget/stats-cards";
 import BookingChart from "@/widget/booking-chart";
 import RevenueChart from "@/widget/revenue-chart";
 import RecentActivity from "@/widget/recent-activity";
-import { Calendar, ArrowRight, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const Overview = () => {
