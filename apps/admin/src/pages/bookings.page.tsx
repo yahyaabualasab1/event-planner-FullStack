@@ -230,27 +230,6 @@ const BookingCard = ({ booking }: { booking: Booking }) => {
             {getTotalPrice()}
           </p>
         </div>
-
-        {isPending && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => handleUpdate("approved")}
-              disabled={isMutating}
-              className="px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 disabled:opacity-50"
-            >
-              {t("bookingsPage.actions.approve")}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleUpdate("declined")}
-              disabled={isMutating}
-              className="px-4 py-2 rounded-xl border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50"
-            >
-              {t("bookingsPage.actions.decline")}
-            </button>
-          </div>
-        )}
       </div>
 
       {updateStatus.isError && updateStatus.variables?.id === booking._id && (

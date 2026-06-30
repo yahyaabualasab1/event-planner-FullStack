@@ -33,6 +33,7 @@
     "portalSubtitle": "Client Portal",
     "dashboard": "Dashboard",
     "bookings": "Bookings",
+    "messages": "Messages",
     "account": "Account",
     "overview": "Overview"
   },
@@ -114,12 +115,23 @@
     },
     "availability": {
       "title": "Availability",
+      "day": "Day",
       "date": "Date",
+      "selectDay": "Select a day",
       "from": "From",
       "to": "To",
       "addSlot": "Add availability slot",
       "slotsList": "Availability slots",
-      "remove": "Remove"
+      "remove": "Remove",
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      }
     }
   },
   "bookings": {
@@ -128,7 +140,12 @@
     "selectVenue": "Select a venue to review its bookings."
   },
   "common": {
-    "dash": "—"
+    "dash": "—",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "modal": {
+    "closeDialog": "Close Dialog"
   },
   "bookingsPage": {
     "title": "Bookings",
@@ -151,6 +168,14 @@
     "actions": {
       "approve": "Approve",
       "decline": "Decline"
+    },
+    "confirmApprove": {
+      "title": "Approve booking?",
+      "description": "Are you sure you want to approve this booking request?"
+    },
+    "confirmDecline": {
+      "title": "Decline booking?",
+      "description": "Are you sure you want to decline this booking request?"
     },
     "card": {
       "venueTitle": "Venue #{{id}}",
