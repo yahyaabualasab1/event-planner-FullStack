@@ -7,17 +7,15 @@ import { Dashboard } from "@/pages/layout.page";
 import { RegisterPage } from "../pages/registar.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import { AppInit } from "@/providers/app-init.provider";
-
+import { Navigate } from "react-router-dom";
 export const AppRouter = () => {
   return (
     <BrowserRouter>
       <AppInit>
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
-
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-
           <Route
             path="/dashboard"
             element={

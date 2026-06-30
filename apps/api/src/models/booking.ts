@@ -1,5 +1,4 @@
 import { Schema, model, type Model } from "mongoose";
-import mongoose from "mongoose";
 import { BookingEnum } from "../enums/models/booking";
 import {
   IBooking,

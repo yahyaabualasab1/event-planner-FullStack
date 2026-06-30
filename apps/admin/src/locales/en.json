@@ -20,14 +20,6 @@
       "bookings": "Bookings",
       "reports": "Reports",
       "messages": "Messages"
-    },
-    "reports.page": {
-      "title": "Reports & Issues",
-      "subtitle": "Monitor and resolve platform issues",
-      "pending": "Pending",
-      "reviewing": "Reviewing",
-      "resolved": "Resolved",
-      "highPriority": "High Priority"
     }
   },
   "report-item": {
@@ -60,7 +52,7 @@
   },
   "pages": {
     "analytics": {
-      "title": "Analytics Dasboard",
+      "title": "Analytics Dashboard",
       "subtitle": "Platform-wide metrics and insights",
       "stats": {
         "totalUsers": "Total Users",
@@ -98,6 +90,14 @@
         "users": "users",
         "venues": "venues"
       }
+    },
+    "reportsPage": {
+      "title": "Reports & Issues",
+      "subtitle": "Monitor and resolve platform issues",
+      "pending": "Pending",
+      "reviewing": "Reviewing",
+      "resolved": "Resolved",
+      "highPriority": "High Priority"
     }
   },
   "messagesPage": {
@@ -227,10 +227,6 @@
     "title": "Listings",
     "subtitle": "Venue listings overview",
     "emptyForClient": "No venues found for this person."
-  },
-  "reportsPage": {
-    "title": "Reports",
-    "subtitle": "Reports and exports"
   },
   "bookingsPage": {
     "title": "Booking requests",

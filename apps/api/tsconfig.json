@@ -10,10 +10,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "app/*": ["./src/app/*"],
+      "shared/*": ["./src/app/_shared/*"]
     }
   },
   "include": ["src/**/*.ts"]
