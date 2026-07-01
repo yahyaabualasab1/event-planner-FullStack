@@ -6,6 +6,7 @@ import { Pricing } from "@/widget/pricing";
 import { VenueOwner } from "@/widget/venue-owner";
 import { CTA } from "@/components/cta";
 import { Footer } from "@/widget/footer";
+             
 
 export const LandingPage = () => {
   return (

@@ -1,5 +1,5 @@
 # Event Planner Admin — static SPA for GCP Cloud Run
-#
+# 
 # Build:
 #   docker build -f Dockerfile.admin -t event-planner-admin .
 #
