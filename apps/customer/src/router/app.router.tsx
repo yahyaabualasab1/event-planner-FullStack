@@ -8,12 +8,13 @@ import { RegisterPage } from "../pages/registar.page";
 import { ProtectedRoute } from "@/router/protected.route";
 import { AppInit } from "@/providers/app-init.provider";
 import { Navigate } from "react-router-dom";
+import { LandingPage } from "@/pages/landing.page";
 export const AppRouter = () => {
   return (
     <BrowserRouter>
       <AppInit>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route
