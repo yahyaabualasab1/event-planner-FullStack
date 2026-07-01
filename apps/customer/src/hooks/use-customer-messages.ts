@@ -2,10 +2,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useMemo } from "react";
 import { useAuthStore } from "@/store/auth.store";
 import axios from "axios";
+const baseURL =
+	import.meta.env.VITE_API_URL?.trim() || "https://dev-event-planner-608310769455.europe-west1.run.app";
 
 // 1. تحديث الـ Base URL ليشمل الـ prefixes الخاصة بالـ API لديك
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/client-system/client/manage-messages", // ◄ جرب هذا المسار الكامل أولاً
+  baseURL: baseURL + "/api/client-system/client/manage-messages", // ◄ جرب هذا المسار الكامل أولاً
 });
 
 api.interceptors.request.use((config) => {
